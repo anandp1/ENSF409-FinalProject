@@ -17,6 +17,6 @@ public class RegisteredRenter {
 
     }
     public void removeCriteria(Criteria criteria) {
-        
+
     }
 }
