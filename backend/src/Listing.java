@@ -1,7 +1,7 @@
 
 public class Listing {
-    private String listingState;
-    private Fee fee;
+    private final String listingState;
+    private final Fee fee;
 
     private int daysCount;
     Listing(String listingState, Fee fee, int daysCount) {
