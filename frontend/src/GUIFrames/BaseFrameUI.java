@@ -205,7 +205,7 @@ public class BaseFrameUI extends javax.swing.JFrame {
         Integer numBedrooms = Integer.valueOf(Objects.requireNonNull(numBed.getSelectedItem()).toString());
         String cityQuad = Objects.requireNonNull(cityQuadrant.getSelectedItem()).toString();
         boolean furnishedState = furnishedBool.getState();
-        // call method to array of all properties that match this
+        // call method that returns a array of all properties that match this
         // display the property in the propertiesText
 
         // if returned list is empty set model to No Matches

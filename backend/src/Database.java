@@ -37,7 +37,7 @@ public class Database {
                             // returns empty string if none of the above
     // (email, password, IDofperson) <-- function that returns properties owned by landlord if the id is of a landlord
                                         // returns any mail that landlord has if the id is of a landlord
-                                        
+
     // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
     // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
 }
