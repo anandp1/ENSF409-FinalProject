@@ -1,8 +1,5 @@
 
-package main;
-
-import javax.swing.*;
-import java.util.Objects;
+package GUIFrames;
 
 /**
  *
