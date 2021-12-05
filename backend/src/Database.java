@@ -29,10 +29,14 @@ public class Database {
             e.printStackTrace();
         }
     }
+    // @Jett
+    // if anything is unclear let me know but these are all the functions
+    // that I think we need to make the program work
+
     // function to get all the properties available
     // function that returns all renters
     // function that returns all managers
-    // (apartmentType, numBath, numBed, cityQuad, furnishedState) <-- function that returns all properties that match this function returns a arraylist
+    // (Property property) <-- function that returns all properties that match this function returns a arraylist
     // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
                             // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above
@@ -44,4 +48,10 @@ public class Database {
                                     // is already active return -1 to indicate error
     // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
     // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
+    // (Criteria criteria) <-- checks if this any properties matches this criteria and
+                                // returns the same criteria as input if it does
+                                // return empty ArrayList<Criteria> if none exist
+    // (RenterId) <-- returns ArrayList<Criteria> of all criteria that match this renter
+    // (RenterId) <-- returns subscriptionState of the renter as a boolean
+    // (Criteria criteria) <-- adds criteria to the database
 }
