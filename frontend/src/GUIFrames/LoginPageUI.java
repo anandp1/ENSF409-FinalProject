@@ -134,13 +134,12 @@ public class LoginPageUI extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         System.out.println("email " + email);
         System.out.println("password: " + password);
-        // check if valid through the database
+        // check who it is and return a string saying who it is if empty then they are not registered
 
         // if invalid show this
             // JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
         // else
-            // check who it is and return the 
-            // show registered renter frame
+            // depending on who they are show the gui frame
         this.dispose();
         new RegisteredRenterUI().setVisible(true);
     }
