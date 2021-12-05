@@ -1,6 +1,8 @@
 
 package GUIFrames;
 
+import java.util.Objects;
+
 /**
  *
  * @author Anand
@@ -193,15 +195,15 @@ public class BaseFrameUI extends javax.swing.JFrame {
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginPage().setVisible(true);
+        new LoginPageUI().setVisible(true);
     }
 
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-        String apartmentText = apartmentType.getSelectedItem().toString();
-        Integer numBathrooms = Integer.valueOf(numBath.getSelectedItem().toString());
-        Integer numBedrooms = Integer.valueOf(numBed.getSelectedItem().toString());
-        String cityQuad = cityQuadrant.getSelectedItem().toString();
+        String apartmentText = Objects.requireNonNull(apartmentType.getSelectedItem()).toString();
+        Integer numBathrooms = Integer.valueOf(Objects.requireNonNull(numBath.getSelectedItem()).toString());
+        Integer numBedrooms = Integer.valueOf(Objects.requireNonNull(numBed.getSelectedItem()).toString());
+        String cityQuad = Objects.requireNonNull(cityQuadrant.getSelectedItem()).toString();
         boolean furnishedState = furnishedBool.getState();
         // call method to array of all properties that match this
         // display the property in the propertiesText

@@ -33,5 +33,5 @@ public class Database {
     // (apartmentType, numBath, numBed, cityQuad, furnishedState) <-- function that returns all properties that match this function returns a arraylist
     // (email,password) <-- function that returns a the renter if it is a valid login
     // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
-
+    // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
 }

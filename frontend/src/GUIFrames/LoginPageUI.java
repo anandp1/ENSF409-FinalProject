@@ -2,16 +2,14 @@
 
 package GUIFrames;
 
-import javax.swing.*;
-
 /**
  *
  * @author Anand
  */
-public class LoginPage extends javax.swing.JFrame {
+public class LoginPageUI extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    public LoginPage() {
+    public LoginPageUI() {
         initComponents();
     }
 
@@ -126,7 +124,7 @@ public class LoginPage extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new RegisterPage().setVisible(true);
+        new RegisterPageUI().setVisible(true);
 
     }
 
@@ -141,7 +139,10 @@ public class LoginPage extends javax.swing.JFrame {
         // if invalid show this
             // JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
         // else
+            // check who it is and return the 
             // show registered renter frame
+        this.dispose();
+        new RegisteredRenterUI().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
@@ -167,20 +168,20 @@ public class LoginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginPage().setVisible(true);
+                new LoginPageUI().setVisible(true);
             }
         });
     }

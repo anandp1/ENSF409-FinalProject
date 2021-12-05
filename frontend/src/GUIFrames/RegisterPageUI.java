@@ -8,12 +8,12 @@ package GUIFrames;
  *
  * @author Anand
  */
-public class RegisterPage extends javax.swing.JFrame {
+public class RegisterPageUI extends javax.swing.JFrame {
 
     /**
      * Creates new form RegisterPage
      */
-    public RegisterPage() {
+    public RegisterPageUI() {
         initComponents();
     }
 
@@ -145,13 +145,13 @@ public class RegisterPage extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
         this.dispose();
-        new LoginPage().setVisible(true);
+        new LoginPageUI().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginPage().setVisible(true);
+        new LoginPageUI().setVisible(true);
     }
 
     /**
@@ -171,20 +171,20 @@ public class RegisterPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPageUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegisterPage().setVisible(true);
+                new RegisterPageUI().setVisible(true);
             }
         });
     }
