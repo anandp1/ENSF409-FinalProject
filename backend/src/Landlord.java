@@ -7,7 +7,7 @@ public class Landlord {
         this.landlordID = landlordID;
         this.properties = properties;
     }
-    public void registerProperty(String apartmentType, Integer numBed, Integer numBath, String quadrant, boolean isFurnished) {
+    public void registerProperty(Property property) {
         // call database using landlordID and save all this info
         // add it to all the properties in the database
         // in the database each property has a id to it indicating the landlord that in charge of it
