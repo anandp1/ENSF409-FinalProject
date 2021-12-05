@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Landlord {
-    private ArrayList<Property> properties;
-    private int landlordID;
+    private final ArrayList<Property> properties;
+    private final int landlordID;
     Landlord(int landlordID, ArrayList<Property> properties) {
         this.landlordID = landlordID;
         this.properties = properties;
@@ -24,7 +24,6 @@ public class Landlord {
         // into active only if it its currently suspended
     }
     public ArrayList<Property> getProperty() {
-        // get all properties associated with the landlord id from database
         return properties;
     }
 

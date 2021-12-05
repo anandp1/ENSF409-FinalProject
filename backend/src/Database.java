@@ -33,9 +33,11 @@ public class Database {
     // function that returns all renters
     // function that returns all managers
     // (apartmentType, numBath, numBed, cityQuad, furnishedState) <-- function that returns all properties that match this function returns a arraylist
-    // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id or name or whatever we chose to do)
+    // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
+                            // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above
     // (email, password, IDofperson) <-- function that returns properties owned by landlord if the id is of a landlord
+                                        // return a ArrayList<Property> with all the properties
                                         // returns any mail that landlord has if the id is of a landlord
 
     // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
