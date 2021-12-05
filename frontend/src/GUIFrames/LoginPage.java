@@ -134,6 +134,8 @@ public class LoginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         String email = emailInput.getText();
         String password = String.valueOf(passwordInput.getPassword());
+        System.out.println("email " + email);
+        System.out.println("password: " + password);
         // check if valid through the database
 
         // if invalid show this
