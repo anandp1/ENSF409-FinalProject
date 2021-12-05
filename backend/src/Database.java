@@ -40,9 +40,9 @@ public class Database {
     // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
                             // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above
-    // (IDofperson, "landlord") <-- function that returns properties owned by landlord if the id is of a landlord
-                                        // return a ArrayList<Property> with all the properties
-                                        // returns any mail that landlord has if the id is of a landlord
+    // (IDofperson) <-- function that returns properties owned by landlord
+                         // return a ArrayList<Property> with all the properties
+                         // returns any mail that landlord has if the id is of a landlord
     // (Property, landlordId) <-- saves property into properties in the database with that landlord id
     // (Property, landlordId) <-- turns property associsated with that landlordid into active only if its currently suspended if it
                                     // is already active return -1 to indicate error
