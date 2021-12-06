@@ -4,10 +4,10 @@ public class Listing {
     private final Fee fee;
 
     private int daysCount;
-    Listing(String listingState, Fee fee, int daysCount) {
+    Listing(String listingState, Fee fee) {
         this.listingState = listingState;
         this.fee = fee;
-        this.daysCount = daysCount;
+
 
     }
     public void addDay() {

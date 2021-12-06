@@ -33,14 +33,14 @@ public class Database {
     // if anything is unclear let me know but these are all the functions
     // that I think we need to make the program work
 
-    // function to get all the properties available
-    // function that returns all renters
-    // function that returns all managers
+    // function to get all the properties names <-- returns ArrayList<Property>
+    // function that returns all renters name <-- returns ArrayList<String>
+    // function that returns all landlord names <-- returns ArrayList<String>
     // (Property property) <-- function that returns all properties that match this function returns a arraylist
     // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
                             // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above
-    // (IDofperson) <-- function that returns properties owned by landlord
+    // (landlordID) <-- function that returns properties owned by landlord
                          // return a ArrayList<Property> with all the properties
                          // returns any mail that landlord has if the id is of a landlord
     // (Property, landlordId) <-- saves property into properties in the database with that landlord id

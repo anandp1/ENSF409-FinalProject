@@ -2,15 +2,15 @@ import java.util.ArrayList;
 
 public class Landlord {
     private final ArrayList<Property> properties;
-    private final int landlordID;
-    Landlord(int landlordID, ArrayList<Property> properties) {
-        this.landlordID = landlordID;
+    private final String landlordName;
+    Landlord(String landlordName, ArrayList<Property> properties) {
+        this.landlordName = landlordName;
         this.properties = properties;
     }
     public void registerProperty(Property property) {
-        // call database using landlordID and save all this info
+        // call database using landlordName and saves all this info
         // add it to all the properties in the database
-        // in the database each property has a id to it indicating the landlord that in charge of it
+        // in the database each property has a column for landlordID that in charge of it
 
 
     }
@@ -19,6 +19,10 @@ public class Landlord {
     }
     public void processPayment() {
         // update the payment to 1 from 0 in the database indicating has paid
+    }
+    public void setListingState(String propertyName, String propertyState) {
+        // get property that matches this name
+        // update the property with the name with the new state in the database
     }
     public void postProperty() {
         // turns the property that is associated with this landlords id
