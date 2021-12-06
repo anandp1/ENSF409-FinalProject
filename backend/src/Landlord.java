@@ -35,6 +35,7 @@ public class Landlord {
         called isNew, whenever we add a new property we mark it as a 1 and all the original
         properties is a 0. See RegisteredRenters class for more.
          */
+        return true;
     }
     public ArrayList<Property> getProperty() {
         return properties;
