@@ -55,4 +55,10 @@ public class Database {
     // (RenterId) <-- returns ArrayList<Criteria> of all criteria that match this renter
     // (RenterId) <-- returns subscriptionState of the renter as a boolean
     // (Criteria criteria) <-- adds criteria to the database
+
+    // (PropertyID, fee) <-- updates fee of that property
+    // (PropertyID, period) <-- updates period of that property
+    // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
+                            // return as ArrayList<String>
+    
 }
