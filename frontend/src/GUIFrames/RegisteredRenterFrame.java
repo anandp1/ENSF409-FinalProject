@@ -5,20 +5,18 @@
 package GUIFrames;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 /**
  *
  * @author Anand
  */
-public class RegisteredRenterUI extends javax.swing.JFrame {
+public class RegisteredRenterFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form RegisteredRenter
      */
-    public RegisteredRenterUI() {
+    public RegisteredRenterFrame() {
         initComponents();
     }
 
@@ -226,7 +224,7 @@ public class RegisteredRenterUI extends javax.swing.JFrame {
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrameUI().setVisible(true);
+        new BaseFrame().setVisible(true);
     }
 
     private void unsubscribeButtonMouseClicked(java.awt.event.MouseEvent evt) {

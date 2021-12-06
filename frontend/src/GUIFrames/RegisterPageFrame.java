@@ -8,12 +8,12 @@ package GUIFrames;
  *
  * @author Anand
  */
-public class RegisterPageUI extends javax.swing.JFrame {
+public class RegisterPageFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form RegisterPage
      */
-    public RegisterPageUI() {
+    public RegisterPageFrame() {
         initComponents();
     }
 
@@ -145,13 +145,13 @@ public class RegisterPageUI extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
         this.dispose();
-        new LoginPageUI().setVisible(true);
+        new LoginFrame().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginPageUI().setVisible(true);
+        new LoginFrame().setVisible(true);
     }
 
 //    /**

@@ -6,10 +6,10 @@ package GUIFrames;
  *
  * @author Anand
  */
-public class LoginPageUI extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    public LoginPageUI() {
+    public LoginFrame() {
         initComponents();
     }
 
@@ -124,7 +124,7 @@ public class LoginPageUI extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new RegisterPageUI().setVisible(true);
+        new RegisterPageFrame().setVisible(true);
 
     }
 
@@ -141,13 +141,13 @@ public class LoginPageUI extends javax.swing.JFrame {
         // else
             // depending on who they are show the gui frame
         this.dispose();
-        new RegisteredRenterUI().setVisible(true);
+        new RegisteredRenterFrame().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrameUI().setVisible(true);
+        new BaseFrame().setVisible(true);
     }
 
     /**

@@ -7,12 +7,12 @@ import java.util.Objects;
  *
  * @author Anand
  */
-public class BaseFrameUI extends javax.swing.JFrame {
+public class BaseFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form BaseFrameUI
      */
-    public BaseFrameUI() {
+    public BaseFrame() {
         initComponents();
     }
 
@@ -195,7 +195,7 @@ public class BaseFrameUI extends javax.swing.JFrame {
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginPageUI().setVisible(true);
+        new LoginFrame().setVisible(true);
     }
 
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
