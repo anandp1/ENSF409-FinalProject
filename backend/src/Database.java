@@ -44,6 +44,7 @@ public class Database {
                          // return a ArrayList<Property> with all the properties
                          // returns any mail that landlord has if the id is of a landlord
     // (Property, landlordId) <-- saves property into properties in the database with that landlord id
+                                    // set fee and period to -1 manually because it is not set yet (manager sets it)
     // (Property, landlordId) <-- turns property associsated with that landlordid into active only if its currently suspended if it
                                     // is already active return -1 to indicate error
     // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter

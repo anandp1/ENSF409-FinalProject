@@ -4,8 +4,8 @@ public class Property {
     private final Integer numBath;
     private final String quadrant;
     private final boolean isFurnished;
-    private final Listing listing;
-    private final int propertyID;
+    private Listing listing;
+    private int propertyID;
     private final String propertyAddress;
     Property(String apartmentType, Integer numBed, Integer numBath, String quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
         this.apartmentType = apartmentType;
@@ -17,14 +17,12 @@ public class Property {
         this.propertyID = propertyID;
         this.propertyAddress = propertyAddress;
     }
-    Property(String apartmentType, Integer numBed, Integer numBath, String quadrant, boolean isFurnished, Listing listing, String propertyAddress) {
+    Property(String apartmentType, Integer numBed, Integer numBath, String quadrant, boolean isFurnished, String propertyAddress) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;
         this.quadrant = quadrant;
         this.isFurnished = isFurnished;
-        this.listing = listing;
-        this.propertyID = propertyID;
         this.propertyAddress = propertyAddress;
     }
     public String getApartmentType() {

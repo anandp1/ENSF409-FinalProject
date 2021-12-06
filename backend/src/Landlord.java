@@ -24,7 +24,10 @@ public class Landlord {
         // get property that matches this name
         // update the property with the name with the new state in the database
     }
-    public void postProperty() {
+    public boolean postProperty() {
+        // returns true if we were able to post if not then false
+        // Can only post if fee is not equal to -1
+
         // turns the property that is associated with this landlords id
         // into active only if it its currently suspended
         /*
