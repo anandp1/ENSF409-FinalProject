@@ -1,6 +1,8 @@
-package Main;
+//package Main;
 
 import java.sql.*;
+import GUIFrames.BaseFrame;
+
 
 public class MainApplication {
     public static void main(String[] args) throws Exception {
@@ -13,6 +15,7 @@ public class MainApplication {
     	final Quadrant quadrant = Quadrant.SW;
     	System.out.println(quadrant.getInt());
     	database.disconnect();
+              new BaseFrame().setVisible(true);
     	System.out.println("Program Terminated.");
     }
 }

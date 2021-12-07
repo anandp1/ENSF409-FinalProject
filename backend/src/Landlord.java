@@ -1,12 +1,12 @@
-package Main;
+//package Main;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class Landlord {
     private final ArrayList<Property> properties;
-    private final int landlordID;
-    Landlord(int landlordID, ArrayList<Property> properties) {
-        this.landlordID = landlordID;
+    private final String landlordName;
+    Landlord(String landlordName, ArrayList<Property> properties) {
+        this.landlordName = landlordName;
         this.properties = properties;
     }
     public void registerProperty(Connection db, Property property) {
@@ -26,7 +26,7 @@ public class Landlord {
 			myStmt.close();
 	            
 		} catch (SQLException ex) {
-			System.err.println("\nError in Login createLogin\n");
+			System.err.println("\nError in Landlord RegisterProperty\n");
 			ex.printStackTrace();
 		}
     }
@@ -38,12 +38,29 @@ public class Landlord {
         // update the payment to 1 from 0 in the database indicating has paid
     	// not too sure where we are holding payments in the database
     }
-    public void postProperty(Connection db, int index) {
-    	// requires that you know which property you want to post from the array list, please help me out here
-    	// also you're going to need the property_id
-        if(properties.get(index).getListing().getListingState()==State.SUSPENDED) {
+    public void setListingState(String propertyName, String propertyState) {
+        // get property that matches this name
+        // update the property with the name with the new state in the database
+    }
+    public boolean postProperty() {
+        // returns true if we were able to post if not then false
+        // Can only post if fee is not equal to -1
+
+        // turns the property that is associated with this landlords id
+        // into active only if it its currently suspended
+        /*
+        One option to notify registeredrenters make a new column in the database
+        called isNew, whenever we add a new property we mark it as a 1 and all the original
+        properties is a 0. See RegisteredRenters class for more.
+         */
+      
+      
+      /////////
+      // Jett's code, incomplete:
+      if(properties.get(index).getListing().getListingState()==State.SUSPENDED) {
         	properties.get(index).getListing().setListingState(db, State.ACTIVE, properties.get(index).getPropertyID());
         }
+        return true;
     }
     public ArrayList<Property> getProperty() {
         return properties;

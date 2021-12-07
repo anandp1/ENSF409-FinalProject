@@ -1,4 +1,4 @@
-package Main;
+//package Main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +12,6 @@ public class Listing {
     Listing(State listingState, Fee fee, int daysCount) {
         this.listingState = listingState;
         this.fee = fee;
-        this.daysCount = daysCount;
-
     }
     public void addDay() {
         daysCount++;
