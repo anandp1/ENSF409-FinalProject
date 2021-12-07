@@ -19,6 +19,10 @@ public class Database {
         dbConnect = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
 
     }
+    public Connection getConnection() {
+    	return dbConnect;
+    }
+    
     public void disconnect() {
         try {
             dbConnect.close();

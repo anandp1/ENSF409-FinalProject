@@ -1,3 +1,5 @@
+package Main;
+
 public class Fee {
     private double feeAmount;
     private int period;
