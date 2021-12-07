@@ -60,5 +60,5 @@ public class Database {
     // (PropertyID, period) <-- updates period of that property
     // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
                             // return as ArrayList<String>
-    
+
 }
