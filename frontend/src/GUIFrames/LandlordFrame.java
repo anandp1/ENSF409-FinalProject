@@ -75,13 +75,19 @@ public class LandlordFrame extends javax.swing.JPanel {
             }
         });
 
+        propertiesLabel.setText("Apartment list");
+
+        propertiesBox.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = {  };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(propertiesBox);
+
         ArrayList<Property> properties = currentLogin.getProperty();
-        ArrayList<String> places = new ArrayList<String>();
         for (int i = 0; i < properties.size(); i++) {
-            places.add(properties.get(i).getPropertyAddress());
+            propertiesBox.add(properties.get(i).getPropertyAddress());
         }
-        DefaultComboBoxModel list = new DefaultComboBoxModel();
-        propertiesBox = new JComboBox(list);
 
         jScrollPane1.setViewportView(propertiesBox);
 
@@ -115,11 +121,12 @@ public class LandlordFrame extends javax.swing.JPanel {
                                         .addComponent(registerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(registerLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(furnishedBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(100, 100, 100)
+                                .addGap(97, 97, 97)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(feeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane1))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane1)
+                                        .addComponent(propertiesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(feeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,6 +151,9 @@ public class LandlordFrame extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(quadrantBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addComponent(propertiesLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(feeButton)))
@@ -190,7 +200,8 @@ public class LandlordFrame extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JCheckBox furnishedBox;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> propertiesBox;
+    private javax.swing.JList<String> propertiesBox;
+    private javax.swing.JLabel propertiesLabel;
     private javax.swing.JComboBox<String> quadrantBox;
     private javax.swing.JLabel quadrantLabel;
     private javax.swing.JButton registerButton;
