@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Landlord {
     private final ArrayList<Property> properties;
-    private final String landlordName;
+    private final int landlordID;
     private final Database db;
-    Landlord(String landlordName, ArrayList<Property> properties, Database db) {
-        this.landlordName = landlordName;
+    Landlord(int landlordID, ArrayList<Property> properties, Database db) {
+        this.landlordID = landlordID;
         this.properties = properties;
         this.db = db;
     }
     public void registerProperty(Property property) {
         // requires that the property doesn't already exist in the database
-    	db.addProperty(landlordName, property);
+    	db.addProperty(landlordID, property);
     }
     public void messageRenter(String message, int renterID) {
         // save message for the renterID in the database

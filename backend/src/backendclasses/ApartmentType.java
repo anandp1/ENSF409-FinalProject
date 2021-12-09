@@ -23,4 +23,15 @@ public enum ApartmentType {
         }
         return null;
     }
+    static public int fromString(String i) {
+        switch(i) {
+            case "ATTACHED":
+                return ATTACHED.getInt();
+            case "DETACHED":
+                return DETACHED.getInt();
+            case "TOWNHOUSE":
+                return TOWNHOUSE.getInt();
+        }
+        return -1;
+    }
 }

@@ -212,7 +212,7 @@ public class BaseFrame extends javax.swing.JFrame {
         // call method that returns a array of all properties that match this
         // display the property in the propertiesText
 
-        Criteria criteria = new Criteria(apartmentText, numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
+        Criteria criteria = new Criteria(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
         // if returned list is empty set model to No Matches
         // else set it to all the matches
         // set new model with new listings

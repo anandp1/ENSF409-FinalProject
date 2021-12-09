@@ -255,29 +255,29 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         // display any new criteria in the notifications text
         // Change code using the Renter class
 
-        Criteria criteria = new Criteria(apartmentText, numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
-        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
-        if(matched.isEmpty()) {
-            searchList.setModel(new javax.swing.AbstractListModel<String>() {
-                String[] strings = {"No Matches"};
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            });
-        }
-        else {
-            String[] propertyDisplay = new String[matched.size()];
-            int i = 0;
-            for(Property properties : matched) {
-                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
-                        + properties.getPropertyAddress();
-                i++;
-            }
-            searchList.setModel(new javax.swing.AbstractListModel<String>() {
-                //                String[] strings = { "No Matches", "NewItem" };
-                public int getSize() { return propertyDisplay.length; }
-                public String getElementAt(int i) { return propertyDisplay[i]; }
-            });
-        }
+//        Criteria criteria = new Criteria(apartmentText, numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
+//        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
+//        if(matched.isEmpty()) {
+//            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+//                String[] strings = {"No Matches"};
+//                public int getSize() { return strings.length; }
+//                public String getElementAt(int i) { return strings[i]; }
+//            });
+//        }
+//        else {
+//            String[] propertyDisplay = new String[matched.size()];
+//            int i = 0;
+//            for(Property properties : matched) {
+//                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+//                        + properties.getPropertyAddress();
+//                i++;
+//            }
+//            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+//                //                String[] strings = { "No Matches", "NewItem" };
+//                public int getSize() { return propertyDisplay.length; }
+//                public String getElementAt(int i) { return propertyDisplay[i]; }
+//            });
+//        }
 
 
     }
