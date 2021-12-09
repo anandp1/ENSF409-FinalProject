@@ -10,7 +10,7 @@ public class Property {
     private Listing listing;
     private int propertyID;
     private final String propertyAddress;
-    Property(ApartmentType apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
+    public Property(ApartmentType apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;

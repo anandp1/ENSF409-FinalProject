@@ -11,4 +11,16 @@ public enum ApartmentType {
     ApartmentType(int num) {
         this.num = num;
     }
+
+    static public ApartmentType fromInt(int i) {
+        switch(i) {
+            case 1:
+                return ATTACHED;
+            case 2:
+                return DETACHED;
+            case 3:
+                return TOWNHOUSE;
+        }
+        return null;
+    }
 }

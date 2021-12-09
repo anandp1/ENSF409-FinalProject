@@ -39,6 +39,7 @@ public class Database {
 
     public ArrayList<Property> getAllActiveProperties() {
         // presumes all states are active, otherwise set the first input for listing as results.getInt("ListingState")
+        // honestly might throw an error - no idea how to verify if this is working right. Basically I call getBoolean on a result that might be an integer.
         ArrayList<Property> returnValue = new ArrayList<Property>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -47,27 +48,107 @@ public class Database {
             while(results.next()) {
                 Fee tempFee = new Fee(results.getDouble("Login_id"), results.getInt("Period"));
                 Listing tempListing = new Listing(State.ACTIVE, tempFee, results.getInt("DayCount"), this);
-                Property tempProperty = new Property(results.getInt("Apartment_type"), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant, )
-//                returnValue = results.getInt("Login_id");
+                Property tempProperty = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
+                returnValue.add(tempProperty);
             }
             stmt.close();
             results.close();
         }
         catch(Exception e) {
-            System.err.println("\nError in Login checkLogin\n");
+            System.err.println("\nError in Database getAllActiveProperties\n");
             e.printStackTrace();
         }
 
         return returnValue;
     }
+
+    public ArrayList<String> getAllRenterNames() {
+        ArrayList<String> returnValue = new ArrayList<String>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("SELECT * FROM User WHERE User_type = 1");
+
+            while(results.next()) {
+                returnValue.add(results.getString("Fname") + " " + results.getString("Lname"));
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllRenterNames\n");
+            e.printStackTrace();
+        }
+
+        return returnValue;
+    }
+
+    public ArrayList<String> getAllLandlordNames() {
+        ArrayList<String> returnValue = new ArrayList<String>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("SELECT * FROM User WHERE User_type = 0");
+
+            while(results.next()) {
+                returnValue.add(results.getString("Fname") + " " + results.getString("Lname"));
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllLandlordNames\n");
+            e.printStackTrace();
+        }
+
+        return returnValue;
+    }
+
+    public ArrayList<Property> getAllMatchingProperties(Criteria criteria) {
+        ArrayList<Property> returnValue = new ArrayList<Property>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("SELECT * FROM Listing as L, Property as P WHERE L.Property_id = P.Property_id AND " +
+                    "P.ApartmentType = " + criteria.getApartmentType() + " AND " +
+                    "P.NoBedrooms >= " + criteria.getNumBed() + " AND " +
+                    "P.NoBathrooms >= " + criteria.getNumBath() + " AND " +
+                    "P.Quadrant = " + criteria.getQuadrant().getInt() + " AND " +
+                    "P.isFurnished = " + criteria.intIsFurnished() + " AND " +
+                    "L.ListingState = 1");
+
+            while(results.next()) {
+                Fee tempFee = new Fee(results.getDouble("Login_id"), results.getInt("Period"));
+                Listing tempListing = new Listing(State.ACTIVE, tempFee, results.getInt("DayCount"), this);
+                Property tempProperty = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
+                returnValue.add(tempProperty);
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllMatchingProperties\n");
+            e.printStackTrace();
+        }
+
+        return returnValue;
+    }
+
+
+    /* Jett's progress comments.
+       I have implemented the following functions, as per the specifications below:
+       1. function to get all the properties names <-- returns ArrayList<backendclasses.Property>
+       2. function that returns all renters name <-- returns ArrayList<String>
+       3. function that returns all landlord names <-- returns ArrayList<String>
+       4. (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
+     */
+
+
     // @Jett
     // if anything is unclear let me know but these are all the functions
     // that I think we need to make the program work
 
-    // function to get all the properties names <-- returns ArrayList<backendclasses.Property>
-    // function that returns all renters name <-- returns ArrayList<String>
-    // function that returns all landlord names <-- returns ArrayList<String>
-    // (backendclasses.Property property) <-- function that returns all properties that match this function returns a arraylist
+            // function to get all the properties names <-- returns ArrayList<backendclasses.Property>
+            // function that returns all renters name <-- returns ArrayList<String>
+            // function that returns all landlord names <-- returns ArrayList<String>
+            // (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
     // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
                             // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above

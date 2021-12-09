@@ -13,9 +13,17 @@ public enum Quadrant {
 		number = i;
 	}
 
-	public Quadrant fromInt(int i) {
-		switch(i){
-			c
+	static public Quadrant fromInt(int i) {
+		switch(i) {
+			case 1:
+				return SW;
+			case 2:
+				return NW;
+			case 3:
+				return NE;
+			case 4:
+				return SE;
 		}
+		return null;
 	}
 }
