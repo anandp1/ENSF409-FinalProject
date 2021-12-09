@@ -36,7 +36,7 @@ public class Manager {
         Fee fee = new Fee(feeAmount, period);
         db.updatePropertyFee(propertyID, fee);
     }
-    public void setSummaryInfo(int period) {
+    public void setSummaryInfo(Integer period) {
         // call database to get all properties that match this period
         allProperties = new ArrayList<Property>();
         for(Property property : getProperties()) {
@@ -79,6 +79,7 @@ public class Manager {
             if(property.getListing().getListingState().getInt() == 2) {
                 listNumRented.add(new ArrayList<>());
                 listNumRented.get(i).add(
+                        "Landlord Name: " + db.getLandlordNameFromProperty(property.getPropertyID()) +
                         "Property ID: " + String.valueOf(property.getPropertyID()) +
                         " Address: " + property.getPropertyAddress()
                 );

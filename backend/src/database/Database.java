@@ -385,10 +385,9 @@ public class Database {
                     // set fee and period to -1 manually because it is not set yet (manager sets it)
 
 
+    public boolean addMessage(int landlord_id, String mess)
 
 
-
-    // need to redo these to match the database attributes - will otherwise throw some errors
     public boolean addProperty(int landlord_id, Property property) {
         try {
             String query = "INSERT INTO Property (Landlord_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";

@@ -383,8 +383,15 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-        JFrame frame = new SummaryReportFrame(db);
-        frame.setVisible(true); // GUI gui = new GUI() as well
+        if(periodEntry.getText() == null) {
+            JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            JFrame frame = new SummaryReportFrame(db, manager, Integer.valueOf(periodEntry.getText()));
+            frame.setVisible(true);
+
+        }
+        // GUI gui = new GUI() as well
     }//GEN-LAST:event_createSummaryReportButtonActionPerformed
     private void changePeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if(displayList.getSelectedValue() == null) {
