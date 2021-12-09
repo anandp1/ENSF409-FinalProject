@@ -1,5 +1,5 @@
 
-package javaapplication1;
+package GUIFrames;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
