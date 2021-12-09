@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Landlord {
     private final ArrayList<Property> properties;
     private final String landlordName;
-    Landlord(String landlordName, ArrayList<Property> properties) {
+    Database db;
+    Landlord(String landlordName, ArrayList<Property> properties, Database db) {
         this.landlordName = landlordName;
         this.properties = properties;
+        this.db = db
     }
     public void registerProperty(Connection db, Property property) {
         // requires that the property doesn't already exist in the database
