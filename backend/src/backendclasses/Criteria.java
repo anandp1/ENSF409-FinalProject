@@ -8,7 +8,7 @@ public class Criteria {
     private final Quadrant quadrant;
     private final boolean isFurnished;
 
-    Criteria(String apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished) {
+    public Criteria(String apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;

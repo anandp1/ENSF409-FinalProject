@@ -26,4 +26,18 @@ public enum Quadrant {
 		}
 		return null;
 	}
+
+	static public int fromString(String i) {
+		switch(i) {
+			case "SW":
+				return SW.getInt();
+			case "NW":
+				return NW.getInt();
+			case "NE":
+				return NE.getInt();
+			case "SE":
+				return SE.getInt();
+		}
+		return -1;
+	}
 }

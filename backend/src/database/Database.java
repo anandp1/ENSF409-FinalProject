@@ -46,7 +46,7 @@ public class Database {
             results = stmt.executeQuery("SELECT * FROM Listing, Property WHERE Listing.Property_id = Property.Property_id AND Listing.ListingState = 1");
 
             while(results.next()) {
-                Fee tempFee = new Fee(results.getDouble("Login_id"), results.getInt("Period"));
+                Fee tempFee = new Fee(results.getDouble("FeeAmount"), results.getInt("Period"));
                 Listing tempListing = new Listing(State.ACTIVE, tempFee, results.getInt("DayCount"), this);
                 Property tempProperty = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
                 returnValue.add(tempProperty);
@@ -131,13 +131,41 @@ public class Database {
         return returnValue;
     }
 
+    public String getUserType(String email, String password) {
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("SELECT * FROM User WHERE Email = \'" + email + "\' AND Password = \'" + password + "\'");
+            int userType = -1;
+            int id = -1;
+            if(results.next()) {
+                id = results.getInt("User_id");
+                userType = results.getInt("User_type");
+            }
+
+            stmt.close();
+            results.close();
+            if(userType != -1) {
+                if(userType == 0) return String.valueOf(id) + "r";
+                else if(userType == 1) return String.valueOf(id) + "l";
+                else if(userType == 2) return String.valueOf(id) + "m";
+            }
+            return null;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllMatchingProperties\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /* Jett's progress comments.
-       I have implemented the following functions, as per the specifications below:
+     I have implemented the following functions, as per the specifications below:
        1. function to get all the properties names <-- returns ArrayList<backendclasses.Property>
        2. function that returns all renters name <-- returns ArrayList<String>
        3. function that returns all landlord names <-- returns ArrayList<String>
        4. (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
+       5. (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
+
      */
 
 
@@ -149,12 +177,12 @@ public class Database {
             // function that returns all renters name <-- returns ArrayList<String>
             // function that returns all landlord names <-- returns ArrayList<String>
             // (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
-    // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
+            // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
                             // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                             // returns empty string if none of the above
     // (landlordID) <-- function that returns properties owned by landlord
                          // return a ArrayList<backendclasses.Property> with all the properties
-                         // returns any mail that landlord has if the id is of a landlord
+    // (landlordID) <-- returns any mail that landlord has if the id is of a landlord
    // DONE  // (backendclasses.Property, landlordId) <-- saves property into properties in the database with that landlord id
                                     // set fee and period to -1 manually because it is not set yet (manager sets it)
     // (backendclasses.Property, landlordId) <-- turns property associsated with that landlordid into active only if its currently suspended if it
