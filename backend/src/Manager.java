@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class Manager {
     private ArrayList<Property> allProperties;
-    Manager() {
-
+    private final Database db;
+    Manager(Database db) {
+        this.db = db;
     }
     public ArrayList<Property> getProperties() {
         // calls database to return all properties

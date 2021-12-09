@@ -4,10 +4,12 @@ public class RegisteredRenter {
     private ArrayList<Criteria> criteria;
     private boolean subscriptionState;
     private int renterID;
-    RegisteredRenter(ArrayList<Criteria> criteria, boolean subscriptionState, int renterID) {
+    private final Database db;
+    RegisteredRenter(ArrayList<Criteria> criteria, boolean subscriptionState, int renterID, Database db) {
         this.criteria = criteria;
         this.subscriptionState = subscriptionState;
         this.renterID = renterID;
+        this.db = db;
     }
     public ArrayList<Criteria> searchResults(Criteria Criteria) {
         // searches for any results that match the property and return any properties that match
