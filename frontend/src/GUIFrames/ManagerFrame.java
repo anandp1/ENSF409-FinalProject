@@ -239,7 +239,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_selectDropDownActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String select= selectDropDown.getSelectedItem();
+        String select= selectDropDown.getSelectedItem().toString();
         if(select.equals("All properties"))
         {
             ArrayList<Property> allProperties = manager.getProperties();
