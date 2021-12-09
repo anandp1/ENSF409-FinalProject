@@ -8,12 +8,12 @@ package GUIFrames;
  *
  * @author mubas
  */
-public class ChangeFee extends javax.swing.JFrame {
+public class ChangePeriodFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form ChangeFee
+     * Creates new form ChangePeriod
      */
-    public ChangeFee() {
+    public ChangePeriodFrame() {
         initComponents();
     }
 
@@ -26,18 +26,18 @@ public class ChangeFee extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        newFeeLabel = new javax.swing.JLabel();
-        newFeeEntry = new javax.swing.JTextField();
-        changeButton = new javax.swing.JButton();
+        PeriodLable = new javax.swing.JLabel();
+        PeriodEntry = new javax.swing.JTextField();
+        SaveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        newFeeLabel.setText("New Fee");
+        PeriodLable.setText("Period");
 
-        changeButton.setText("Change");
-        changeButton.addActionListener(new java.awt.event.ActionListener() {
+        SaveButton.setText("Save");
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeButtonActionPerformed(evt);
+                SaveButtonActionPerformed(evt);
             }
         });
 
@@ -46,36 +46,35 @@ public class ChangeFee extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(SaveButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(newFeeLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(newFeeEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(changeButton)))
-                .addContainerGap(134, Short.MAX_VALUE))
+                        .addComponent(PeriodLable)
+                        .addGap(40, 40, 40)
+                        .addComponent(PeriodEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newFeeLabel)
-                    .addComponent(newFeeEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
-                .addComponent(changeButton)
-                .addContainerGap(103, Short.MAX_VALUE))
+                    .addComponent(PeriodLable)
+                    .addComponent(PeriodEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(SaveButton)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-       this.setVisible(false);
-       this.dispose();
-    }//GEN-LAST:event_changeButtonActionPerformed
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+      this.setVisible(false);
+      this.dispose();   
+// TODO add your handling code here:
+    }//GEN-LAST:event_SaveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,27 +93,27 @@ public class ChangeFee extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangePeriod.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangePeriod.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangePeriod.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangePeriod.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new ChangeFee().setVisible(true);
+//                new ChangePeriod().setVisible(true);
 //            }
 //        });
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton changeButton;
-    private javax.swing.JTextField newFeeEntry;
-    private javax.swing.JLabel newFeeLabel;
+    private javax.swing.JTextField PeriodEntry;
+    private javax.swing.JLabel PeriodLable;
+    private javax.swing.JButton SaveButton;
     // End of variables declaration//GEN-END:variables
 }

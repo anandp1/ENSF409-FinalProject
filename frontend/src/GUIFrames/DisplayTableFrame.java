@@ -10,12 +10,12 @@ import javax.swing.JFrame;
  *
  * @author mubas
  */
-public class DisplayTable extends javax.swing.JFrame {
+public class DisplayTableFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form DisplayTable
      */
-    public DisplayTable() {
+    public DisplayTableFrame() {
         initComponents();
         changeFeeButton.setVisible(false);
         changeListingButton.setVisible(false);
@@ -250,21 +250,21 @@ public class DisplayTable extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void changeListingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeListingButtonActionPerformed
-        JFrame frame =new ChangeListingStatus();
+        JFrame frame =new ChangeListingStatusFrame();
         frame.setVisible(true);
     }//GEN-LAST:event_changeListingButtonActionPerformed
 
     private void changeFeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFeeButtonActionPerformed
-        JFrame frame = new ChangeFee();
+        JFrame frame = new ChangeFeeFrame();
         frame.setVisible(true);
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-        JFrame frame = new SummaryReport();
+        JFrame frame = new SummaryReportFrame();
         frame.setVisible(true); // GUI gui = new GUI() as well
     }//GEN-LAST:event_createSummaryReportButtonActionPerformed
     private void changePeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame frame = new ChangePeriod();
+        JFrame frame = new ChangePeriodFrame();
         frame.setVisible(true);
     }
     /**

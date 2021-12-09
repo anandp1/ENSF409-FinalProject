@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ManagerMenuView extends JFrame{
+public class ManagerMenuFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JButton changeStatus = new JButton("Change Property Status");
 	private JButton changeFee = new JButton("Change Fee");
@@ -13,7 +13,7 @@ public class ManagerMenuView extends JFrame{
 	private JButton exit = new JButton("Exit");
 	private JButton createNewReport = new JButton("Create New Summary Report");
 	
-	public ManagerMenuView() {
+	public ManagerMenuFrame() {
 		setSize(431, 310);
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setTitle("Manager Menu");

@@ -6,10 +6,10 @@ package GUIFrames;
  *
  * @author Anand
  */
-public class LoginFrame extends javax.swing.JFrame {
+public class LoginFrameFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    public LoginFrame() {
+    public LoginFrameFrame() {
         initComponents();
     }
 
@@ -141,7 +141,7 @@ public class LoginFrame extends javax.swing.JFrame {
         // else
             // depending on who they are show the gui frame
         this.dispose();
-        new DisplayTable().setVisible(true);
+        new DisplayTableFrame().setVisible(true);
         // new RegisteredRenterFrame().setVisible(true);
     }
 

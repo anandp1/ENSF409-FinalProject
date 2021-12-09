@@ -194,7 +194,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginFrame().setVisible(true);
+        new LoginFrameFrame().setVisible(true);
     }
 
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {

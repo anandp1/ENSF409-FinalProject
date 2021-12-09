@@ -8,12 +8,12 @@ package GUIFrames;
  *
  * @author mubas
  */
-public class SummaryReport extends javax.swing.JFrame {
+public class SummaryReportFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form SummaryReport
      */
-    public SummaryReport() {
+    public SummaryReportFrame() {
         initComponents();
     }
 

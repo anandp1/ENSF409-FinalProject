@@ -145,13 +145,13 @@ public class RegisterPageFrame extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
         this.dispose();
-        new LoginFrame().setVisible(true);
+        new LoginFrameFrame().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginFrame().setVisible(true);
+        new LoginFrameFrame().setVisible(true);
     }
 
 //    /**

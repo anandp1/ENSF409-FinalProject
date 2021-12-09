@@ -8,12 +8,12 @@ package GUIFrames;
  *
  * @author mubas
  */
-public class ChangeListingStatus extends javax.swing.JFrame {
+public class ChangeFeeFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form ChangeListingStatus
+     * Creates new form ChangeFee
      */
-    public ChangeListingStatus() {
+    public ChangeFeeFrame() {
         initComponents();
     }
 
@@ -26,30 +26,13 @@ public class ChangeListingStatus extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        checkBoxGroup = new javax.swing.ButtonGroup();
-        rentedCheckbox = new javax.swing.JCheckBox();
-        cancelledCheckBox = new javax.swing.JCheckBox();
-        suspendedCheckbox = new javax.swing.JCheckBox();
-        activeCheckbox = new javax.swing.JCheckBox();
+        newFeeLabel = new javax.swing.JLabel();
+        newFeeEntry = new javax.swing.JTextField();
         changeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        checkBoxGroup.add(rentedCheckbox);
-        rentedCheckbox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        rentedCheckbox.setText("Rented");
-
-        checkBoxGroup.add(cancelledCheckBox);
-        cancelledCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cancelledCheckBox.setText("Cancelled");
-
-        checkBoxGroup.add(suspendedCheckbox);
-        suspendedCheckbox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        suspendedCheckbox.setText("Suspended");
-
-        checkBoxGroup.add(activeCheckbox);
-        activeCheckbox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        activeCheckbox.setText("Active");
+        newFeeLabel.setText("New Fee");
 
         changeButton.setText("Change");
         changeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -62,40 +45,36 @@ public class ChangeListingStatus extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(217, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(activeCheckbox)
-                    .addComponent(suspendedCheckbox)
-                    .addComponent(cancelledCheckBox)
-                    .addComponent(rentedCheckbox)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(changeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(198, 198, 198))
+                        .addGap(93, 93, 93)
+                        .addComponent(newFeeLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(newFeeEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(changeButton)))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(activeCheckbox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rentedCheckbox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelledCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(suspendedCheckbox)
-                .addGap(18, 18, 18)
+                .addGap(89, 89, 89)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newFeeLabel)
+                    .addComponent(newFeeEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
                 .addComponent(changeButton)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-        this.setVisible(false);
-        this.dispose();
+       this.setVisible(false);
+       this.dispose();
     }//GEN-LAST:event_changeButtonActionPerformed
 
     /**
@@ -115,30 +94,27 @@ public class ChangeListingStatus extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ChangeListingStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ChangeListingStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ChangeListingStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ChangeListingStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ChangeFee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new ChangeListingStatus().setVisible(true);
+//                new ChangeFee().setVisible(true);
 //            }
 //        });
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox activeCheckbox;
-    private javax.swing.JCheckBox cancelledCheckBox;
     private javax.swing.JButton changeButton;
-    private javax.swing.ButtonGroup checkBoxGroup;
-    private javax.swing.JCheckBox rentedCheckbox;
-    private javax.swing.JCheckBox suspendedCheckbox;
+    private javax.swing.JTextField newFeeEntry;
+    private javax.swing.JLabel newFeeLabel;
     // End of variables declaration//GEN-END:variables
 }
