@@ -509,9 +509,12 @@ public class Database {
 
     public boolean addNewProperty(int property_id) {
         Property property = getProperty(property_id);
+        if(property == null) return false;
+        ArrayList<Integer> renter_ids = getMatchingCriteria(property);
 
         // get all criteria that match the property
         // notify up
+        return true;
     }
 
     private Property getProperty(int property_id) {
@@ -533,5 +536,29 @@ public class Database {
         return returnValue;
     }
 
-    private ArrayList
+    public ArrayList<Integer> getMatchingCriteria(Property property) {
+        ArrayList<Integer> returnValue = new ArrayList<Integer>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM Criteria " +
+                    "WHERE Apartment_type = " + property.getApartmentType().getInt() + " AND " +
+                    "NoBedrooms <= " + property.getNumBed() + " AND " +
+                    "NoBathrooms <= " + property.getNumBath() + " AND " +
+                    "Quadrant = " + property.getQuadrant().getInt() + " AND " +
+                    "Furnished = " + (property.getIsFurnished() ? 1:0 ));
+
+            while(results.next()) {
+                returnValue.add(results.getInt("Renter_id"));
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getMaxPropertyId\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
+    public boolean addNewProperty()
 }

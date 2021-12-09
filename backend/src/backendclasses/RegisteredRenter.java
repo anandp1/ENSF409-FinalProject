@@ -24,7 +24,7 @@ public class RegisteredRenter {
         // call addCriteria and save this property criteria as a subscription
         return matchedCriteria;
     }
-    public ArrayList<Criteria> subscribedCriteria() {
+    public ArrayList<Criteria> getSubscribedCriteria() {
         return db.getAllCriteria(renterID);
     }
     public void addCriteria(Criteria criteria) {
