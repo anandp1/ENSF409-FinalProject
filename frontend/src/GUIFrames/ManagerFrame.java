@@ -6,9 +6,11 @@ package GUIFrames;
 
 import javax.swing.JFrame;
 
-import backendclasses.Manager;
+import backendclasses.*;
 import database.Database;
 import java.sql.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author mubas
@@ -237,9 +239,38 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_selectDropDownActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String select= selectDropDown.getSelectedItem().toString();
+        String select= selectDropDown.getSelectedItem();
         if(select.equals("All properties"))
         {
+            ArrayList<Property> allProperties = manager.getProperties();
+            if(allProperties.isEmpty()) {
+                displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                    String[] strings = {"No Properties"};
+                    public int getSize() { return strings.length; }
+                    public String getElementAt(int i) { return strings[i]; }
+                });
+            }
+            else {
+                String[] propertyDisplay = new String[allProperties.size()];
+                int i = 0;
+                for(Property properties : allProperties) {
+                    String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
+                    propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + "\nAddress:"
+                            + properties.getPropertyAddress() + "\nApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
+                    "\nNumber of Bedrooms: " + properties.getNumBed() + "\nNumber of Bathrooms: " + properties.getNumBath() +
+                    "\nQuadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "\nFurnished State: " + isFurnished +
+                    "\nFee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "\nPeriod: " +
+                            String.valueOf(properties.getListing().getFee().getPeriod()) + "\nListing State: " +
+                    State.fromInt(properties.getListing().getListingState().getInt());
+                    i++;
+                }
+                displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                    //                String[] strings = { "No Matches", "NewItem" };
+                    public int getSize() { return propertyDisplay.length; }
+                    public String getElementAt(int i) { return propertyDisplay[i]; }
+                });
+            }
+
             changeFeeButton.setVisible(true);
             changeListingButton.setVisible(true);
             changePeriodButton.setVisible(true);

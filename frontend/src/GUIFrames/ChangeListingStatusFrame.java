@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
+import backendclasses.Manager;
 import database.Database;
 import java.sql.*;
 /**
@@ -15,9 +16,11 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
      * Creates new form ChangeListingStatus
      */
     private final Database db;
+
     public ChangeListingStatusFrame(Database db) {
         initComponents();
         this.db = db;
+
     }
 
     /**
@@ -97,6 +100,7 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
+
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_changeButtonActionPerformed
