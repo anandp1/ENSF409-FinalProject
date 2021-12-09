@@ -1,7 +1,7 @@
 //package Main;
 
 public class Property {
-    private final String apartmentType;
+    private final ApartmentType apartmentType;
     private final Integer numBed;
     private final Integer numBath;
     private final Quadrant quadrant;
@@ -10,7 +10,7 @@ public class Property {
     private Listing listing;
     private int propertyID;
     private final String propertyAddress;
-    Property(String apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
+    Property(ApartmentType apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;
@@ -21,7 +21,7 @@ public class Property {
         this.propertyAddress = propertyAddress;
     }
  
-    public String getApartmentType() {
+    public ApartmentType getApartmentType() {
         return apartmentType;
     }
     public Integer getNumBed() {

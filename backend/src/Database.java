@@ -72,7 +72,7 @@ public class Database {
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setString(1, landlordName);
-            myStmt.setString(2, property.getApartmentType());
+            // myStmt.setString(2, property.getApartmentType()); it is a enum now.
             myStmt.setInt(3, property.getNumBed());
             myStmt.setInt(4, property.getNumBath());
             myStmt.setInt(5, property.getQuadrant().getInt());

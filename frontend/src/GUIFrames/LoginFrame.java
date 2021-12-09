@@ -141,7 +141,8 @@ public class LoginFrame extends javax.swing.JFrame {
         // else
             // depending on who they are show the gui frame
         this.dispose();
-        new RegisteredRenterFrame().setVisible(true);
+        new DisplayTable().setVisible(true);
+        // new RegisteredRenterFrame().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
