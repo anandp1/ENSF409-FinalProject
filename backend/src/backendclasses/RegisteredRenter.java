@@ -1,3 +1,7 @@
+package backendclasses;
+
+import database.Database;
+
 import java.util.ArrayList;
 
 public class RegisteredRenter {

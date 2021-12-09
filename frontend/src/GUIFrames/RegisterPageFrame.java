@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author Anand
@@ -13,8 +14,10 @@ public class RegisterPageFrame extends javax.swing.JFrame {
     /**
      * Creates new form RegisterPage
      */
-    public RegisterPageFrame() {
+    private final Connection db;
+    public RegisterPageFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -145,13 +148,13 @@ public class RegisterPageFrame extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
         this.dispose();
-        new LoginFrameFrame().setVisible(true);
+        new LoginFrameFrame(db).setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginFrameFrame().setVisible(true);
+        new LoginFrameFrame(db).setVisible(true);
     }
 
 //    /**

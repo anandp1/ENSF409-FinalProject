@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author mubas
@@ -13,8 +14,10 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChangeFee
      */
-    public ChangeFeeFrame() {
+    private final Connection db;
+    public ChangeFeeFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -32,7 +35,7 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        newFeeLabel.setText("New Fee");
+        newFeeLabel.setText("New backendclasses.Fee");
 
         changeButton.setText("Change");
         changeButton.addActionListener(new java.awt.event.ActionListener() {

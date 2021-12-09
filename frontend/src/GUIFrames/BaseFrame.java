@@ -1,7 +1,8 @@
 package GUIFrames;
 
 import java.util.Objects;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author Anand
@@ -11,8 +12,10 @@ public class BaseFrame extends javax.swing.JFrame {
     /**
      * Creates new form BaseFrameUI
      */
-    public BaseFrame() {
+    private Connection db;
+    public BaseFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -45,7 +48,7 @@ public class BaseFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search backendclasses.Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jPanel1.setName(""); // NOI18N
 
@@ -63,7 +66,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         label4.setText("Furnished:");
 
-        label5.setText("City Quadrant:");
+        label5.setText("City backendclasses.Quadrant:");
 
         cityQuadrant.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SW", "NW", "NE", "SE" }));
 
@@ -150,7 +153,7 @@ public class BaseFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listProperties);
 
-        emailLandlord.setLabel("Email Landlord");
+        emailLandlord.setLabel("Email backendclasses.Landlord");
         emailLandlord.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,7 +197,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginFrameFrame().setVisible(true);
+        new LoginFrameFrame(db).setVisible(true);
     }
 
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {

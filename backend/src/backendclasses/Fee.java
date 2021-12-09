@@ -1,9 +1,9 @@
-//package Main;
+package backendclasses;//package Main;
 
 public class Fee {
     private double feeAmount;
     private int period;
-    Fee(double feeAmount, int period) {
+    public Fee(double feeAmount, int period) {
         this.feeAmount = feeAmount;
         this.period = period;
     }

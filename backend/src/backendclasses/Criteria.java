@@ -1,3 +1,5 @@
+package backendclasses;
+
 public class Criteria {
 
     private final String apartmentType;

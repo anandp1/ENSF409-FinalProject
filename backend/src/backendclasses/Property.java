@@ -1,4 +1,4 @@
-//package Main;
+package backendclasses;//package Main;
 
 public class Property {
     private final ApartmentType apartmentType;

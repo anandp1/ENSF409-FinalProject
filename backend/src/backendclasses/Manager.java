@@ -1,4 +1,7 @@
-import java.sql.Array;
+package backendclasses;
+
+import database.Database;
+
 import java.util.ArrayList;
 
 public class Manager {

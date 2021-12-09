@@ -5,7 +5,8 @@
 package GUIFrames;
 
 import javax.swing.JFrame;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author mubas
@@ -15,7 +16,8 @@ public class DisplayTableFrame extends javax.swing.JFrame {
     /**
      * Creates new form DisplayTable
      */
-    public DisplayTableFrame() {
+    private final Connection db;
+    public DisplayTableFrame(Connection db) {
         initComponents();
         changeFeeButton.setVisible(false);
         changeListingButton.setVisible(false);
@@ -23,6 +25,7 @@ public class DisplayTableFrame extends javax.swing.JFrame {
         periodLabel.setVisible(false);
         periodEntry.setVisible(false);
         createSummaryReportButton.setVisible(false);
+        this.db = db;
     }
 
     /**
@@ -86,14 +89,14 @@ public class DisplayTableFrame extends javax.swing.JFrame {
         displayList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(displayList);
 
-        changeListingButton.setText("Change Listing Status");
+        changeListingButton.setText("Change backendclasses.Listing Status");
         changeListingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeListingButtonActionPerformed(evt);
             }
         });
 
-        changeFeeButton.setText("Change Fee");
+        changeFeeButton.setText("Change backendclasses.Fee");
         changeFeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeFeeButtonActionPerformed(evt);
@@ -250,21 +253,21 @@ public class DisplayTableFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void changeListingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeListingButtonActionPerformed
-        JFrame frame =new ChangeListingStatusFrame();
+        JFrame frame =new ChangeListingStatusFrame(db);
         frame.setVisible(true);
     }//GEN-LAST:event_changeListingButtonActionPerformed
 
     private void changeFeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFeeButtonActionPerformed
-        JFrame frame = new ChangeFeeFrame();
+        JFrame frame = new ChangeFeeFrame(db);
         frame.setVisible(true);
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-        JFrame frame = new SummaryReportFrame();
+        JFrame frame = new SummaryReportFrame(db);
         frame.setVisible(true); // GUI gui = new GUI() as well
     }//GEN-LAST:event_createSummaryReportButtonActionPerformed
     private void changePeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame frame = new ChangePeriodFrame();
+        JFrame frame = new ChangePeriodFrame(db);
         frame.setVisible(true);
     }
     /**

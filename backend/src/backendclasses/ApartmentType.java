@@ -1,3 +1,5 @@
+package backendclasses;
+
 public enum ApartmentType {
     ATTACHED(1), DETACHED(2), TOWNHOUSE(3);
 

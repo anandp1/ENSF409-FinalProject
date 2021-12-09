@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author mubas
@@ -13,8 +14,10 @@ public class SummaryReportFrame extends javax.swing.JFrame {
     /**
      * Creates new form SummaryReport
      */
-    public SummaryReportFrame() {
+    private final Connection db;
+    public SummaryReportFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -78,8 +81,8 @@ public class SummaryReportFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-this.setVisible(false);
-this.dispose();// TODO add your handling code here:
+        this.setVisible(false);
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_exitButtonActionPerformed
 
     /**

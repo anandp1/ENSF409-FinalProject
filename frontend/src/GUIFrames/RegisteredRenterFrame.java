@@ -6,7 +6,8 @@ package GUIFrames;
 
 import javax.swing.*;
 import java.util.Objects;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author Anand
@@ -14,10 +15,12 @@ import java.util.Objects;
 public class RegisteredRenterFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form RegisteredRenter
+     * Creates new form backendclasses.RegisteredRenter
      */
-    public RegisteredRenterFrame() {
+    private final Connection db;
+    public RegisteredRenterFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -60,7 +63,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search backendclasses.Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         label1.setText("Apartment Type:");
 
@@ -68,7 +71,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         label3.setText("# of Bathrooms:");
 
-        label4.setText("City Quadrant:");
+        label4.setText("City backendclasses.Quadrant:");
 
         apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
 
@@ -157,7 +160,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(searchList);
 
-        emailButton.setLabel("Email Landlord");
+        emailButton.setLabel("Email backendclasses.Landlord");
         emailButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 emailButtonMouseClicked(evt);
@@ -224,7 +227,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrame().setVisible(true);
+        new BaseFrame(db).setVisible(true);
     }
 
     private void unsubscribeButtonMouseClicked(java.awt.event.MouseEvent evt) {

@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
-
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author mubas
@@ -13,8 +14,10 @@ public class ChangePeriodFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChangePeriod
      */
-    public ChangePeriodFrame() {
+    private final Connection db;
+    public ChangePeriodFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /**

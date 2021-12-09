@@ -1,5 +1,6 @@
-//package Main;
-import java.sql.*;
+package backendclasses;//package Main;
+import database.Database;
+
 import java.util.ArrayList;
 
 public class Landlord {
@@ -42,8 +43,8 @@ public class Landlord {
       
       /////////
       // Jett's code, incomplete:
-    //   if(properties.get(index).getListing().getListingState()==State.SUSPENDED) {
-    //     	properties.get(index).getListing().setListingState(db, State.ACTIVE, properties.get(index).getPropertyID());
+    //   if(properties.get(index).getListing().getListingState()==backendclasses.State.SUSPENDED) {
+    //     	properties.get(index).getListing().setListingState(db, backendclasses.State.ACTIVE, properties.get(index).getPropertyID());
     //     }
         return true;
     }

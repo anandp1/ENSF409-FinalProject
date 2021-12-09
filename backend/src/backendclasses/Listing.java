@@ -1,15 +1,13 @@
-//package Main;
+package backendclasses;//package Main;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import database.Database;
 
 public class Listing {
     private State listingState;
     private Fee fee;
     private final Database db;
     private int daysCount;
-    Listing(State listingState, Fee fee, int daysCount, Database db) {
+    public Listing(State listingState, Fee fee, int daysCount, Database db) {
         this.listingState = listingState;
         this.fee = fee;
         this.db = db;

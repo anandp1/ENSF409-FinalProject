@@ -2,6 +2,8 @@
 
 package GUIFrames;
 
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author Anand
@@ -9,8 +11,10 @@ package GUIFrames;
 public class LoginFrameFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    public LoginFrameFrame() {
+    private final Connection db;
+    public LoginFrameFrame(Connection db) {
         initComponents();
+        this.db = db;
     }
 
     /** This method is called from within the constructor to
@@ -124,7 +128,7 @@ public class LoginFrameFrame extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new RegisterPageFrame().setVisible(true);
+        new RegisterPageFrame(db).setVisible(true);
 
     }
 
@@ -141,14 +145,14 @@ public class LoginFrameFrame extends javax.swing.JFrame {
         // else
             // depending on who they are show the gui frame
         this.dispose();
-        new DisplayTableFrame().setVisible(true);
+        new DisplayTableFrame(db).setVisible(true);
         // new RegisteredRenterFrame().setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrame().setVisible(true);
+        new BaseFrame(db).setVisible(true);
     }
 
     /**
