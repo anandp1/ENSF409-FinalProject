@@ -348,14 +348,14 @@ public class ManagerFrame extends javax.swing.JFrame {
         else {
             String selectedProperty = displayList.getSelectedValue();
             StringBuilder propertyID = new StringBuilder();
-            for(int i = 12; i < selectedProperty.length(); i++){
-                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+            for(int i = 18; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '<' || selectedProperty.charAt(i) == 'A'){
                     break;
                 }
                 propertyID.append(String.valueOf(selectedProperty.charAt(i)));
 
             }
-
+            System.out.println("propertyID: " + propertyID.toString());
             JFrame frame =new ChangeListingStatusFrame(db, Integer.valueOf(propertyID.toString()));
             frame.setVisible(true);
         }
@@ -369,8 +369,8 @@ public class ManagerFrame extends javax.swing.JFrame {
         else {
             String selectedProperty = displayList.getSelectedValue();
             StringBuilder propertyID = new StringBuilder();
-            for(int i = 12; i < selectedProperty.length(); i++){
-                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+            for(int i = 18; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '<' || selectedProperty.charAt(i) == 'A'){
                     break;
                 }
                 propertyID.append(String.valueOf(selectedProperty.charAt(i)));
@@ -400,8 +400,8 @@ public class ManagerFrame extends javax.swing.JFrame {
         else {
             String selectedProperty = displayList.getSelectedValue();
             StringBuilder propertyID = new StringBuilder();
-            for(int i = 12; i < selectedProperty.length(); i++){
-                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+            for(int i = 18; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '<' || selectedProperty.charAt(i) == 'A'){
                     break;
                 }
                 propertyID.append(String.valueOf(selectedProperty.charAt(i)));
