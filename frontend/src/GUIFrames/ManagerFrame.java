@@ -5,6 +5,8 @@
 package GUIFrames;
 
 import javax.swing.JFrame;
+
+import backendclasses.Manager;
 import database.Database;
 import java.sql.*;
 /**
@@ -18,6 +20,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private final Database db;
     private final Integer ID;
+    Manager manager;
     public ManagerFrame(Database db, String ID) {
         initComponents();
         changeFeeButton.setVisible(false);
@@ -28,6 +31,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         createSummaryReportButton.setVisible(false);
         this.db = db;
         this.ID = Integer.valueOf(ID);
+        manager = new Manager(db);
     }
 
     /**

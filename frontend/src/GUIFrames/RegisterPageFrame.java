@@ -15,7 +15,7 @@ public class RegisterPageFrame extends javax.swing.JFrame {
      * Creates new form RegisterPage
      */
     private final Database db;
-    private final Integer ID;
+
     public RegisterPageFrame(Database db) {
         initComponents();
         this.db = db;

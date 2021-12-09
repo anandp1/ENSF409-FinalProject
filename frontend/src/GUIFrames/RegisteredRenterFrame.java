@@ -5,7 +5,12 @@
 package GUIFrames;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import backendclasses.Criteria;
+import backendclasses.Property;
+import backendclasses.Quadrant;
 import database.Database;
 import java.sql.*;
 /**
@@ -244,11 +249,35 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         Integer numBedrooms = Integer.valueOf(Objects.requireNonNull(numBed.getSelectedItem()).toString());
         String cityQuad = Objects.requireNonNull(cityQuadrant.getSelectedItem()).toString();
         boolean furnishedState = furnishedBool.getState();
-        // call method to array of all properties that match this
-        // display the property in the propertiesText
 
+        // TO DO:
         // save this criteria of the renter into the database
         // display any new criteria in the notifications text
+        // Change code using the Renter class
+
+        Criteria criteria = new Criteria(apartmentText, numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
+        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
+        if(matched.isEmpty()) {
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Matches"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            String[] propertyDisplay = new String[matched.size()];
+            int i = 0;
+            for(Property properties : matched) {
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                        + properties.getPropertyAddress();
+                i++;
+            }
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                //                String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
 
 
     }

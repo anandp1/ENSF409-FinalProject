@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Manager {
     private ArrayList<Property> allProperties;
     private final Database db;
-    Manager(Database db) {
+    public Manager(Database db) {
         this.db = db;
     }
     public ArrayList<Property> getProperties() {
