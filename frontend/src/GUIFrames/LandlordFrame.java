@@ -4,6 +4,7 @@
  */
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -40,7 +41,7 @@ public class LandlordFrame extends javax.swing.JPanel {
         furnishedBox = new javax.swing.JCheckBox();
         registerButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        propertiesList = new javax.swing.JList<>();
+        propertiesBox = new javax.swing.JComboBox<>();
         feeButton = new javax.swing.JButton();
         registerLabel = new javax.swing.JLabel();
 
@@ -74,14 +75,15 @@ public class LandlordFrame extends javax.swing.JPanel {
             }
         });
 
-        ArrayList<Property> places = currentLogin.getProperty();
-        DefaultListModel list = new DefaultListModel();
-        for (int i = 0; i < places.length(); i++) {
-            list.addElement(places.getPropertyAddress());
+        ArrayList<Property> properties = currentLogin.getProperty();
+        ArrayList<String> places = new ArrayList<String>();
+        for (int i = 0; i < properties.size(); i++) {
+            places.add(properties.get(i).getPropertyAddress());
         }
-        propertiesList = new JList(list);
+        DefaultComboBoxModel list = new DefaultComboBoxModel();
+        propertiesBox = new JComboBox(list);
 
-        jScrollPane1.setViewportView(propertiesList);
+        jScrollPane1.setViewportView(propertiesBox);
 
         feeButton.setText("Pay fee");
         feeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -163,15 +165,16 @@ public class LandlordFrame extends javax.swing.JPanel {
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String type = apartmentBox.getItemAt(apartmentBox.getSelectedIndex());
+        String location = addressBox.getText();
         int numBed = bedroomBox.getSelectedIndex() + 1;
         int numBath = bathroomBox.getSelectedIndex() + 1;
         String quadrant = quadrantBox.getItemAt(quadrantBox.getSelectedIndex());
-        Property toRegister = new Property(type, numBed, numBath, quadrant, checkbox, "Empty for now");
+        Property toRegister = new Property(type, numBed, numBath, quadrant, checkbox, location);
         currentLogin.registerProperty(toRegister);
     }
 
     private void feeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
+        currentLogin.processPayment(propertiesList.getSelectedIndex());
     }
 
     // Variables declaration - do not modify
@@ -187,7 +190,7 @@ public class LandlordFrame extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JCheckBox furnishedBox;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> propertiesList;
+    private javax.swing.JComboBox<String> propertiesBox;
     private javax.swing.JComboBox<String> quadrantBox;
     private javax.swing.JLabel quadrantLabel;
     private javax.swing.JButton registerButton;
