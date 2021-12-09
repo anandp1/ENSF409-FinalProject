@@ -34,7 +34,7 @@ public class RegisteredRenter {
          */
         return new ArrayList<Criteria>();
     }
-    public void removeCriteria() {
+    public void removeCriteria(Criteria criteria) {
         // unsubscribes that criteria
         // removes the renterID from that criteria
     }
