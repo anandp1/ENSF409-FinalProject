@@ -146,7 +146,7 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
-            if(user.substring(user.length()-1).equals("r")) {
+            if(user.substring(user.length()-1).equals("m")) {
                 this.dispose();
                 new ManagerFrame(db, user.substring(0, user.length()-1)).setVisible(true);
             }
@@ -154,7 +154,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 this.dispose();
                 // ADD landlord
             }
-            if(user.substring(user.length()-1).equals("m")) {
+            if(user.substring(user.length()-1).equals("r")) {
                 this.dispose();
                 new RegisteredRenterFrame(db, user.substring(0, user.length()-1)).setVisible(true);
             }
