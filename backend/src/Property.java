@@ -10,7 +10,7 @@ public class Property {
     private Listing listing;
     private int propertyID;
     private final String propertyAddress;
-    Property(String apartmentType, Integer numBed, Integer numBath, String quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
+    Property(String apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, Listing listing, int propertyID, String propertyAddress) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;
@@ -20,9 +20,7 @@ public class Property {
         this.propertyID = propertyID;
         this.propertyAddress = propertyAddress;
     }
-    public int getPropertyID() {
-    	return property_id;
-    }
+ 
     public String getApartmentType() {
         return apartmentType;
     }

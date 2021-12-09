@@ -1,4 +1,3 @@
-
 package GUIFrames;
 
 import java.util.Objects;

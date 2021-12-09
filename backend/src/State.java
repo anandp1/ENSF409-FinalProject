@@ -1,4 +1,4 @@
-package Main;
+
 
 public enum State {
 	ACTIVE(1), RENTED(2), CANCELLED(3), SUSPENDED(4);

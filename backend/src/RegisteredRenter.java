@@ -25,6 +25,8 @@ public class RegisteredRenter {
     }
     public ArrayList<Criteria> checkSubCriteria() {
         // ONLY if subscription state is set to true
+        // add to new database table
+        // database table has which renters are subscribed to this criteria
         /*
         We check the criteria against every single property if any of them matches
         AND it is marked as a 1 in the 'isNew' column then we add it to the arraylist and return

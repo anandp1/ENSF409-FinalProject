@@ -42,9 +42,9 @@ public class Landlord {
       
       /////////
       // Jett's code, incomplete:
-      if(properties.get(index).getListing().getListingState()==State.SUSPENDED) {
-        	properties.get(index).getListing().setListingState(db, State.ACTIVE, properties.get(index).getPropertyID());
-        }
+    //   if(properties.get(index).getListing().getListingState()==State.SUSPENDED) {
+    //     	properties.get(index).getListing().setListingState(db, State.ACTIVE, properties.get(index).getPropertyID());
+    //     }
         return true;
     }
     public ArrayList<Property> getProperty() {
