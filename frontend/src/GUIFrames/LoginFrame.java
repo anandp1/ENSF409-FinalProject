@@ -3,16 +3,18 @@
 package GUIFrames;
 
 import database.Database;
-import java.sql.*;
+
+import javax.swing.*;
+
 /**
  *
  * @author Anand
  */
-public class LoginFrameFrame extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
     private final Database db;
-    public LoginFrameFrame(Database db) {
+    public LoginFrame(Database db) {
         initComponents();
         this.db = db;
     }
@@ -139,14 +141,26 @@ public class LoginFrameFrame extends javax.swing.JFrame {
         System.out.println("email " + email);
         System.out.println("password: " + password);
         // check who it is and return a string saying who it is if empty then they are not registered
+        String user = db.getUserType(email, password);
+        if(user == null) {
+            JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            if(user.substring(user.length()-1).equals("r")) {
+                this.dispose();
+                new ManagerFrame(db, user.substring(0, user.length()-1)).setVisible(true);
+            }
+            if(user.substring(user.length()-1).equals("l")) {
+                this.dispose();
+                // ADD landlord
+            }
+            if(user.substring(user.length()-1).equals("m")) {
+                this.dispose();
+                new RegisteredRenterFrame(db, user.substring(0, user.length()-1)).setVisible(true);
+            }
 
-        // if invalid show this
-            // JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
-        // else
-            // depending on who they are show the gui frame
-        this.dispose();
-        new DisplayTableFrame(db).setVisible(true);
-        // new RegisteredRenterFrame().setVisible(true);
+        }
+
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {

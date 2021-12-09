@@ -4,7 +4,7 @@
  */
 package GUIFrames;
 import database.Database;
-import java.sql.*;
+
 /**
  *
  * @author Anand
@@ -15,10 +15,13 @@ public class RegisterPageFrame extends javax.swing.JFrame {
      * Creates new form RegisterPage
      */
     private final Database db;
+    private final Integer ID;
     public RegisterPageFrame(Database db) {
         initComponents();
         this.db = db;
+
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,13 +151,13 @@ public class RegisterPageFrame extends javax.swing.JFrame {
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
         this.dispose();
-        new LoginFrameFrame(db).setVisible(true);
+        new LoginFrame(db).setVisible(true);
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginFrameFrame(db).setVisible(true);
+        new LoginFrame(db).setVisible(true);
     }
 
 //    /**

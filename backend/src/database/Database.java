@@ -167,6 +167,10 @@ public class Database {
        5. (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
 
      */
+    /*
+    Anand's progress comments.
+
+     */
 
 
     // @Jett

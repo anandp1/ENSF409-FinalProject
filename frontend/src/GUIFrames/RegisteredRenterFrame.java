@@ -18,9 +18,11 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
      * Creates new form backendclasses.RegisteredRenter
      */
     private final Database db;
-    public RegisteredRenterFrame(Database db) {
+    private final Integer ID;
+    public RegisteredRenterFrame(Database db, String ID) {
         initComponents();
         this.db = db;
+        this.ID = Integer.valueOf(ID);
     }
 
     /**

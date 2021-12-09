@@ -11,13 +11,14 @@ import java.sql.*;
  *
  * @author mubas
  */
-public class DisplayTableFrame extends javax.swing.JFrame {
+public class ManagerFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form DisplayTable
      */
     private final Database db;
-    public DisplayTableFrame(Database db) {
+    private final Integer ID;
+    public ManagerFrame(Database db, String ID) {
         initComponents();
         changeFeeButton.setVisible(false);
         changeListingButton.setVisible(false);
@@ -26,6 +27,7 @@ public class DisplayTableFrame extends javax.swing.JFrame {
         periodEntry.setVisible(false);
         createSummaryReportButton.setVisible(false);
         this.db = db;
+        this.ID = Integer.valueOf(ID);
     }
 
     /**

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import database.Database;
 import backendclasses.*;
-import java.sql.*;
+
 /**
  *
  * @author Anand
@@ -199,7 +199,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginFrameFrame(db).setVisible(true);
+        new LoginFrame(db).setVisible(true);
     }
 
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
