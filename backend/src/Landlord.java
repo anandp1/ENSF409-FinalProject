@@ -5,32 +5,15 @@ import java.util.ArrayList;
 public class Landlord {
     private final ArrayList<Property> properties;
     private final String landlordName;
-    Database db;
+    private final Database db;
     Landlord(String landlordName, ArrayList<Property> properties, Database db) {
         this.landlordName = landlordName;
         this.properties = properties;
-        this.db = db
+        this.db = db;
     }
-    public void registerProperty(Connection db, Property property) {
+    public void registerProperty(Property property) {
         // requires that the property doesn't already exist in the database
-    	try {
-			String query = "INSERT INTO Property (Landlord_login_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
-			PreparedStatement myStmt = db.prepareStatement(query);
-	            
-			myStmt.setInt(1, landlordID);
-			myStmt.setString(2, property.getApartmentType());
-			myStmt.setInt(3, property.getNumBed());
-			myStmt.setInt(4, property.getNumBath());
-			myStmt.setInt(5, property.getQuadrant().getInt());
-			myStmt.setInt(6, property.getIsFurnished() ? 1:0);
-			myStmt.executeUpdate();
-	            
-			myStmt.close();
-	            
-		} catch (SQLException ex) {
-			System.err.println("\nError in Landlord RegisterProperty\n");
-			ex.printStackTrace();
-		}
+    	db.addProperty(landlordName, property);
     }
     public void messageRenter(String message, int renterID) {
         // save message for the renterID in the database

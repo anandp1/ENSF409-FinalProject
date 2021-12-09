@@ -7,11 +7,12 @@ import java.sql.SQLException;
 public class Listing {
     private State listingState;
     private Fee fee;
-
+    private final Database db;
     private int daysCount;
-    Listing(State listingState, Fee fee, int daysCount) {
+    Listing(State listingState, Fee fee, int daysCount, Database db) {
         this.listingState = listingState;
         this.fee = fee;
+        this.db = db;
     }
     public void addDay() {
         daysCount++;
@@ -20,18 +21,8 @@ public class Listing {
         // might change
     	// I have left this for now
     }
-    public void setListingState(Connection db, State listingState, int propertyID) {
-    	try {
-			String query = "UPDATE Listing SET listingState = " + listingState.getInt() + " WHERE Property_id = " + propertyID;
-			PreparedStatement myStmt = db.prepareStatement(query);
-			myStmt.executeUpdate();
-	            
-			myStmt.close();
-	            
-		} catch (SQLException ex) {
-			System.err.println("\nError in Listing setListingState\n");
-			ex.printStackTrace();
-		}
+    public void setListingState(State listingState, int propertyID) {
+    	db.setListingState(listingState, propertyID);
     }
     public State getListingState() {
         return listingState;

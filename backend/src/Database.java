@@ -47,7 +47,7 @@ public class Database {
     // (landlordID) <-- function that returns properties owned by landlord
                          // return a ArrayList<Property> with all the properties
                          // returns any mail that landlord has if the id is of a landlord
-    // (Property, landlordId) <-- saves property into properties in the database with that landlord id
+   // DONE  // (Property, landlordId) <-- saves property into properties in the database with that landlord id
                                     // set fee and period to -1 manually because it is not set yet (manager sets it)
     // (Property, landlordId) <-- turns property associsated with that landlordid into active only if its currently suspended if it
                                     // is already active return -1 to indicate error
@@ -64,5 +64,40 @@ public class Database {
     // (PropertyID, period) <-- updates period of that property
     // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
                             // return as ArrayList<String>
+
+
+    public void addProperty(String landlordName, Property property) {
+        try {
+            String query = "INSERT INTO Property (Landlord_login_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setString(1, landlordName);
+            myStmt.setString(2, property.getApartmentType());
+            myStmt.setInt(3, property.getNumBed());
+            myStmt.setInt(4, property.getNumBath());
+            myStmt.setInt(5, property.getQuadrant().getInt());
+            myStmt.setInt(6, property.getIsFurnished() ? 1:0);
+            myStmt.executeUpdate();
+
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            System.err.println("\nError in Landlord RegisterProperty\n");
+            ex.printStackTrace();
+        }
+    }
+    public void setListingState(State listingState, int propertyID) {
+        try {
+            String query = "UPDATE Listing SET listingState = " + listingState.getInt() + " WHERE Property_id = " + propertyID;
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+            myStmt.executeUpdate();
+
+            myStmt.close();
+
+        } catch (SQLException ex) {
+            System.err.println("\nError in Listing setListingState\n");
+            ex.printStackTrace();
+        }
+    }
 
 }
