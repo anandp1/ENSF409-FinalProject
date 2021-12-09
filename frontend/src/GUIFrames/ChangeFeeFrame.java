@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
+import backendclasses.Fee;
 import database.Database;
+
+import javax.swing.*;
 import java.sql.*;
 /**
  *
@@ -15,9 +18,13 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
      * Creates new form ChangeFee
      */
     private final Database db;
-    public ChangeFeeFrame(Database db) {
+    private final Integer period;
+    private final Integer propertyID;
+    public ChangeFeeFrame(Database db, Integer period, Integer propertyID) {
         initComponents();
         this.db = db;
+        this.period = period;
+        this.propertyID = propertyID;
     }
 
     /**
@@ -76,8 +83,16 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-       this.setVisible(false);
-       this.dispose();
+        if(newFeeEntry.getText() == null) {
+            JOptionPane.showMessageDialog(this, "You have not entered anything!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            Fee fee = new Fee(Double.parseDouble(newFeeEntry.getText()), period);
+            db.updatePropertyFee(propertyID, fee);
+            this.setVisible(false);
+            this.dispose();
+        }
+
     }//GEN-LAST:event_changeButtonActionPerformed
 
     /**

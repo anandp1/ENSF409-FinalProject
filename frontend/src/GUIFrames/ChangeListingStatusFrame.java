@@ -4,8 +4,13 @@
  */
 package GUIFrames;
 import backendclasses.Manager;
+import backendclasses.State;
 import database.Database;
+
+import javax.swing.*;
 import java.sql.*;
+import java.util.Objects;
+
 /**
  *
  * @author mubas
@@ -16,10 +21,11 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
      * Creates new form ChangeListingStatus
      */
     private final Database db;
-
-    public ChangeListingStatusFrame(Database db) {
+    private final Integer propertyID;
+    public ChangeListingStatusFrame(Database db, Integer propertyID) {
         initComponents();
         this.db = db;
+        this.propertyID = propertyID;
 
     }
 
@@ -100,9 +106,37 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
+//        rentedCheckbox = new javax.swing.JCheckBox();
+//        cancelledCheckBox = new javax.swing.JCheckBox();
+//        suspendedCheckbox = new javax.swing.JCheckBox();
+//        activeCheckbox = new javax.swing.JCheckBox();
+        if(checkBoxGroup.getButtonCount() > 1) {
+            checkBoxGroup.clearSelection();
+            JOptionPane.showMessageDialog(this, "You selected more than one option!", "Error", JOptionPane.ERROR_MESSAGE);
 
-        this.setVisible(false);
-        this.dispose();
+        }
+        else if(checkBoxGroup.getButtonCount() < 1) {
+            checkBoxGroup.clearSelection();
+            JOptionPane.showMessageDialog(this, "You have not selected anything!", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+        else {
+            String state = "";
+            if (cancelledCheckBox.isSelected()) {
+                state = "cancelled";
+            } else if (rentedCheckbox.isSelected()) {
+                state = "rented";
+            } else if (suspendedCheckbox.isSelected()) {
+                state = "suspended";
+            } else if (activeCheckbox.isSelected()) {
+                state = "active";
+            }
+            db.setListingState(Objects.requireNonNull(State.fromInt(State.fromString(state))), propertyID);
+
+            this.setVisible(false);
+            this.dispose();
+        }
+
     }//GEN-LAST:event_changeButtonActionPerformed
 
     /**

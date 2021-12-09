@@ -1,5 +1,7 @@
 package backendclasses;
 
+import java.util.Locale;
+
 public enum ApartmentType {
     ATTACHED(1), DETACHED(2), TOWNHOUSE(3);
 
@@ -24,7 +26,7 @@ public enum ApartmentType {
         return null;
     }
     static public int fromString(String i) {
-        switch(i) {
+        switch(i.toUpperCase()) {
             case "ATTACHED":
                 return ATTACHED.getInt();
             case "DETACHED":

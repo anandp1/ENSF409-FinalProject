@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
+import backendclasses.Fee;
 import database.Database;
+
+import javax.swing.*;
 import java.sql.*;
 /**
  *
@@ -15,9 +18,13 @@ public class ChangePeriodFrame extends javax.swing.JFrame {
      * Creates new form ChangePeriod
      */
     private final Database db;
-    public ChangePeriodFrame(Database db) {
+    private final Double feeAmount;
+    private final Integer propertyID;
+    public ChangePeriodFrame(Database db, Double fee, Integer propertyID) {
         initComponents();
         this.db = db;
+        this.feeAmount = fee;
+        this.propertyID =propertyID;
     }
 
     /**
@@ -74,8 +81,15 @@ public class ChangePeriodFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-      this.setVisible(false);
-      this.dispose();   
+        if(PeriodEntry.getText() == null) {
+            JOptionPane.showMessageDialog(this, "You have not entered anything!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            Fee fee = new Fee(feeAmount, Integer.valueOf(PeriodEntry.getText()));
+            db.updatePropertyFee(propertyID, fee);
+            this.setVisible(false);
+            this.dispose();
+        }
 // TODO add your handling code here:
     }//GEN-LAST:event_SaveButtonActionPerformed
 

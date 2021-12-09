@@ -236,16 +236,16 @@ public class BaseFrame extends javax.swing.JFrame {
                 System.out.println(propertyDisplay[i]);
                 i++;
             }
-            DefaultListModel<String> v = new DefaultListModel();
-            for(String val : propertyDisplay) {
-                v.addElement(val);
-            }
-            listProperties.setModel(v);
-//            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
-// //               String[] strings = { "No Matches", "NewItem" };
-//                public int getSize() { return propertyDisplay.length; }
-//                public String getElementAt(int i) { return propertyDisplay[i]; }
-//            });
+//            DefaultListModel<String> v = new DefaultListModel();
+//            for(String val : propertyDisplay) {
+//                v.addElement(val);
+//            }
+//            listProperties.setModel(v);
+            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
+ //               String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
         }
 
 

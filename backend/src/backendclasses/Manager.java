@@ -24,13 +24,17 @@ public class Manager {
         // calls database to return all renters name
         return db.getAllLandlordNames();
     }
-    public void updateFee(int propertyID, double fee) {
+    public void updateFee(int propertyID, double feeAmount, int period) {
         // get property that matches this name
         // update fee of this property name in the database
+        Fee fee = new Fee(feeAmount, period);
+        db.updatePropertyFee(propertyID, fee);
     }
-    public void updatePeriod(int propertyID, int period) {
+    public void updatePeriod(int propertyID, double feeAmount, int period) {
         // get property that matches this name
         // update the period in the database with the same property name
+        Fee fee = new Fee(feeAmount, period);
+        db.updatePropertyFee(propertyID, fee);
     }
     public void setSummaryInfo(int period) {
         // call database to get all properties that match this period

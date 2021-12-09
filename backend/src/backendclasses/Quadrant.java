@@ -1,5 +1,7 @@
 package backendclasses;
 
+import java.util.Locale;
+
 public enum Quadrant {
 	SW(1), NW(2), NE(3), SE(4);
 
@@ -28,7 +30,7 @@ public enum Quadrant {
 	}
 
 	static public int fromString(String i) {
-		switch(i) {
+		switch(i.toLowerCase()) {
 			case "SW":
 				return SW.getInt();
 			case "NW":

@@ -4,12 +4,13 @@
  */
 package GUIFrames;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import backendclasses.*;
 import database.Database;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -23,6 +24,9 @@ public class ManagerFrame extends javax.swing.JFrame {
     private final Database db;
     private final Integer ID;
     Manager manager;
+    private HashMap<Integer, Double> propertyFee = new HashMap<Integer, Double>();
+    private HashMap<Integer, Integer> propertyPeriod = new HashMap<Integer, Integer>();
+
     public ManagerFrame(Database db, String ID) {
         initComponents();
         changeFeeButton.setVisible(false);
@@ -262,6 +266,8 @@ public class ManagerFrame extends javax.swing.JFrame {
                     "\nFee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "\nPeriod: " +
                             String.valueOf(properties.getListing().getFee().getPeriod()) + "\nListing State: " +
                     State.fromInt(properties.getListing().getListingState().getInt());
+                    propertyFee.put(properties.getPropertyID(), properties.getListing().getFee().getFeeAmount());
+                    propertyPeriod.put(properties.getPropertyID(), properties.getListing().getFee().getPeriod());
                     i++;
                 }
                 displayList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -336,13 +342,44 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void changeListingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeListingButtonActionPerformed
-        JFrame frame =new ChangeListingStatusFrame(db);
-        frame.setVisible(true);
+        if(displayList.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            String selectedProperty = displayList.getSelectedValue();
+            StringBuilder propertyID = new StringBuilder();
+            for(int i = 12; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+
+            JFrame frame =new ChangeListingStatusFrame(db, Integer.valueOf(propertyID.toString()));
+            frame.setVisible(true);
+        }
+
     }//GEN-LAST:event_changeListingButtonActionPerformed
 
     private void changeFeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFeeButtonActionPerformed
-        JFrame frame = new ChangeFeeFrame(db);
-        frame.setVisible(true);
+        if(displayList.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            String selectedProperty = displayList.getSelectedValue();
+            StringBuilder propertyID = new StringBuilder();
+            for(int i = 12; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+            Integer period = propertyPeriod.get(Integer.valueOf(propertyID.toString()));
+            JFrame frame =new ChangeFeeFrame(db, period, Integer.valueOf(propertyID.toString()));
+            frame.setVisible(true);
+        }
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
@@ -350,8 +387,23 @@ public class ManagerFrame extends javax.swing.JFrame {
         frame.setVisible(true); // GUI gui = new GUI() as well
     }//GEN-LAST:event_createSummaryReportButtonActionPerformed
     private void changePeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        JFrame frame = new ChangePeriodFrame(db);
-        frame.setVisible(true);
+        if(displayList.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            String selectedProperty = displayList.getSelectedValue();
+            StringBuilder propertyID = new StringBuilder();
+            for(int i = 12; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == '\n' || selectedProperty.charAt(i) == 'A'){
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+            Double fee = Double.valueOf(propertyPeriod.get(Integer.valueOf(propertyID.toString())));
+            JFrame frame =new ChangePeriodFrame(db, fee, Integer.valueOf(propertyID.toString()));
+            frame.setVisible(true);
+        }
     }
     /**
      * @param args the command line arguments

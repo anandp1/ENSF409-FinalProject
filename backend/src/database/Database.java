@@ -107,7 +107,7 @@ public class Database {
         try {
             Statement stmt = dbConnect.createStatement();
             results = stmt.executeQuery("SELECT * FROM Listing AS L, Property AS P WHERE L.Property_id = P.Property_id AND " +
-                    "P.Apartment_type = " + criteria.getApartmentType() + " AND " +
+                    "P.Apartment_type = " + criteria.getApartmentType().getInt() + " AND " +
                     "P.NoBedrooms >= " + criteria.getNumBed() + " AND " +
                     "P.NoBathrooms >= " + criteria.getNumBath() + " AND " +
                     "P.Quadrant = " + criteria.getQuadrant().getInt() + " AND " +
@@ -115,7 +115,7 @@ public class Database {
                     "L.ListingState = 1");
 
             while(results.next()) {
-                Fee tempFee = new Fee(results.getDouble("Login_id"), results.getInt("Period"));
+                Fee tempFee = new Fee(results.getDouble("FeeAmount"), results.getInt("Period"));
                 Listing tempListing = new Listing(State.ACTIVE, tempFee, results.getInt("DayCount"), this);
                 Property tempProperty = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
                 returnValue.add(tempProperty);
@@ -151,7 +151,7 @@ public class Database {
             }
             return null;
         } catch (Exception e) {
-            System.err.println("\nError in Database getAllMatchingProperties\n");
+            System.err.println("\nError in Database getUserType\n");
             e.printStackTrace();
             return null;
         }
@@ -352,7 +352,7 @@ public class Database {
        9. (RenterId) <-- returns subscriptionState of the renter as a boolean
        10. (Criteria criteria) <-- adds criteria to the database
        11. (PropertyID, fee) <-- updates fee of that property
-       12.
+       12. (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
      */
 
 
@@ -375,13 +375,13 @@ public class Database {
             // (Criteria criteria) <-- adds criteria to the database
             // (PropertyID, fee) <-- updates fee of that property
     // (PropertyID, period) <-- updates period of that property
-    // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
+            // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
                     // return as ArrayList<String>
 
     // (landlordID) <-- returns any mail that landlord has if the id is of a landlord
     // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
 
-    // DONE  // (Property, landlordId) <-- saves property into properties in the database with that landlord id
+            // DONE  // (Property, landlordId) <-- saves property into properties in the database with that landlord id
                     // set fee and period to -1 manually because it is not set yet (manager sets it)
 
 
@@ -389,15 +389,13 @@ public class Database {
 
 
     // need to redo these to match the database attributes - will otherwise throw some errors
-    public void addProperty(int landlord_id, Property property) {
-        ///////////////////////// JETT
-        // need to also create a listing and set the default state to cancelled
+    public boolean addProperty(int landlord_id, Property property) {
         try {
             String query = "INSERT INTO Property (Landlord_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.setInt(1, landlord_id);
-            // myStmt.setString(2, property.getApartmentType()); it is a enum now.
+            myStmt.setInt(2, property.getApartmentType().getInt());
             myStmt.setInt(3, property.getNumBed());
             myStmt.setInt(4, property.getNumBath());
             myStmt.setInt(5, property.getQuadrant().getInt());
@@ -406,11 +404,55 @@ public class Database {
 
             myStmt.close();
 
+            return addListing(getMaxPropertyId(landlord_id), new Fee(-1, -1), -1, State.fromInt(3));
         } catch (SQLException ex) {
             System.err.println("\nError in Database addProperty\n");
             ex.printStackTrace();
+            return false;
         }
     }
+
+    private int getMaxPropertyId(int landlord_id) {
+        int returnValue = -1;
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select MAX(Property_id) FROM Property WHERE Landlord_id = " + landlord_id);
+
+            if(results.next()) {
+                returnValue = results.getInt("Property_id");
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getMaxPropertyId\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
+    public boolean addListing(int property_id, Fee fee, int dayCount, State listingState) {
+        try {
+            String query = "INSERT INTO Listing (Property_id, FeeAmount, Period, DayCount, ListingState) VALUES (?,?,?,?,?)";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setInt(1, property_id);
+            myStmt.setDouble(2, fee.getFeeAmount());
+            myStmt.setInt(3, fee.getPeriod());
+            myStmt.setInt(4, dayCount);
+            myStmt.setInt(5, listingState.getInt());
+            myStmt.executeUpdate();
+
+            myStmt.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("\nError in Database addListing\n");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public void setListingState(State listingState, int propertyID) {
         try {
             String query = "UPDATE Listing SET ListingState = " + listingState.getInt() + " WHERE Property_id = " + propertyID;
