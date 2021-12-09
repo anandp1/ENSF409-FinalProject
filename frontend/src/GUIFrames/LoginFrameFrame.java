@@ -11,8 +11,8 @@ import java.sql.*;
 public class LoginFrameFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    private final Connection db;
-    public LoginFrameFrame(Connection db) {
+    private final Database db;
+    public LoginFrameFrame(Database db) {
         initComponents();
         this.db = db;
     }

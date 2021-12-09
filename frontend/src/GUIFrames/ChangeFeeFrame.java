@@ -14,8 +14,8 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChangeFee
      */
-    private final Connection db;
-    public ChangeFeeFrame(Connection db) {
+    private final Database db;
+    public ChangeFeeFrame(Database db) {
         initComponents();
         this.db = db;
     }

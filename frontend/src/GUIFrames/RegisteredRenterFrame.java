@@ -17,8 +17,8 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     /**
      * Creates new form backendclasses.RegisteredRenter
      */
-    private final Connection db;
-    public RegisteredRenterFrame(Connection db) {
+    private final Database db;
+    public RegisteredRenterFrame(Database db) {
         initComponents();
         this.db = db;
     }

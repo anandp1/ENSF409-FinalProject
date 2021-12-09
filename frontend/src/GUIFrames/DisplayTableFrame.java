@@ -16,8 +16,8 @@ public class DisplayTableFrame extends javax.swing.JFrame {
     /**
      * Creates new form DisplayTable
      */
-    private final Connection db;
-    public DisplayTableFrame(Connection db) {
+    private final Database db;
+    public DisplayTableFrame(Database db) {
         initComponents();
         changeFeeButton.setVisible(false);
         changeListingButton.setVisible(false);

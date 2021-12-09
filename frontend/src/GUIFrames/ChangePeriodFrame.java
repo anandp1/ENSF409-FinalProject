@@ -14,8 +14,8 @@ public class ChangePeriodFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChangePeriod
      */
-    private final Connection db;
-    public ChangePeriodFrame(Connection db) {
+    private final Database db;
+    public ChangePeriodFrame(Database db) {
         initComponents();
         this.db = db;
     }

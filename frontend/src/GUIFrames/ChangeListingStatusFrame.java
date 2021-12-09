@@ -14,8 +14,8 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
     /**
      * Creates new form ChangeListingStatus
      */
-    private final Connection db;
-    public ChangeListingStatusFrame(Connection db) {
+    private final Database db;
+    public ChangeListingStatusFrame(Database db) {
         initComponents();
         this.db = db;
     }

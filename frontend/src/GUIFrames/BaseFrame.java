@@ -1,5 +1,6 @@
 package GUIFrames;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import database.Database;
 import backendclasses.*;
@@ -13,8 +14,8 @@ public class BaseFrame extends javax.swing.JFrame {
     /**
      * Creates new form BaseFrameUI
      */
-    private Connection db;
-    public BaseFrame(Connection db) {
+    private final Database db;
+    public BaseFrame(Database db) {
         initComponents();
         this.db = db;
     }
@@ -215,11 +216,29 @@ public class BaseFrame extends javax.swing.JFrame {
         // if returned list is empty set model to No Matches
         // else set it to all the matches
         // set new model with new listings
-        listProperties.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "No Matches", "NewItem" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
+        if(matched.isEmpty()) {
+            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Matches"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            String[] propertyDisplay = new String[matched.size()];
+            int i = 0;
+            for(Property properties : matched) {
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                        + properties.getPropertyAddress();
+                i++;
+            }
+            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
+//                String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
+
 
     }
 

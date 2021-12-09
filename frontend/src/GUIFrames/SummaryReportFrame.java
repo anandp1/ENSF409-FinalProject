@@ -14,8 +14,8 @@ public class SummaryReportFrame extends javax.swing.JFrame {
     /**
      * Creates new form SummaryReport
      */
-    private final Connection db;
-    public SummaryReportFrame(Connection db) {
+    private final Database db;
+    public SummaryReportFrame(Database db) {
         initComponents();
         this.db = db;
     }
