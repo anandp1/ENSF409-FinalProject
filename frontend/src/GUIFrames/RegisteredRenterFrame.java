@@ -8,9 +8,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import backendclasses.Criteria;
-import backendclasses.Property;
-import backendclasses.Quadrant;
+import backendclasses.*;
 import database.Database;
 import java.sql.*;
 /**
@@ -23,11 +21,14 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
      * Creates new form backendclasses.RegisteredRenter
      */
     private final Database db;
-    private final Integer ID;
+    private final Integer renterID;
+    private final RegisteredRenter registeredRenter;
     public RegisteredRenterFrame(Database db, String ID) {
         initComponents();
         this.db = db;
-        this.ID = Integer.valueOf(ID);
+        this.renterID = Integer.valueOf(ID);
+        this.registeredRenter = new RegisteredRenter(db.getSubscriptionState(renterID),
+                renterID, db);
     }
 
     /**
@@ -238,6 +239,17 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     }
 
     private void unsubscribeButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        boolean subState = db.getSubscriptionState(renterID);
+        if(subState) {
+            subState = false;
+            registeredRenter.setSubscriptionState(subState);
+            unsubscribeButton.setLabel("Subscribe");
+        }
+        else {
+            subState = true;
+            registeredRenter.setSubscriptionState(subState);
+            unsubscribeButton.setLabel("Unsubscribe");
+        }
         // TODO add your handling code here:
         // unsubcribes to all the criteria in the class for this renter
     }
@@ -255,29 +267,29 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         // display any new criteria in the notifications text
         // Change code using the Renter class
 
-//        Criteria criteria = new Criteria(apartmentText, numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
-//        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
-//        if(matched.isEmpty()) {
-//            searchList.setModel(new javax.swing.AbstractListModel<String>() {
-//                String[] strings = {"No Matches"};
-//                public int getSize() { return strings.length; }
-//                public String getElementAt(int i) { return strings[i]; }
-//            });
-//        }
-//        else {
-//            String[] propertyDisplay = new String[matched.size()];
-//            int i = 0;
-//            for(Property properties : matched) {
-//                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
-//                        + properties.getPropertyAddress();
-//                i++;
-//            }
-//            searchList.setModel(new javax.swing.AbstractListModel<String>() {
-//                //                String[] strings = { "No Matches", "NewItem" };
-//                public int getSize() { return propertyDisplay.length; }
-//                public String getElementAt(int i) { return propertyDisplay[i]; }
-//            });
-//        }
+        Criteria criteria = new Criteria(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
+        ArrayList<Property> matched = registeredRenter.searchResults(criteria);
+        if(matched.isEmpty()) {
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Matches"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            String[] propertyDisplay = new String[matched.size()];
+            int i = 0;
+            for(Property properties : matched) {
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                        + properties.getPropertyAddress();
+                i++;
+            }
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                //                String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
 
 
     }

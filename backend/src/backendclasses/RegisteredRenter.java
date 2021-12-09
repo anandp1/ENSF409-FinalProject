@@ -9,21 +9,26 @@ public class RegisteredRenter {
     private boolean subscriptionState;
     private int renterID;
     private final Database db;
-    RegisteredRenter(ArrayList<Criteria> criteria, boolean subscriptionState, int renterID, Database db) {
-        this.criteria = criteria;
+    public RegisteredRenter(boolean subscriptionState, int renterID, Database db) {
         this.subscriptionState = subscriptionState;
         this.renterID = renterID;
         this.db = db;
     }
-    public ArrayList<Criteria> searchResults(Criteria Criteria) {
+    public ArrayList<Property> searchResults(Criteria criteria) {
         // searches for any results that match the property and return any properties that match
         // from the database
-
+        ArrayList<Property> matchedCriteria = db.getAllMatchingProperties(criteria);
+        if(subscriptionState) {
+            addCriteria(criteria);
+        }
         // call addCriteria and save this property criteria as a subscription
-        return new ArrayList<Criteria>();
+        return matchedCriteria;
     }
-
+    public ArrayList<Criteria> subscribedCriteria() {
+        return db.getAllCriteria(renterID);
+    }
     public void addCriteria(Criteria criteria) {
+        db.addCriteria(renterID, criteria);
         // adds criteria to the database
         // adds the renterID to the criteria in the database
     }

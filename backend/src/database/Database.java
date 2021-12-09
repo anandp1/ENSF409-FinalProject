@@ -385,8 +385,45 @@ public class Database {
                     // set fee and period to -1 manually because it is not set yet (manager sets it)
 
 
-    public boolean addMessage(int landlord_id, String mess)
+    public boolean addMessage(int landlord_id, Message message) {
+        try {
+            String query = "INSERT INTO Message (Landlord_id, Renter_email, Message) VALUES (?,?,?)";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
+            myStmt.setInt(1, landlord_id);
+            myStmt.setString(2, message.getRenterEmail());
+            myStmt.setString(3, message.getMessage());
+            myStmt.executeUpdate();
+
+            myStmt.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("\nError in Database addMessage\n");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public ArrayList<Message> getAllMessages(int landlord_id) {
+        ArrayList<Message> returnValue = new ArrayList<Message>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM Message WHERE Landlord_id = " + landlord_id);
+
+            while(results.next()) {
+                Message tempMessage = new Message(results.getString("Renter_email"), results.getString("Message"));
+                returnValue.add(tempMessage);
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllMessages\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
 
     public boolean addProperty(int landlord_id, Property property) {
         try {
@@ -452,7 +489,7 @@ public class Database {
         }
     }
 
-    public void setListingState(State listingState, int propertyID) {
+    public boolean setListingState(State listingState, int propertyID) {
         try {
             String query = "UPDATE Listing SET ListingState = " + listingState.getInt() + " WHERE Property_id = " + propertyID;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -460,10 +497,41 @@ public class Database {
 
             myStmt.close();
 
+            if(listingState == State.ACTIVE) {
+                return addNewProperty(propertyID);
+            } else return true;
         } catch (SQLException ex) {
             System.err.println("\nError in Database setListingState\n");
             ex.printStackTrace();
+            return false;
         }
     }
 
+    public boolean addNewProperty(int property_id) {
+        Property property = getProperty(property_id);
+
+        // get all criteria that match the property
+        // notify up
+    }
+
+    private Property getProperty(int property_id) {
+        Property returnValue = null;
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM Property WHERE Property_id = " + property_id);
+
+            if(results.next()) {
+                returnValue = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), null, property_id, results.getString("Property_address") );
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getMaxPropertyId\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
+    private ArrayList
 }
