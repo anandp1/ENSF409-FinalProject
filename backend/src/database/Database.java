@@ -512,8 +512,10 @@ public class Database {
         if(property == null) return false;
         ArrayList<Integer> renter_ids = getMatchingCriteria(property);
 
-        // get all criteria that match the property
-        // notify up
+        for(var renter: renter_ids) {
+            if(!addNewProperty(renter, property_id)) return false;
+        }
+
         return true;
     }
 
@@ -560,5 +562,24 @@ public class Database {
         return returnValue;
     }
 
-    public boolean addNewProperty()
+    public boolean addNewProperty(int renter_id, int property_id) {
+        try {
+            String query = "INSERT INTO New_Property (Renter_id, Property_id) VALUES (?,?)";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.setInt(1, renter_id);
+            myStmt.setInt(2, property_id);
+            myStmt.executeUpdate();
+
+            myStmt.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("\nError in Database addProperty\n");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+//    public boolean increaseDay
 }

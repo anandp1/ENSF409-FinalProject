@@ -259,13 +259,13 @@ public class ManagerFrame extends javax.swing.JFrame {
                 int i = 0;
                 for(Property properties : allProperties) {
                     String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
-                    propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + "\nAddress:"
-                            + properties.getPropertyAddress() + "\nApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
-                    "\nNumber of Bedrooms: " + properties.getNumBed() + "\nNumber of Bathrooms: " + properties.getNumBath() +
-                    "\nQuadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "\nFurnished State: " + isFurnished +
-                    "\nFee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "\nPeriod: " +
-                            String.valueOf(properties.getListing().getFee().getPeriod()) + "\nListing State: " +
-                    State.fromInt(properties.getListing().getListingState().getInt());
+                    propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address:"
+                            + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
+                    "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
+                    "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
+                    "<br/>Fee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "<br/>Period: " +
+                            String.valueOf(properties.getListing().getFee().getPeriod()) + "<br/>Listing State: " +
+                    State.fromInt(properties.getListing().getListingState().getInt()) + "</html>";
                     propertyFee.put(properties.getPropertyID(), properties.getListing().getFee().getFeeAmount());
                     propertyPeriod.put(properties.getPropertyID(), properties.getListing().getFee().getPeriod());
                     i++;
