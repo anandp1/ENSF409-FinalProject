@@ -280,6 +280,52 @@ public class ManagerFrame extends javax.swing.JFrame {
         }
         else
         {
+            if(select.equals("All renters")) {
+                ArrayList<String> allRenters = manager.getRenters();
+                if(allRenters.isEmpty()) {
+                    displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                        String[] strings = {"No Renters"};
+                        public int getSize() { return strings.length; }
+                        public String getElementAt(int i) { return strings[i]; }
+                    });
+                }
+                else {
+                    String[] renterDisplay = new String[allRenters.size()];
+                    int i = 0;
+                    for(String renters : allRenters) {
+                        renterDisplay[i] = renters;
+                        i++;
+                    }
+                    displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                        //                String[] strings = { "No Matches", "NewItem" };
+                        public int getSize() { return renterDisplay.length; }
+                        public String getElementAt(int i) { return renterDisplay[i]; }
+                    });
+                }
+            }
+            else {
+                ArrayList<String> allLandlords = manager.getLandlords();
+                if(allLandlords.isEmpty()) {
+                    displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                        String[] strings = {"No Landlords"};
+                        public int getSize() { return strings.length; }
+                        public String getElementAt(int i) { return strings[i]; }
+                    });
+                }
+                else {
+                    String[] landlordDisplay = new String[allLandlords.size()];
+                    int i = 0;
+                    for(String renters : allLandlords) {
+                        landlordDisplay[i] = renters;
+                        i++;
+                    }
+                    displayList.setModel(new javax.swing.AbstractListModel<String>() {
+                        //                String[] strings = { "No Matches", "NewItem" };
+                        public int getSize() { return landlordDisplay.length; }
+                        public String getElementAt(int i) { return landlordDisplay[i]; }
+                    });
+                }
+            }
             changeFeeButton.setVisible(false);
             changeListingButton.setVisible(false);
             changePeriodButton.setVisible(false);
