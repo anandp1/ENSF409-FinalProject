@@ -152,11 +152,11 @@ public class LoginFrame extends javax.swing.JFrame {
             }
             if(user.substring(user.length()-1).equals("l")) {
                 this.dispose();
-                // ADD landlord
+                new LandlordFrame(db, user.substring(0, user.length()-1)).setVisible(true);
             }
             if(user.substring(user.length()-1).equals("r")) {
                 this.dispose();
-                new RegisteredRenterFrame(db, user.substring(0, user.length()-1)).setVisible(true);
+                new RegisteredRenterFrame(db, user.substring(0, user.length()-1), email).setVisible(true);
             }
 
         }

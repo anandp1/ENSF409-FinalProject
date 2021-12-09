@@ -16,21 +16,17 @@ public class Landlord {
         // requires that the property doesn't already exist in the database
     	db.addProperty(landlordID, property);
     }
-    public void messageRenter(String message, int renterID) {
-        // save message for the renterID in the database
-    	// where are we saving messages for renters?
+    public ArrayList<Message> getAllMessages() {
+        return db.getAllMessages(landlordID);
     }
-    public void processPayment() {
-        // update the payment to 1 from 0 in the database indicating has paid
-    	// not too sure where we are holding payments in the database
+    public boolean setListingState(int property_id, State propertyState) {
+        return db.setListingState(propertyState, property_id);
     }
-    public void setListingState(String propertyName, String propertyState) {
-        // get property that matches this name
-        // update the property with the name with the new state in the database
-    }
-    public boolean postProperty() {
-        // returns true if we were able to post if not then false
-        // Can only post if fee is not equal to -1
+    public boolean postProperty(int propertyID) {
+        Property property = db.getProperty(propertyID);
+        if(property.getListing().getFee().getFeeAmount() > -1) return db.setListingState(State.ACTIVE, propertyID);
+        else return false;
+        // return false if property doesn't exist or if its active and its already active
 
         // turns the property that is associated with this landlords id
         // into active only if it its currently suspended
@@ -46,7 +42,6 @@ public class Landlord {
     //   if(properties.get(index).getListing().getListingState()==backendclasses.State.SUSPENDED) {
     //     	properties.get(index).getListing().setListingState(db, backendclasses.State.ACTIVE, properties.get(index).getPropertyID());
     //     }
-        return true;
     }
     public ArrayList<Property> getProperty() {
         return properties;

@@ -37,7 +37,7 @@ public class Database {
         }
     }
 
-    public ArrayList<Property> getAllproperties() {
+    public ArrayList<Property> getAllProperties() {
         // presumes all states are active, otherwise set the first input for listing as results.getInt("ListingState")
         // honestly might throw an error - no idea how to verify if this is working right. Basically I call getBoolean on a result that might be an integer.
         ArrayList<Property> returnValue = new ArrayList<Property>();
@@ -291,13 +291,8 @@ public class Database {
     }
 
     public boolean updatePropertyFee(int property_id, Fee fee) {
-        /* ANAND: I have combined the update fee and period into one function (as I figured you would
-        always pass in the entire fee object and you could just set the old value.
-
-        Would you rather I split the function?
-         */
         try {
-            String query = "UPDATE Listing Set FeeAmount = " + fee.getFeeAmount() + ", Period = " + fee.getPeriod() + " WHERE Property_id = " + property_id;
+            String query = "UPDATE Listing SET FeeAmount = " + fee.getFeeAmount() + ", Period = " + fee.getPeriod() + " WHERE Property_id = " + property_id;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
             myStmt.executeUpdate();
@@ -519,7 +514,26 @@ public class Database {
         return true;
     }
 
-    private Property getProperty(int property_id) {
+    public Integer getPropertyLandlord(int property_id) {
+        int returnValue = -1;
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM Property WHERE Property_id = " + property_id);
+
+            if(results.next()) {
+                returnValue = results.getInt("Landlord_id");
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getPropertyLandlord\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
+    public Property getProperty(int property_id) {
         Property returnValue = null;
         try {
             Statement stmt = dbConnect.createStatement();
@@ -532,7 +546,7 @@ public class Database {
             results.close();
         }
         catch(Exception e) {
-            System.err.println("\nError in Database getMaxPropertyId\n");
+            System.err.println("\nError in Database getProperty\n");
             e.printStackTrace();
         }
         return returnValue;
@@ -556,7 +570,7 @@ public class Database {
             results.close();
         }
         catch(Exception e) {
-            System.err.println("\nError in Database getMaxPropertyId\n");
+            System.err.println("\nError in Database getMatchingCriteria\n");
             e.printStackTrace();
         }
         return returnValue;
@@ -575,13 +589,98 @@ public class Database {
 
             return true;
         } catch (SQLException ex) {
-            System.err.println("\nError in Database addProperty\n");
+            System.err.println("\nError in Database addNewProperty\n");
             ex.printStackTrace();
             return false;
         }
     }
 
-//    public boolean increaseDay
+    public ArrayList<Property> getNewProperties(int renter_id) {
+        ArrayList<Property> returnValue = new ArrayList<Property>();
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM New_Property, Property, Listing " +
+                    "WHERE New_Property.Property_id = Property.Property_id AND " +
+                    "Property.Property_id = Listing.Property_id AND " +
+                    "Listing.ListingState = 1" +
+                    "New_Property.Renter_id = " + renter_id);
 
-    //
+            while(results.next()) {
+                Fee tempFee = new Fee(results.getDouble("FeeAmount"), results.getInt("Period"));
+                Listing tempListing = new Listing(State.fromInt(results.getInt("ListingState")), tempFee, results.getInt("DayCount"), this);
+                Property tempProperty = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
+                returnValue.add(tempProperty);
+            }
+            stmt.close();
+            results.close();
+
+            removeNewProperties(renter_id);
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getNewProperties\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
+    public boolean removeNewProperties(int renter_id) {
+        try {
+            String query = "UPDATE New_Property SET Is_new = " + 0 + " WHERE Renter_id = " + renter_id;
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.executeUpdate();
+            myStmt.close();
+
+            return true;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Login updatePropertyFee\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean increaseDay(){ return increaseDay(1); }
+
+    public boolean increaseDay(int numDays) {
+        if(increaseByDay(numDays)) {
+            suspendByPeriod();
+            return true;
+        }
+        else return false;
+    }
+
+    private boolean increaseByDay(int numDays) {
+        try {
+            String query = "UPDATE Listing SET DayCount = DayCount + " + numDays + " WHERE Property_id > 0 AND ListingState = 1 ";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.executeUpdate();
+            myStmt.close();
+
+            return true;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Login updatePropertyFee\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean suspendByPeriod() {
+        try {
+            String query = "UPDATE Listing SET ListingState = 4, DayCount = 0 WHERE Property_id > 0 AND DayCount > Period";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.executeUpdate();
+            myStmt.close();
+
+            return true;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Login updatePropertyFee\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

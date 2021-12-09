@@ -9,18 +9,19 @@ Beside each functionality, first column is whether it's finished back-end, secon
 √ X Create new Manager
 -- update / remove information for all user types (like name, email, password)
 √ X Update renter's subscription state
-X X Create new Property
+√ X Create new Property
 -- X X update / remove property - only real one we would want to update is furnished
 √ X Create new Listing
 √ X Update Listing Fee (Amount and Period)
-X X Update all Listing DayCount by +1 (as a testing function, or as normal)
+√ X Update all Listing DayCount by +1 (as a testing function, or as normal)
 √ X Update listing state - manager and landlord
-X X Automatically update listing state to cancelled when the daycount = period, notify landlord
+√ X Automatically update listing state to cancelled when the daycount = period,
+-- notify landlord
 X X Notify landlord when anything changeds (fee, listing state)
 √ X Create criteria (possible make criteria incomplete, ie don't care about quadrant)
 -- X X Remove criteria
-X X Notify register renters when a new property matches the criteria
+√ X Notify register renters when a new property matches the criteria
 √ X Insert into new properties
-X X Update / remove the "seen" of new properties
+√ X Update / remove the "seen" of new properties
 √ X Notify landlord of new messages
-X X Possible notify renters of messages from landlord
+-- X X Possible notify renters of messages from landlord

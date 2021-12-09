@@ -70,7 +70,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         label4.setText("Furnished:");
 
-        label5.setText("City backendclasses.Quadrant:");
+        label5.setText("City Quadrant:");
 
         cityQuadrant.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SW", "NW", "NE", "SE" }));
 
@@ -157,8 +157,12 @@ public class BaseFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listProperties);
 
-        emailLandlord.setLabel("Email backendclasses.Landlord");
-        emailLandlord.setEnabled(false);
+        emailLandlord.setLabel("Email Landlord");
+        emailLandlord.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                emailButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,7 +207,24 @@ public class BaseFrame extends javax.swing.JFrame {
 //        LoginPage loginPage = new LoginPage();
         new LoginFrame(db).setVisible(true);
     }
+    private void emailButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        String selectedProperty = listProperties.getSelectedValue();
+        System.out.println(selectedProperty);
+        String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
+        String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
+        Message constructMessage = new Message(email, message);
 
+        StringBuilder propertyID = new StringBuilder();
+        for(int i = 12; i < selectedProperty.length(); i++){
+            if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
+                break;
+            }
+            propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+        }
+        Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+        db.addMessage(landlordID, constructMessage);
+    }
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         String apartmentText = Objects.requireNonNull(apartmentType.getSelectedItem()).toString();

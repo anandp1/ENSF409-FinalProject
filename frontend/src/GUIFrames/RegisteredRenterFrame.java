@@ -23,10 +23,12 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     private final Database db;
     private final Integer renterID;
     private final RegisteredRenter registeredRenter;
-    public RegisteredRenterFrame(Database db, String ID) {
+    private final String renterEmail;
+    public RegisteredRenterFrame(Database db, String ID, String renterEmail) {
         initComponents();
         this.db = db;
         this.renterID = Integer.valueOf(ID);
+        this.renterEmail = renterEmail;
         this.registeredRenter = new RegisteredRenter(db.getSubscriptionState(renterID),
                 renterID, db);
     }
@@ -79,7 +81,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         label3.setText("# of Bathrooms:");
 
-        label4.setText("City backendclasses.Quadrant:");
+        label4.setText("City Quadrant:");
 
         apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
 
@@ -168,7 +170,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(searchList);
 
-        emailButton.setLabel("Email backendclasses.Landlord");
+        emailButton.setLabel("Email Landlord");
         emailButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 emailButtonMouseClicked(evt);
@@ -177,14 +179,30 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Search Results:");
 
+//        notificationList.setModel(new javax.swing.AbstractListModel<String>() {
+//            String[] strings = { "temp", " " };
+//            public int getSize() { return strings.length; }
+//            public String getElementAt(int i) { return strings[i]; }
+//        });
+//        jScrollPane2.setViewportView(notificationList);
+
+        jLabel2.setText("Notifications:");
+        ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
+
+        String[] propertyDisplay = new String[notificationProperties.size()];
+        int i = 0;
+        for(Property properties : notificationProperties) {
+            propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                    + properties.getPropertyAddress();
+            i++;
+        }
         notificationList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "temp", " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            //                String[] strings = { "No Matches", "NewItem" };
+            public int getSize() { return propertyDisplay.length; }
+            public String getElementAt(int i) { return propertyDisplay[i]; }
         });
         jScrollPane2.setViewportView(notificationList);
 
-        jLabel2.setText("Notifications:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -315,15 +333,20 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         }
         if(flag == 1) {
                 System.out.println(selectedProperty);
-                // Creating the main window of our application
-    //        emailButton.addActionListener(new ActionListener() {
-    //            @Override
-    //            public void actionPerformed(ActionEvent e) {
-    //                String name = JOptionPane.showInputDialog("What is your name?");
-    //                JOptionPane.showMessageDialog(this, "Hello " + name + '!');
-    //            }
-    //        });
+                String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
                 String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
+                Message constructMessage = new Message(email, message);
+
+                StringBuilder propertyID = new StringBuilder();
+                for(int i = 12; i < selectedProperty.length(); i++){
+                    if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
+                        break;
+                    }
+                    propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+                }
+                Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+                db.addMessage(landlordID, constructMessage);
                 // save message in the landlord emails, pass in who the renter is
         }
 

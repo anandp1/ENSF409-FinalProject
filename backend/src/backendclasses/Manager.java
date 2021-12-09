@@ -14,7 +14,7 @@ public class Manager {
     public ArrayList<Property> getProperties() {
         // calls database to return all properties
 
-        return db.getAllproperties();
+        return db.getAllProperties();
     }
     public ArrayList<String> getRenters() {
         // calls database to return all renters name
