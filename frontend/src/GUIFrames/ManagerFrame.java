@@ -303,7 +303,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     });
                 }
             }
-            else {
+            if (select.equals("All landlords")){
                 ArrayList<String> allLandlords = manager.getLandlords();
                 if(allLandlords.isEmpty()) {
                     displayList.setModel(new javax.swing.AbstractListModel<String>() {

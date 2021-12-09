@@ -107,11 +107,11 @@ public class Database {
         try {
             Statement stmt = dbConnect.createStatement();
             results = stmt.executeQuery("SELECT * FROM Listing AS L, Property AS P WHERE L.Property_id = P.Property_id AND " +
-                    "P.ApartmentType = " + criteria.getApartmentType() + " AND " +
+                    "P.Apartment_type = " + criteria.getApartmentType() + " AND " +
                     "P.NoBedrooms >= " + criteria.getNumBed() + " AND " +
                     "P.NoBathrooms >= " + criteria.getNumBath() + " AND " +
                     "P.Quadrant = " + criteria.getQuadrant().getInt() + " AND " +
-                    "P.isFurnished = " + criteria.intIsFurnished() + " AND " +
+                    "P.Furnished = " + criteria.intIsFurnished() + " AND " +
                     "L.ListingState = 1");
 
             while(results.next()) {
@@ -291,6 +291,11 @@ public class Database {
     }
 
     public boolean updatePropertyFee(int property_id, Fee fee) {
+        /* ANAND: I have combined the update fee and period into one function (as I figured you would
+        always pass in the entire fee object and you could just set the old value.
+
+        Would you rather I split the function?
+         */
         try {
             String query = "UPDATE Listing Set FeeAmount = " + fee.getFeeAmount() + ", Period = " + fee.getPeriod() + " WHERE Property_id = " + property_id;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -307,9 +312,36 @@ public class Database {
         }
     }
 
+    public ArrayList<String> getLandlordNamesFromProperties (ArrayList<Property> properties) {
+        ArrayList<String> returnValue = new ArrayList<String>();
+        for(var property: properties) {
+            returnValue.add(getLandlordNameFromProperty(property.getPropertyID()));
+        }
+        return returnValue;
+    }
+
+    public String getLandlordNameFromProperty(int property_id) {
+        String returnValue = "";
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("Select * FROM User, Property WHERE User.User_type = 1 AND User.User_id = Property.Landlord_id AND Property.Property_id = " + property_id);
+
+            if(results.next()) {
+                 returnValue = results.getString("Fname") + " " + results.getString("Lname");
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getLandlordNameFromProperty\n");
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+
     /* Jett's progress comments.
      I have implemented the following functions, as per the specifications below:
-       1. function to get all the properties names <-- returns ArrayList<backendclasses.Property>
+       1. function to get all the properties names <-- returns ArrayList<Property>
        2. function that returns all renters name <-- returns ArrayList<String>
        3. function that returns all landlord names <-- returns ArrayList<String>
        4. (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
@@ -328,7 +360,7 @@ public class Database {
     // if anything is unclear let me know but these are all the functions
     // that I think we need to make the program work
 
-            // function to get all the properties names <-- returns ArrayList<backendclasses.Property>
+            // function to get all the properties names <-- returns ArrayList<Property>
             // function that returns all renters name <-- returns ArrayList<String>
             // function that returns all landlord names <-- returns ArrayList<String>
             // (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
@@ -336,7 +368,7 @@ public class Database {
                     // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
                     // returns empty string if none of the above
             // (landlordID) <-- function that returns properties owned by landlord
-                    // return a ArrayList<backendclasses.Property> with all the properties
+                    // return a ArrayList<Property> with all the properties
             // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
             // (RenterId) <-- returns ArrayList<Criteria> of all criteria that match this renter
             // (RenterId) <-- returns subscriptionState of the renter as a boolean
@@ -345,8 +377,6 @@ public class Database {
     // (PropertyID, period) <-- updates period of that property
     // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
                     // return as ArrayList<String>
-    // (Property, landlordId) <-- turns property associsated with that landlordid into active only if its currently suspended if it
-                    // is already active return -1 to indicate error
 
     // (landlordID) <-- returns any mail that landlord has if the id is of a landlord
     // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
