@@ -18,9 +18,9 @@ X X Update all Listing DayCount by +1 (as a testing function, or as normal)
 X X Automatically update listing state to cancelled when the daycount = period, notify landlord
 X X Notify landlord when anything changeds (fee, listing state)
 √ X Create criteria (possible make criteria incomplete, ie don't care about quadrant)
-X X Remove criteria
+-- X X Remove criteria
 X X Notify register renters when a new property matches the criteria
-X X Insert into new properties
+√ X Insert into new properties
 X X Update / remove the "seen" of new properties
 √ X Notify landlord of new messages
 X X Possible notify renters of messages from landlord

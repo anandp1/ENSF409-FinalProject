@@ -265,7 +265,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
                     "<br/>Fee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "<br/>Period: " +
                             String.valueOf(properties.getListing().getFee().getPeriod()) + "<br/>Listing State: " +
-                    State.fromInt(properties.getListing().getListingState().getInt()) + "</html>";
+                    State.fromInt(properties.getListing().getListingState().getInt()) + "<br/></html>";
                     propertyFee.put(properties.getPropertyID(), properties.getListing().getFee().getFeeAmount());
                     propertyPeriod.put(properties.getPropertyID(), properties.getListing().getFee().getPeriod());
                     i++;
