@@ -107,7 +107,7 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
         if(!cancelledCheckBox.isSelected() && !rentedCheckbox.isSelected() && !suspendedCheckbox.isSelected() && !activeCheckbox.isSelected()) {
-           
+
             JOptionPane.showMessageDialog(this, "You have not selected anything!", "Error", JOptionPane.ERROR_MESSAGE);
 
         }

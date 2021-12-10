@@ -4,17 +4,15 @@ import database.Database;
 import java.util.ArrayList;
 
 public class Landlord {
-    private final ArrayList<Property> properties;
     private final int landlordID;
     private final Database db;
-    Landlord(int landlordID, ArrayList<Property> properties, Database db) {
+    public Landlord(int landlordID, Database db) {
         this.landlordID = landlordID;
-        this.properties = properties;
         this.db = db;
     }
-    public void registerProperty(Property property) {
+    public boolean registerProperty(Property property) {
         // requires that the property doesn't already exist in the database
-    	db.addProperty(landlordID, property);
+    	return db.addProperty(landlordID, property);
     }
     public ArrayList<Message> getAllMessages() {
         return db.getAllMessages(landlordID);
@@ -44,7 +42,7 @@ public class Landlord {
     //     }
     }
     public ArrayList<Property> getProperty() {
-        return properties;
+        return db.getLandlordProperties(landlordID);
     }
 
 

@@ -20,7 +20,7 @@ public class Property {
         this.propertyID = propertyID;
         this.propertyAddress = propertyAddress;
     }
-    Property(ApartmentType apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, String propertyAddress) {
+    public Property(ApartmentType apartmentType, Integer numBed, Integer numBath, Quadrant quadrant, boolean isFurnished, String propertyAddress) {
         this.apartmentType = apartmentType;
         this.numBath = numBath;
         this.numBed = numBed;

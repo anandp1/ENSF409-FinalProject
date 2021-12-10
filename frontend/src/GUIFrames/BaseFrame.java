@@ -52,7 +52,7 @@ public class BaseFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search backendclasses.Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jPanel1.setName(""); // NOI18N
 

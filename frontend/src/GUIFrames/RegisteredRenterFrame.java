@@ -83,7 +83,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         label4.setText("City Quadrant:");
 
-        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
+        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse", "Apartment" }));
 
         numBed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
