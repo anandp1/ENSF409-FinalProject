@@ -63,6 +63,8 @@ public class ManagerFrame extends javax.swing.JFrame {
         periodLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        logout = new java.awt.Button();
+
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -76,6 +78,12 @@ public class ManagerFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        logout.setLabel("Logout");
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
 
         selectDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "All renters", "All landlords", "All properties" }));
         selectDropDown.addActionListener(new java.awt.event.ActionListener() {
@@ -159,6 +167,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup() // added
+                                .addGap(0, 0, Short.MAX_VALUE) // added
+                                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)) // added
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(116, 116, 116)
                                 .addComponent(displayLabel)
@@ -205,6 +216,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE) // added
                                         .addComponent(selectDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(displayLabel))
                                 .addGap(18, 18, 18)
@@ -239,7 +251,11 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        this.dispose();
+        new BaseFrame(db).setVisible(true);
+    }
     private void selectDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDropDownActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_selectDropDownActionPerformed
@@ -464,5 +480,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JLabel periodLabel;
     private javax.swing.JButton searchButton;
     private javax.swing.JComboBox<String> selectDropDown;
+    private java.awt.Button logout;
     // End of variables declaration//GEN-END:variables
 }
