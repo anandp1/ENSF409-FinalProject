@@ -72,6 +72,7 @@ public class ChangeFee extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Changes current fee and closes form
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
        this.setVisible(false);
        this.dispose();
