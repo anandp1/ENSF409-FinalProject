@@ -17,6 +17,8 @@ public class DisplayTable extends javax.swing.JFrame {
      */
     public DisplayTable() {
         initComponents();
+        
+        //Intially all buttons except for "search" is invisible
         changeFeeButton.setVisible(false);
         changeListingButton.setVisible(false);
         changePeriodButton.setVisible(false);
@@ -61,7 +63,8 @@ public class DisplayTable extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        
+        //Add three options to choose from the drop-down menu
         selectDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "All renters ", "All landlords", "All properties" }));
         selectDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,6 +226,7 @@ public class DisplayTable extends javax.swing.JFrame {
     }//GEN-LAST:event_selectDropDownActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        //Only if "All properties" is selected, the necessary buttons are visible and invisible otherwise
        String select= selectDropDown.getSelectedItem().toString();
        if(select.equals("All properties"))
        {
@@ -244,16 +248,19 @@ public class DisplayTable extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    //Opens new form to change listing status when button is clicked
     private void changeListingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeListingButtonActionPerformed
        JFrame frame =new ChangeListingStatus();
        frame.setVisible(true);
     }//GEN-LAST:event_changeListingButtonActionPerformed
 
+    //Opens new form to change fee when button is clicked
     private void changeFeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFeeButtonActionPerformed
        JFrame frame = new ChangeFee();
        frame.setVisible(true);
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
+    //Opens new form to create summary report when button is clicked
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
  JFrame frame = new SummaryReport();
 frame.setVisible(true); // GUI gui = new GUI() as well     
