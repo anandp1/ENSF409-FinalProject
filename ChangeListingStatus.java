@@ -93,6 +93,7 @@ public class ChangeListingStatus extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Changes current listing status and closes form
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
         this.setVisible(false);
         this.dispose();
