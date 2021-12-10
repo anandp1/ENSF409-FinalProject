@@ -28,6 +28,27 @@ public class LandlordFrame extends javax.swing.JFrame {
         this.db = db;
         this.landlordID = Integer.valueOf(landlordID);
         landlord = new Landlord(this.landlordID, db);
+
+        ArrayList<Property> allProperties = landlord.getProperty();
+        String[] propertyDisplay = new String[allProperties.size()];
+        int i = 0;
+        for(Property properties : allProperties) {
+            String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
+            propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address: "
+                    + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
+                    "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
+                    "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
+                    "<br/>Fee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "<br/>Period: " +
+                    String.valueOf(properties.getListing().getFee().getPeriod()) + "<br/>Listing State: " +
+                    State.fromInt(properties.getListing().getListingState().getInt()) + "<br/></html>";
+            i++;
+        }
+        apartmentList.setModel(new javax.swing.AbstractListModel<String>() {
+            //                String[] strings = { "No Matches", "NewItem" };
+            public int getSize() { return propertyDisplay.length; }
+            public String getElementAt(int i) { return propertyDisplay[i]; }
+        });
+        jScrollPane1.setViewportView(apartmentList);
     }
 
     /**

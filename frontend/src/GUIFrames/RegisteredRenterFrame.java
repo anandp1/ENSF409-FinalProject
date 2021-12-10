@@ -31,6 +31,22 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         this.renterEmail = renterEmail;
         this.registeredRenter = new RegisteredRenter(db.getSubscriptionState(renterID),
                 renterID, db);
+
+        ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
+
+        String[] propertyDisplay = new String[notificationProperties.size()];
+        int i = 0;
+        for(Property properties : notificationProperties) {
+            propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                    + properties.getPropertyAddress();
+            i++;
+        }
+        notificationList.setModel(new javax.swing.AbstractListModel<String>() {
+            //                String[] strings = { "No Matches", "NewItem" };
+            public int getSize() { return propertyDisplay.length; }
+            public String getElementAt(int i) { return propertyDisplay[i]; }
+        });
+        jScrollPane2.setViewportView(notificationList);
     }
 
     /**
@@ -179,29 +195,15 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Search Results:");
 
-//        notificationList.setModel(new javax.swing.AbstractListModel<String>() {
-//            String[] strings = { "temp", " " };
-//            public int getSize() { return strings.length; }
-//            public String getElementAt(int i) { return strings[i]; }
-//        });
-//        jScrollPane2.setViewportView(notificationList);
-
-        jLabel2.setText("Notifications:");
-        ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
-
-        String[] propertyDisplay = new String[notificationProperties.size()];
-        int i = 0;
-        for(Property properties : notificationProperties) {
-            propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
-                    + properties.getPropertyAddress();
-            i++;
-        }
         notificationList.setModel(new javax.swing.AbstractListModel<String>() {
-            //                String[] strings = { "No Matches", "NewItem" };
-            public int getSize() { return propertyDisplay.length; }
-            public String getElementAt(int i) { return propertyDisplay[i]; }
+            String[] strings = { "temp", " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(notificationList);
+
+        jLabel2.setText("Notifications:");
+
 
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
