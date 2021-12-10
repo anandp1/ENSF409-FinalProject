@@ -29,7 +29,7 @@ public enum State {
 	}
 
 	static public int fromString(String i) {
-		switch(i) {
+		switch(i.toUpperCase()) {
 			case "ACTIVE":
 				return ACTIVE.getInt();
 			case "RENTED":

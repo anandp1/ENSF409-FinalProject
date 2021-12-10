@@ -3,7 +3,7 @@ package backendclasses;
 import java.util.Locale;
 
 public enum ApartmentType {
-    ATTACHED(1), DETACHED(2), TOWNHOUSE(3);
+    ATTACHED(1), DETACHED(2), TOWNHOUSE(3), APARTMENT(4);
 
     private int num;
 
@@ -22,6 +22,8 @@ public enum ApartmentType {
                 return DETACHED;
             case 3:
                 return TOWNHOUSE;
+            case 4:
+                return APARTMENT;
         }
         return null;
     }
@@ -33,6 +35,8 @@ public enum ApartmentType {
                 return DETACHED.getInt();
             case "TOWNHOUSE":
                 return TOWNHOUSE.getInt();
+            case "APARTMENT":
+                return APARTMENT.getInt();
         }
         return -1;
     }

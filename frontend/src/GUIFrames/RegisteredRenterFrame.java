@@ -73,7 +73,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search backendclasses.Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search Criteria", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         label1.setText("Apartment Type:");
 
@@ -321,6 +321,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         }
         if(notificationList.getSelectedValue() != null && searchList.getSelectedValue() != null) {
             notificationList.clearSelection();
+            JOptionPane.showMessageDialog(this, "Only select one property!", "Error", JOptionPane.ERROR_MESSAGE);
             searchList.clearSelection();
         }
         if(notificationList.getSelectedValue() != null && searchList.getSelectedValue() == null){

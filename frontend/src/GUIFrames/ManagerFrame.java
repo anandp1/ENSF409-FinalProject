@@ -77,7 +77,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        selectDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "All renters ", "All landlords", "All properties" }));
+        selectDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select", "All renters", "All landlords", "All properties" }));
         selectDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectDropDownActionPerformed(evt);
@@ -101,14 +101,14 @@ public class ManagerFrame extends javax.swing.JFrame {
         displayList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(displayList);
 
-        changeListingButton.setText("Change backendclasses.Listing Status");
+        changeListingButton.setText("Change Listing Status");
         changeListingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeListingButtonActionPerformed(evt);
             }
         });
 
-        changeFeeButton.setText("Change backendclasses.Fee");
+        changeFeeButton.setText("Change Fee");
         changeFeeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeFeeButtonActionPerformed(evt);
@@ -124,7 +124,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
 
-        periodEntry.setText("           ");
+
 
         periodLabel.setText("Period");
         changePeriodButton.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +187,9 @@ public class ManagerFrame extends javax.swing.JFrame {
                                                                 .addComponent(changePeriodButton))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(9, 9, 9)
-                                                                .addComponent(periodEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addComponent(periodEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap(225, Short.MAX_VALUE)))) // added this add container
+
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(110, 110, 110)
                                                 .addComponent(createSummaryReportButton)))

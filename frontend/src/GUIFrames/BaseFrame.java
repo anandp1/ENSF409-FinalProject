@@ -58,7 +58,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         label1.setText("Apartment Type:");
 
-        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
+        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse", "Apartment" }));
 
         label2.setText("# of Bedrooms:");
 
@@ -209,21 +209,28 @@ public class BaseFrame extends javax.swing.JFrame {
     }
     private void emailButtonMouseClicked(java.awt.event.MouseEvent evt) {
         String selectedProperty = listProperties.getSelectedValue();
-        System.out.println(selectedProperty);
-        String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
-        String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
-        Message constructMessage = new Message(email, message);
-
-        StringBuilder propertyID = new StringBuilder();
-        for(int i = 12; i < selectedProperty.length(); i++){
-            if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
-                break;
-            }
-            propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+        if(selectedProperty == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
-        Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
-        db.addMessage(landlordID, constructMessage);
+        else {
+            System.out.println(selectedProperty);
+            String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
+            String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
+            Message constructMessage = new Message(email, message);
+
+            StringBuilder propertyID = new StringBuilder();
+            for(int i = 12; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+            Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+            db.addMessage(landlordID, constructMessage);
+        }
+
     }
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:

@@ -25,6 +25,22 @@ public class SummaryReportFrame extends javax.swing.JFrame {
         this.db = db;
         this.manager = manager;
         this.period = period;
+
+        manager.setSummaryInfo(period);
+
+        numPropertyPeriod.setText("Total number of houses listed: " + manager.getNumListed());
+        numRentedPeriod.setText("Total number of houses rented: " + manager.getNumRented());
+        numActivePeriod.setText("Total number of active listings: " + manager.getNumActive());
+        ArrayList<ArrayList<String>> numListed = manager.listNumRented();
+        StringBuilder constructListed = new StringBuilder();
+        constructListed.append("<html>");
+        for (ArrayList<String> strings : numListed) {
+            constructListed.append(strings.get(0)).append("<br/>");
+        }
+        System.out.println("listed houses: " + constructListed);
+        constructListed.append("</html>");
+        numListPeriod.setText(constructListed.toString());
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,23 +112,6 @@ public class SummaryReportFrame extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        manager.setSummaryInfo(period);
-//        numPropertyPeriod = new javax.swing.JLabel();
-//        numRentedPeriod = new javax.swing.JLabel();
-//        numActivePeriod = new javax.swing.JLabel();
-//        numListPeriod = new javax.swing.JLabel();
-        numPropertyPeriod.setText("Total number of houses listed: " + manager.getNumListed());
-        numRentedPeriod.setText("Total number of houses rented: " + manager.getNumRented());
-        numActivePeriod.setText("Total number of active listings: " + manager.getNumActive());
-        ArrayList<ArrayList<String>> numListed = manager.listNumRented();
-        StringBuilder constructListed = new StringBuilder();
-        constructListed.append("<html>");
-        for (ArrayList<String> strings : numListed) {
-            constructListed.append(strings.get(0)).append("<br/>");
-        }
-        System.out.println("listed houses: " + constructListed);
-        constructListed.append("</html>");
-        numListPeriod.setText(constructListed.toString());
 
         this.setVisible(false);
         this.dispose();// TODO add your handling code here:

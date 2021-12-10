@@ -30,7 +30,7 @@ public enum Quadrant {
 	}
 
 	static public int fromString(String i) {
-		switch(i.toLowerCase()) {
+		switch(i.toUpperCase()) {
 			case "SW":
 				return SW.getInt();
 			case "NW":
