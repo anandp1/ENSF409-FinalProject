@@ -259,7 +259,7 @@ public class BaseFrame extends javax.swing.JFrame {
             String[] propertyDisplay = new String[matched.size()];
             int i = 0;
             for(Property properties : matched) {
-                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address: "
                         + properties.getPropertyAddress();
                 System.out.println(propertyDisplay[i]);
                 i++;

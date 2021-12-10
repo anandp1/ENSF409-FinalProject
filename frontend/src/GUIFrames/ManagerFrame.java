@@ -123,7 +123,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
 
-        changePeriodButton.setText("ChangePeriod");
+        changePeriodButton.setText("Change Period");
 
         createSummaryReportButton.setText("Create Summary Report");
         createSummaryReportButton.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +277,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 int i = 0;
                 for(Property properties : allProperties) {
                     String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
-                    propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address:"
+                    propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address: "
                             + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
                     "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
                     "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +

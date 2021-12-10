@@ -39,7 +39,7 @@ public class SummaryReportFrame extends javax.swing.JFrame {
         }
         System.out.println("listed houses: " + constructListed);
         constructListed.append("</html>");
-        numListPeriod.setText(constructListed.toString());
+        numActivePeriod.setText(constructListed.toString());
 
     }
     /**

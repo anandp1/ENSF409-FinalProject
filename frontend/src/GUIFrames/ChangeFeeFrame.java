@@ -42,7 +42,7 @@ public class ChangeFeeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        newFeeLabel.setText("New backendclasses.Fee");
+        newFeeLabel.setText("New Fee");
 
         changeButton.setText("Change");
         changeButton.addActionListener(new java.awt.event.ActionListener() {

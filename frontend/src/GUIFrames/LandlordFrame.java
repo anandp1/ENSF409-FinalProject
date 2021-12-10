@@ -319,7 +319,7 @@ public class LandlordFrame extends javax.swing.JFrame {
             int i = 0;
             for(Property properties : allProperties) {
                 String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
-                propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address:"
+                propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address: "
                         + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
                         "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
                         "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
