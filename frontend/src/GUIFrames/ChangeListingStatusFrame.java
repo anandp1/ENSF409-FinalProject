@@ -106,17 +106,8 @@ public class ChangeListingStatusFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-//        rentedCheckbox = new javax.swing.JCheckBox();
-//        cancelledCheckBox = new javax.swing.JCheckBox();
-//        suspendedCheckbox = new javax.swing.JCheckBox();
-//        activeCheckbox = new javax.swing.JCheckBox();
-        if(checkBoxGroup.getButtonCount() > 1) {
-            checkBoxGroup.clearSelection();
-            JOptionPane.showMessageDialog(this, "You selected more than one option!", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-        else if(checkBoxGroup.getButtonCount() < 1) {
-            checkBoxGroup.clearSelection();
+        if(!cancelledCheckBox.isSelected() && !rentedCheckbox.isSelected() && !suspendedCheckbox.isSelected() && !activeCheckbox.isSelected()) {
+           
             JOptionPane.showMessageDialog(this, "You have not selected anything!", "Error", JOptionPane.ERROR_MESSAGE);
 
         }
