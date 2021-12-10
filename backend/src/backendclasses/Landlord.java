@@ -41,6 +41,9 @@ public class Landlord {
     //     	properties.get(index).getListing().setListingState(db, backendclasses.State.ACTIVE, properties.get(index).getPropertyID());
     //     }
     }
+    public ArrayList<Message> getMessages(int landlordID) {
+        return db.getAllMessages(landlordID);
+    }
     public ArrayList<Property> getProperty() {
         return db.getLandlordProperties(landlordID);
     }

@@ -343,6 +343,9 @@ public class LandlordFrame extends javax.swing.JFrame {
     }
     private void viewMessagesMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        ArrayList<Message> messages = landlord.getMessages(landlordID);
+        JFrame frame =new MessagesFrame(db, messages);
+        frame.setVisible(true);
     }
     /**
      * @param args the command line arguments
