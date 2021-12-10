@@ -70,6 +70,7 @@ public class ChangePeriod extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Changes current period and closes form
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
       this.setVisible(false);
       this.dispose();   
