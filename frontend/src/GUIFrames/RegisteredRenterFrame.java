@@ -5,8 +5,12 @@
 package GUIFrames;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
+import backendclasses.*;
+import database.Database;
+import java.sql.*;
 /**
  *
  * @author Anand
@@ -14,10 +18,35 @@ import java.util.Objects;
 public class RegisteredRenterFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form RegisteredRenter
+     * Creates new form backendclasses.RegisteredRenter
      */
-    public RegisteredRenterFrame() {
+    private final Database db;
+    private final Integer renterID;
+    private final RegisteredRenter registeredRenter;
+    private final String renterEmail;
+    public RegisteredRenterFrame(Database db, String ID, String renterEmail) {
         initComponents();
+        this.db = db;
+        this.renterID = Integer.valueOf(ID);
+        this.renterEmail = renterEmail;
+        this.registeredRenter = new RegisteredRenter(db.getSubscriptionState(renterID),
+                renterID, db);
+
+        ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
+
+        String[] propertyDisplay = new String[notificationProperties.size()];
+        int i = 0;
+        for(Property properties : notificationProperties) {
+            propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                    + properties.getPropertyAddress();
+            i++;
+        }
+        notificationList.setModel(new javax.swing.AbstractListModel<String>() {
+            //                String[] strings = { "No Matches", "NewItem" };
+            public int getSize() { return propertyDisplay.length; }
+            public String getElementAt(int i) { return propertyDisplay[i]; }
+        });
+        jScrollPane2.setViewportView(notificationList);
     }
 
     /**
@@ -70,7 +99,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         label4.setText("City Quadrant:");
 
-        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
+        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse", "Apartment" }));
 
         numBed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
@@ -175,6 +204,8 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Notifications:");
 
+
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,10 +255,21 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrame().setVisible(true);
+        new BaseFrame(db).setVisible(true);
     }
 
     private void unsubscribeButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        boolean subState = db.getSubscriptionState(renterID);
+        if(subState) {
+            subState = false;
+            registeredRenter.setSubscriptionState(subState);
+            unsubscribeButton.setLabel("Subscribe");
+        }
+        else {
+            subState = true;
+            registeredRenter.setSubscriptionState(subState);
+            unsubscribeButton.setLabel("Unsubscribe");
+        }
         // TODO add your handling code here:
         // unsubcribes to all the criteria in the class for this renter
     }
@@ -239,11 +281,35 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         Integer numBedrooms = Integer.valueOf(Objects.requireNonNull(numBed.getSelectedItem()).toString());
         String cityQuad = Objects.requireNonNull(cityQuadrant.getSelectedItem()).toString();
         boolean furnishedState = furnishedBool.getState();
-        // call method to array of all properties that match this
-        // display the property in the propertiesText
 
+        // TO DO:
         // save this criteria of the renter into the database
         // display any new criteria in the notifications text
+        // Change code using the Renter class
+
+        Criteria criteria = new Criteria(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
+        ArrayList<Property> matched = registeredRenter.searchResults(criteria);
+        if(matched.isEmpty()) {
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Matches"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            String[] propertyDisplay = new String[matched.size()];
+            int i = 0;
+            for(Property properties : matched) {
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
+                        + properties.getPropertyAddress();
+                i++;
+            }
+            searchList.setModel(new javax.swing.AbstractListModel<String>() {
+                //                String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
 
 
     }
@@ -257,6 +323,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         }
         if(notificationList.getSelectedValue() != null && searchList.getSelectedValue() != null) {
             notificationList.clearSelection();
+            JOptionPane.showMessageDialog(this, "Only select one property!", "Error", JOptionPane.ERROR_MESSAGE);
             searchList.clearSelection();
         }
         if(notificationList.getSelectedValue() != null && searchList.getSelectedValue() == null){
@@ -269,15 +336,20 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         }
         if(flag == 1) {
                 System.out.println(selectedProperty);
-                // Creating the main window of our application
-    //        emailButton.addActionListener(new ActionListener() {
-    //            @Override
-    //            public void actionPerformed(ActionEvent e) {
-    //                String name = JOptionPane.showInputDialog("What is your name?");
-    //                JOptionPane.showMessageDialog(this, "Hello " + name + '!');
-    //            }
-    //        });
+                String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
                 String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
+                Message constructMessage = new Message(email, message);
+
+                StringBuilder propertyID = new StringBuilder();
+                for(int i = 12; i < selectedProperty.length(); i++){
+                    if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
+                        break;
+                    }
+                    propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+                }
+                Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+                db.addMessage(landlordID, constructMessage);
                 // save message in the landlord emails, pass in who the renter is
         }
 

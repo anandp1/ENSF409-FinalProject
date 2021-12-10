@@ -1,0 +1,27 @@
+The following functionality needs to be created in the software - there both needs to be a function in database that
+calls the function, and there needs to be front-end functionality that calls the function appropriately.
+
+Beside each functionality, first column is whether it's finished back-end, second column is front-end.
+-- means optional, ie we should discuss if we want it
+
+√ X Create new Renter
+√ X Create new Landlord
+√ X Create new Manager
+-- update / remove information for all user types (like name, email, password)
+√ X Update renter's subscription state
+√ X Create new Property
+-- X X update / remove property - only real one we would want to update is furnished
+√ X Create new Listing
+√ X Update Listing Fee (Amount and Period)
+√ X Update all Listing DayCount by +1 (as a testing function, or as normal)
+√ X Update listing state - manager and landlord
+√ X Automatically update listing state to cancelled when the daycount = period,
+-- notify landlord
+X X Notify landlord when anything changeds (fee, listing state)
+√ X Create criteria (possible make criteria incomplete, ie don't care about quadrant)
+-- X X Remove criteria
+√ X Notify register renters when a new property matches the criteria
+√ X Insert into new properties
+√ X Update / remove the "seen" of new properties
+√ X Notify landlord of new messages
+-- X X Possible notify renters of messages from landlord

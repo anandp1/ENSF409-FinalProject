@@ -1,7 +1,11 @@
-
 package GUIFrames;
 
+import java.util.ArrayList;
 import java.util.Objects;
+import database.Database;
+import backendclasses.*;
+
+import javax.swing.*;
 
 /**
  *
@@ -12,8 +16,10 @@ public class BaseFrame extends javax.swing.JFrame {
     /**
      * Creates new form BaseFrameUI
      */
-    public BaseFrame() {
+    private final Database db;
+    public BaseFrame(Database db) {
         initComponents();
+        this.db = db;
     }
 
     /**
@@ -37,7 +43,7 @@ public class BaseFrame extends javax.swing.JFrame {
         label5 = new java.awt.Label();
         cityQuadrant = new javax.swing.JComboBox<>();
         SearchButton = new java.awt.Button();
-        button2 = new java.awt.Button();
+        login = new java.awt.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         listProperties = new javax.swing.JList<>();
         emailLandlord = new java.awt.Button();
@@ -52,7 +58,7 @@ public class BaseFrame extends javax.swing.JFrame {
 
         label1.setText("Apartment Type:");
 
-        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse" }));
+        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse", "Apartment" }));
 
         label2.setText("# of Bedrooms:");
 
@@ -137,10 +143,10 @@ public class BaseFrame extends javax.swing.JFrame {
                                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        button2.setLabel("Login");
-        button2.addMouseListener(new java.awt.event.MouseAdapter() {
+        login.setLabel("Login");
+        login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                button2MouseReleased(evt);
+                loginMouseReleased(evt);
             }
         });
 
@@ -152,7 +158,11 @@ public class BaseFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listProperties);
 
         emailLandlord.setLabel("Email Landlord");
-        emailLandlord.setEnabled(false);
+        emailLandlord.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                emailButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,7 +171,7 @@ public class BaseFrame extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,7 +183,7 @@ public class BaseFrame extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,15 +199,39 @@ public class BaseFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private void button2MouseReleased(java.awt.event.MouseEvent evt) {
+    private void loginMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
 
 
         this.dispose();
 //        LoginPage loginPage = new LoginPage();
-        new LoginFrame().setVisible(true);
+        new LoginFrame(db).setVisible(true);
     }
+    private void emailButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        String selectedProperty = listProperties.getSelectedValue();
+        if(selectedProperty == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
 
+        }
+        else {
+            System.out.println(selectedProperty);
+            String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
+            String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
+            Message constructMessage = new Message(email, message);
+
+            StringBuilder propertyID = new StringBuilder();
+            for(int i = 12; i < selectedProperty.length(); i++){
+                if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+            Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+            db.addMessage(landlordID, constructMessage);
+        }
+
+    }
     private void SearchButtonMouseReleased(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         String apartmentText = Objects.requireNonNull(apartmentType.getSelectedItem()).toString();
@@ -208,14 +242,40 @@ public class BaseFrame extends javax.swing.JFrame {
         // call method that returns a array of all properties that match this
         // display the property in the propertiesText
 
+        Criteria criteria = new Criteria(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
         // if returned list is empty set model to No Matches
         // else set it to all the matches
         // set new model with new listings
-        listProperties.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "No Matches", "NewItem" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        ArrayList<Property> matched = db.getAllMatchingProperties(criteria);
+        if(matched.isEmpty()) {
+            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Matches"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            // TESTING new
+            String[] propertyDisplay = new String[matched.size()];
+            int i = 0;
+            for(Property properties : matched) {
+                propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address: "
+                        + properties.getPropertyAddress();
+                System.out.println(propertyDisplay[i]);
+                i++;
+            }
+//            DefaultListModel<String> v = new DefaultListModel();
+//            for(String val : propertyDisplay) {
+//                v.addElement(val);
+//            }
+//            listProperties.setModel(v);
+            listProperties.setModel(new javax.swing.AbstractListModel<String>() {
+ //               String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
+
 
     }
 
@@ -257,7 +317,7 @@ public class BaseFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private java.awt.Button SearchButton;
     private javax.swing.JComboBox<String> apartmentType;
-    private java.awt.Button button2;
+    private java.awt.Button login;
     private javax.swing.JComboBox<String> cityQuadrant;
     private java.awt.Button emailLandlord;
     private java.awt.Checkbox furnishedBool;

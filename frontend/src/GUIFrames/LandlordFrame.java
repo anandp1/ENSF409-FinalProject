@@ -1,23 +1,55 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package GUIFrames;
+
+import backendclasses.*;
+import database.Database;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
- * @author cpawl
+ * @author Anand
  */
-public class LandlordFrame extends javax.swing.JPanel {
+public class LandlordFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form LandlordPanel
+     * Creates new form LandlordFrame
      */
-    public LandlordFrame(Landlord person) {
+    private final Database db;
+    private final Integer landlordID;
+    private final Landlord landlord;
+    public LandlordFrame(Database db, String landlordID) {
         initComponents();
-        currentLogin = person;
+        this.db = db;
+        this.landlordID = Integer.valueOf(landlordID);
+        landlord = new Landlord(this.landlordID, db);
+
+        ArrayList<Property> allProperties = landlord.getProperty();
+        String[] propertyDisplay = new String[allProperties.size()];
+        int i = 0;
+        for(Property properties : allProperties) {
+            String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
+            propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address: "
+                    + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
+                    "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
+                    "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
+                    "<br/>Fee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "<br/>Period: " +
+                    String.valueOf(properties.getListing().getFee().getPeriod()) + "<br/>Listing State: " +
+                    State.fromInt(properties.getListing().getListingState().getInt()) + "<br/></html>";
+            i++;
+        }
+        apartmentList.setModel(new javax.swing.AbstractListModel<String>() {
+            //                String[] strings = { "No Matches", "NewItem" };
+            public int getSize() { return propertyDisplay.length; }
+            public String getElementAt(int i) { return propertyDisplay[i]; }
+        });
+        jScrollPane1.setViewportView(apartmentList);
     }
 
     /**
@@ -29,185 +61,372 @@ public class LandlordFrame extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
-        bedroomLabel = new javax.swing.JLabel();
-        bedroomBox = new javax.swing.JComboBox<>();
-        bathroomLabel = new javax.swing.JLabel();
-        bathroomBox = new javax.swing.JComboBox<>();
-        apartmentLabel = new javax.swing.JLabel();
-        apartmentBox = new javax.swing.JComboBox<>();
-        quadrantLabel = new javax.swing.JLabel();
-        quadrantBox = new javax.swing.JComboBox<>();
-        furnishedBox = new javax.swing.JCheckBox();
-        registerButton = new javax.swing.JButton();
+        label1 = new java.awt.Label();
+        label2 = new java.awt.Label();
+        label3 = new java.awt.Label();
+        label4 = new java.awt.Label();
+        label5 = new java.awt.Label();
+        label6 = new java.awt.Label();
+        isFurnished = new java.awt.Checkbox();
+        apartmentType = new javax.swing.JComboBox<>();
+        numBedrooms = new javax.swing.JComboBox<>();
+        cityQuad = new javax.swing.JComboBox<>();
+        addressInput = new javax.swing.JTextField();
+        label7 = new java.awt.Label();
+        numBathrooms = new javax.swing.JComboBox<>();
+        register = new java.awt.Button();
+        logout = new java.awt.Button();
+        label8 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
-        propertiesBox = new javax.swing.JComboBox<>();
-        feeButton = new javax.swing.JButton();
-        registerLabel = new javax.swing.JLabel();
+        apartmentList = new javax.swing.JList<>();
+        payFee = new java.awt.Button();
+        changeListingState = new java.awt.Button();
+        refresh = new java.awt.Button();
+        viewMessages = new java.awt.Button();
 
-        bedroomLabel.setText("Number of bedrooms");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bedroomBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
+        label1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        label1.setText("Register new property");
 
-        bathroomLabel.setText("Number of bathrooms");
+        label2.setText("Apartment Type:");
 
-        bathroomBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
+        label3.setText("# of Bedrooms:");
 
-        apartmentLabel.setText("Type of apartment");
+        label4.setText("City Quadrant:");
 
-        apartmentBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apartment", "Attached house", "Detached house", "Townhouse" }));
+        label5.setText("Address:");
 
-        quadrantLabel.setText("City quadrant");
+        label6.setText("Furnished:");
 
-        quadrantBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NW", "NE", "SW", "SE" }));
+        apartmentType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attached", "Detached", "Townhouse", "Apartment" }));
 
-        furnishedBox.setText("Pre-furnished");
-        furnishedBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                furnishedBoxActionPerformed(evt);
+        numBedrooms.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        cityQuad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SW", "NW", "NE", "SE" }));
+
+        label7.setText("# of Bathrooms:");
+
+        numBathrooms.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+
+        register.setLabel("Register");
+        register.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerMouseClicked(evt);
             }
         });
 
-        registerButton.setText("Register");
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
+        logout.setLabel("Logout");
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
             }
         });
 
-        propertiesLabel.setText("Apartment list");
+        label8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        label8.setText("Apartment List");
 
-        propertiesBox.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {  };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(propertiesBox);
+        jScrollPane1.setViewportView(apartmentList);
 
-        ArrayList<Property> properties = currentLogin.getProperty();
-        for (int i = 0; i < properties.size(); i++) {
-            propertiesBox.add(properties.get(i).getPropertyAddress());
-        }
-
-        jScrollPane1.setViewportView(propertiesBox);
-
-        feeButton.setText("Pay fee");
-        feeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                feeButtonActionPerformed(evt);
+        payFee.setLabel("Pay Fee & Post Property");
+        payFee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                payFeeMouseClicked(evt);
             }
         });
 
-        registerLabel.setText("Register new property");
+        changeListingState.setLabel("Change Listing State");
+        changeListingState.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                changeListingStateMouseClicked(evt);
+            }
+        });
 
-        addressLabel.setText("Address");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        refresh.setLabel("Refresh");
+        refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshMouseClicked(evt);
+            }
+        });
+        viewMessages.setLabel("View Messages");
+        viewMessages.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewMessagesMouseClicked(evt);
+            }
+        });
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(addressBox, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(addressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bedroomLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bedroomBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bathroomLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                        .addComponent(bathroomBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(apartmentLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(apartmentBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(quadrantLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(quadrantBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(registerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(registerLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(furnishedBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(97, 97, 97)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane1)
-                                        .addComponent(propertiesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(feeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(viewMessages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(1, 1, 1)
+                                                                .addComponent(isFurnished, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(register, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(addressInput, javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(cityQuad, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(numBedrooms, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(numBathrooms, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(apartmentType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(label2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(45, 45, 45)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(changeListingState, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(payFee, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))))))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(viewMessages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(label8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(registerLabel)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bedroomLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bedroomBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bathroomLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(bathroomBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(apartmentLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(apartmentBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(quadrantLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(quadrantBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(payFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(12, 12, 12)
+                                                .addComponent(changeListingState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
                                         .addGroup(layout.createSequentialGroup()
+                                                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(2, 2, 2)
-                                                .addComponent(propertiesLabel)
+                                                .addComponent(apartmentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(1, 1, 1)
+                                                .addComponent(numBedrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(feeButton)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addressLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addressBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(furnishedBox)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(registerButton)
-                                .addGap(0, 0, 0))
+                                                .addComponent(label7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(2, 2, 2)
+                                                .addComponent(numBathrooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(2, 2, 2)
+                                                .addComponent(cityQuad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(addressInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(20, 20, 20)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(isFurnished, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(46, 46, 46))))
         );
+
+        pack();
     }// </editor-fold>
 
-    private void furnishedBoxActionPerformed(java.awt.event.ActionEvent evt) {
-        checkbox = !checkbox;
+    private void registerMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        String apartmentText = Objects.requireNonNull(apartmentType.getSelectedItem()).toString();
+        Integer numBath = Integer.valueOf(Objects.requireNonNull(numBedrooms.getSelectedItem()).toString());
+        Integer numBed = Integer.valueOf(Objects.requireNonNull(numBathrooms.getSelectedItem()).toString());
+        String cityQuadrant = Objects.requireNonNull(cityQuad.getSelectedItem()).toString();
+
+        boolean furnishedState = isFurnished.getState();
+        String propertyAddress = addressInput.getText();
+
+
+        Property property = new Property(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBed, numBath, Quadrant.fromInt(Quadrant.fromString(cityQuadrant)), furnishedState, propertyAddress);
+        if(landlord.registerProperty(property)) {
+            JOptionPane.showMessageDialog(this, "Successful!", "Success Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String type = apartmentBox.getItemAt(apartmentBox.getSelectedIndex());
-        String location = addressBox.getText();
-        int numBed = bedroomBox.getSelectedIndex() + 1;
-        int numBath = bathroomBox.getSelectedIndex() + 1;
-        String quadrant = quadrantBox.getItemAt(quadrantBox.getSelectedIndex());
-        Property toRegister = new Property(type, numBed, numBath, quadrant, checkbox, location);
-        currentLogin.registerProperty(toRegister);
+    private void payFeeMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        if(apartmentList.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            String selectedProperty = apartmentList.getSelectedValue();
+            StringBuilder propertyID = new StringBuilder();
+            for (int i = 18; i < selectedProperty.length(); i++) {
+                if (selectedProperty.charAt(i) == '<' || selectedProperty.charAt(i) == 'A') {
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+            Property property = db.getProperty(Integer.parseInt(propertyID.toString()));
+            if(landlord.postProperty(Integer.parseInt(propertyID.toString())) && property.getListing().getListingState().getInt() == 4){
+                JOptionPane.showMessageDialog(this, "Successful!", "Success Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Failed!", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        }
+
     }
 
-    private void feeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        currentLogin.processPayment(propertiesList.getSelectedIndex());
+    private void changeListingStateMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        if(apartmentList.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            String selectedProperty = apartmentList.getSelectedValue();
+            StringBuilder propertyID = new StringBuilder();
+            for (int i = 18; i < selectedProperty.length(); i++) {
+                if (selectedProperty.charAt(i) == '<' || selectedProperty.charAt(i) == 'A') {
+                    break;
+                }
+                propertyID.append(String.valueOf(selectedProperty.charAt(i)));
+
+            }
+
+            JFrame frame = new ChangeListingStatusFrame(db, Integer.valueOf(propertyID.toString()));
+            frame.setVisible(true);
+        }
     }
+
+    private void refreshMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+
+        ArrayList<Property> allProperties = landlord.getProperty();
+        if(allProperties.isEmpty()) {
+            apartmentList.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = {"No Properties"};
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+        }
+        else {
+            String[] propertyDisplay = new String[allProperties.size()];
+            int i = 0;
+            for(Property properties : allProperties) {
+                String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
+                propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + "<br/>Address: "
+                        + properties.getPropertyAddress() + "<br/>ApartmentType: " + ApartmentType.fromInt(properties.getApartmentType().getInt()) +
+                        "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " + properties.getNumBath() +
+                        "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) + "<br>Furnished State: " + isFurnished +
+                        "<br/>Fee: " + String.valueOf(properties.getListing().getFee().getFeeAmount()) + "<br/>Period: " +
+                        String.valueOf(properties.getListing().getFee().getPeriod()) + "<br/>Listing State: " +
+                        State.fromInt(properties.getListing().getListingState().getInt()) + "<br/></html>";
+                i++;
+            }
+            apartmentList.setModel(new javax.swing.AbstractListModel<String>() {
+                //                String[] strings = { "No Matches", "NewItem" };
+                public int getSize() { return propertyDisplay.length; }
+                public String getElementAt(int i) { return propertyDisplay[i]; }
+            });
+        }
+    }
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        this.dispose();
+        new BaseFrame(db).setVisible(true);
+    }
+    private void viewMessagesMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        ArrayList<Message> messages = landlord.getMessages(landlordID);
+        JFrame frame =new MessagesFrame(db, messages);
+        frame.setVisible(true);
+    }
+    /**
+     * @param args the command line arguments
+     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(LandlordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(LandlordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(LandlordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(LandlordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new LandlordFrame().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify
-    private javax.swing.JFormattedTextField addressBox;
-    private javax.swing.JLabel addressLabel;
-    private javax.swing.JComboBox<String> apartmentBox;
-    private javax.swing.JLabel apartmentLabel;
-    private javax.swing.JComboBox<String> bathroomBox;
-    private javax.swing.JLabel bathroomLabel;
-    private javax.swing.JComboBox<String> bedroomBox;
-    private javax.swing.JLabel bedroomLabel;
-    private javax.swing.JButton feeButton;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.JCheckBox furnishedBox;
+    private javax.swing.JTextField addressInput;
+    private javax.swing.JList<String> apartmentList;
+    private javax.swing.JComboBox<String> apartmentType;
+    private java.awt.Button changeListingState;
+    private javax.swing.JComboBox<String> cityQuad;
+    private java.awt.Checkbox isFurnished;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> propertiesBox;
-    private javax.swing.JLabel propertiesLabel;
-    private javax.swing.JComboBox<String> quadrantBox;
-    private javax.swing.JLabel quadrantLabel;
-    private javax.swing.JButton registerButton;
-    private javax.swing.JLabel registerLabel;
-
-    Landlord currentLogin;
-    private boolean checkbox = false;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
+    private java.awt.Label label3;
+    private java.awt.Label label4;
+    private java.awt.Label label5;
+    private java.awt.Label label6;
+    private java.awt.Label label7;
+    private java.awt.Label label8;
+    private java.awt.Button logout;
+    private javax.swing.JComboBox<String> numBathrooms;
+    private javax.swing.JComboBox<String> numBedrooms;
+    private java.awt.Button payFee;
+    private java.awt.Button refresh;
+    private java.awt.Button register;
+    private java.awt.Button viewMessages;
     // End of variables declaration
 }
+

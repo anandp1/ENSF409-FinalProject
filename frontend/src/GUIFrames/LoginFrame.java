@@ -2,6 +2,10 @@
 
 package GUIFrames;
 
+import database.Database;
+
+import javax.swing.*;
+
 /**
  *
  * @author Anand
@@ -9,8 +13,10 @@ package GUIFrames;
 public class LoginFrame extends javax.swing.JFrame {
 
     /** Creates new form LoginPage */
-    public LoginFrame() {
+    private final Database db;
+    public LoginFrame(Database db) {
         initComponents();
+        this.db = db;
     }
 
     /** This method is called from within the constructor to
@@ -124,7 +130,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new RegisterPageFrame().setVisible(true);
+        new RegisterPageFrame(db).setVisible(true);
 
     }
 
@@ -135,19 +141,32 @@ public class LoginFrame extends javax.swing.JFrame {
         System.out.println("email " + email);
         System.out.println("password: " + password);
         // check who it is and return a string saying who it is if empty then they are not registered
+        String user = db.getUserType(email, password);
+        if(user == null) {
+            JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            if(user.substring(user.length()-1).equals("m")) {
+                this.dispose();
+                new ManagerFrame(db, user.substring(0, user.length()-1)).setVisible(true);
+            }
+            if(user.substring(user.length()-1).equals("l")) {
+                this.dispose();
+                new LandlordFrame(db, user.substring(0, user.length()-1)).setVisible(true);
+            }
+            if(user.substring(user.length()-1).equals("r")) {
+                this.dispose();
+                new RegisteredRenterFrame(db, user.substring(0, user.length()-1), email).setVisible(true);
+            }
 
-        // if invalid show this
-            // JOptionPane.showMessageDialog(this, "Invalid login info!", "Error", JOptionPane.ERROR_MESSAGE);
-        // else
-            // depending on who they are show the gui frame
-        this.dispose();
-        new RegisteredRenterFrame().setVisible(true);
+        }
+
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new BaseFrame().setVisible(true);
+        new BaseFrame(db).setVisible(true);
     }
 
     /**

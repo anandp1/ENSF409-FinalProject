@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUIFrames;
+import database.Database;
+
+import javax.swing.*;
+import java.util.Locale;
 
 /**
  *
@@ -13,9 +17,14 @@ public class RegisterPageFrame extends javax.swing.JFrame {
     /**
      * Creates new form RegisterPage
      */
-    public RegisterPageFrame() {
+    private final Database db;
+
+    public RegisterPageFrame(Database db) {
         initComponents();
+        this.db = db;
+
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -144,14 +153,48 @@ public class RegisterPageFrame extends javax.swing.JFrame {
         String email = emailInput.getText();
         String password = String.valueOf(passwordInput.getPassword());
         // send all this info to the database to be saved
-        this.dispose();
-        new LoginFrame().setVisible(true);
+        String userType = JOptionPane.showInputDialog(this, "Who are you? (Renter, Manager, Landlord");
+        if(userType.equalsIgnoreCase("renter")){
+            if(db.createNewRenter(firstName, lastName,  email, password) != -1) {
+                this.dispose();
+                new LoginFrame(db).setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "This user already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else if(userType.equalsIgnoreCase("landlord")){
+            if(db.createNewLandlord(firstName, lastName,  email, password) != -1){
+                this.dispose();
+                new LoginFrame(db).setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "This user already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        else if(userType.equalsIgnoreCase("manager")){
+            if(db.createNewManager(firstName, lastName,  email, password) != -1){
+                this.dispose();
+                new LoginFrame(db).setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "This user already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }
 
     private void returnButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         this.dispose();
-        new LoginFrame().setVisible(true);
+        new LoginFrame(db).setVisible(true);
     }
 
 //    /**
