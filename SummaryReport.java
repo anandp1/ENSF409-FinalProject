@@ -86,6 +86,7 @@ public class SummaryReport extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    //Creates new summary report and closes current form
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 this.setVisible(false);
 this.dispose();// TODO add your handling code here:
