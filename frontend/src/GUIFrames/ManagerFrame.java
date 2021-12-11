@@ -135,7 +135,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
 
-        periodEntry.setText("       ");
+        //periodEntry.setText("       ");
         periodLabel.setText("Period");
         changePeriodButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,7 +201,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(9, 9, 9)
                                                                 .addComponent(periodEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(225, Short.MAX_VALUE)))) // added this add container
+                                                                .addContainerGap(190, Short.MAX_VALUE)))) // added this add container
 
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(110, 110, 110)
@@ -428,14 +428,15 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_changeFeeButtonActionPerformed
     // create summary button is clicked
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-//        if(periodEntry.getText().equals("") || periodEntry.getText() == null) {
-//            JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        if(periodEntry.getText().equals("") || periodEntry.getText() == null) {
+            JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
-
+        else {
             // show new frame to show the summary report from the period
-            JFrame frame = new SummaryReportFrame(db, manager, 1);
+            JFrame frame = new SummaryReportFrame(db, manager, Integer.parseInt(periodEntry.getText()));
             frame.setVisible(true);
+        }
 
 
         // GUI gui = new GUI() as well

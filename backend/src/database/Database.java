@@ -432,7 +432,7 @@ public class Database {
             results = stmt.executeQuery("Select MAX(Property_id) FROM Property WHERE Landlord_id = " + landlord_id);
 
             if(results.next()) {
-                returnValue = results.getInt("Property_id");
+                returnValue = results.getInt("Max(Property_id)");
             }
             stmt.close();
             results.close();

@@ -49,7 +49,10 @@ public class Manager {
     public void setSummaryInfo(Integer period) {
         // call database to get all properties that match this period
         for(Property property : getProperties()) {
-            allProperties.add(property);
+            if(property.getListing().getFee().getPeriod() == period){
+                allProperties.add(property);
+            }
+
         }
     }
 
