@@ -11,7 +11,6 @@ public class MainApplication {
     	
     	 Connection db = database.getConnection();
 		new BaseFrame(database).setVisible(true);
-		database.disconnect();
     	System.out.println("Program Terminated.");
     }
 }
