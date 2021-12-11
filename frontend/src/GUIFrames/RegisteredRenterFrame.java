@@ -34,11 +34,16 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
 
+
         String[] propertyDisplay = new String[notificationProperties.size()];
         int i = 0;
         for(Property properties : notificationProperties) {
-            propertyDisplay[i] = "PropertyID: " + properties.getPropertyID() + " Address:"
-                    + properties.getPropertyAddress();
+            String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
+            propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + " Address:"
+                    + properties.getPropertyAddress() + "<br/>ApartmentType: " + properties.getApartmentType() +
+            "<br/>Number of Bedrooms: " + properties.getNumBed() + "<br/>Number of Bathrooms: " +
+            properties.getNumBath() + "<br/>Quadrant: " + Quadrant.fromInt(properties.getQuadrant().getInt()) +
+            "<br/>Furnished State: " + isFurnished + "<br/></html>";
             i++;
         }
         notificationList.setModel(new javax.swing.AbstractListModel<String>() {

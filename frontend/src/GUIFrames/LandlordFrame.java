@@ -292,8 +292,9 @@ public class LandlordFrame extends javax.swing.JFrame {
 
             }
             System.out.println(propertyID.toString());
-            Property property = db.getProperty(Integer.parseInt(propertyID.toString()));
-            if(landlord.postProperty(Integer.parseInt(propertyID.toString())) && property.getListing().getListingState().getInt() == 3){
+            Property property = db.getPropertyWithListing(Integer.parseInt(propertyID.toString()));
+
+            if(landlord.postPropertyWithListing(Integer.parseInt(propertyID.toString())) && property.getListing().getListingState().getInt() == 3){
                 JOptionPane.showMessageDialog(this, "Successful!", "Success Message", JOptionPane.INFORMATION_MESSAGE);
             }
             else {

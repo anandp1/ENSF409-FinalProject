@@ -49,5 +49,6 @@ public class RegisteredRenter {
     }
     public void setSubscriptionState(boolean val) {
         subscriptionState = val;
+        db.setSubscriptionState(renterID, val);
     }
 }

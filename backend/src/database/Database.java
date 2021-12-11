@@ -602,7 +602,7 @@ public class Database {
             results = stmt.executeQuery("Select * FROM New_Property, Property, Listing " +
                     "WHERE New_Property.Property_id = Property.Property_id AND " +
                     "Property.Property_id = Listing.Property_id AND " +
-                    "Listing.ListingState = 1" +
+                    "Listing.ListingState = 1 AND " +
                     "New_Property.Renter_id = " + renter_id);
 
             while(results.next()) {
@@ -683,4 +683,61 @@ public class Database {
             return false;
         }
     }
+    public boolean setSubscriptionState(int renter_id, boolean state) {
+        try {
+            String query = "Update User Set Subscription_state = " + (state ? 1:0) + " WHERE User_type = 0 AND User_id = " + renter_id;
+
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.executeUpdate();
+            myStmt.close();
+            if(!state) {
+                removeAllCriteria(renter_id);
+            }
+            return true;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database setSubscriptionState\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private boolean removeAllCriteria(int renter_id) {
+        try {
+            String query = "DELETE FROM Criteria WHERE Renter_id = " + renter_id;
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+            myStmt.executeUpdate();
+            myStmt.close();
+
+            return true;
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Login removeAllCriteria\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public Property getPropertyWithListing(int property_id) {
+        Property returnValue = null;
+        try {
+            Statement stmt = dbConnect.createStatement();
+            results = stmt.executeQuery("SELECT * FROM Listing, Property WHERE Listing.Property_id = Property.Property_id AND Property.Property_id = " + property_id);
+
+            if(results.next()) {
+                Fee tempFee = new Fee(results.getDouble("FeeAmount"), results.getInt("Period"));
+                Listing tempListing = new Listing(State.fromInt(results.getInt("ListingState")), tempFee, results.getInt("DayCount"), this);
+                returnValue = new Property(ApartmentType.fromInt(results.getInt("Apartment_type")), results.getInt("NoBedrooms"), results.getInt("NoBathrooms"), Quadrant.fromInt(results.getInt("Quadrant")), results.getBoolean("Furnished"), tempListing, results.getInt("Property_id"), results.getString("Property_address") );
+            }
+            stmt.close();
+            results.close();
+        }
+        catch(Exception e) {
+            System.err.println("\nError in Database getAllproperties\n");
+            e.printStackTrace();
+        }
+
+        return returnValue;
+    }
+
 }

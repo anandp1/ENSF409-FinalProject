@@ -133,7 +133,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
 
-
+        periodEntry.setText("       ");
         periodLabel.setText("Period");
         changePeriodButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,16 +401,16 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-        if(periodEntry.getText().equals("") || periodEntry.getText() == null) {
-            JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        if(periodEntry.getText().equals("") || periodEntry.getText() == null) {
+//            JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
 
-        else {
+
             System.out.println(periodEntry.getText());
-            JFrame frame = new SummaryReportFrame(db, manager, Integer.valueOf(periodEntry.getText()));
+            JFrame frame = new SummaryReportFrame(db, manager, 1);
             frame.setVisible(true);
 
-        }
+
         // GUI gui = new GUI() as well
     }//GEN-LAST:event_createSummaryReportButtonActionPerformed
     private void changePeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {

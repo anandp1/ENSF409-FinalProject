@@ -34,9 +34,10 @@ public class MessagesFrame extends javax.swing.JFrame {
         constructText.append("<html>");
         for (Message message : messages) {
             constructText.append("Renter Email: ").append(message.getRenterEmail()).
-                    append("Message: ").append(message.getMessage()).append("<br/>");
+                    append(" Message: ").append(message.getMessage()).append(" <br/>");
         }
         constructText.append("</html>");
+        numPropertyPeriod.setText(constructText.toString());
     }
     /**
      * This method is called from within the constructor to initialize the form.

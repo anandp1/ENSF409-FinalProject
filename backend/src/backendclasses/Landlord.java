@@ -41,6 +41,11 @@ public class Landlord {
     //     	properties.get(index).getListing().setListingState(db, backendclasses.State.ACTIVE, properties.get(index).getPropertyID());
     //     }
     }
+    public boolean postPropertyWithListing(int property_id) {
+        Property property = db.getPropertyWithListing(property_id);
+        if(property.getListing().getFee().getFeeAmount() > -1) return db.setListingState(State.ACTIVE, property_id);
+        else return false;
+    }
     public ArrayList<Message> getMessages(int landlordID) {
         return db.getAllMessages(landlordID);
     }

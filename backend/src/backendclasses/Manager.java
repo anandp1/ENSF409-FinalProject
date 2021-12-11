@@ -40,10 +40,10 @@ public class Manager {
         // call database to get all properties that match this period
 
         for(Property property : getProperties()) {
-            if(property.getListing().getFee().getPeriod() == period) {
-                allProperties.add(property);
+            //if(property.getListing().getFee().getPeriod() == period) {
+            allProperties.add(property);
 
-            }
+            //}
         }
     }
     public int getNumListed() {
