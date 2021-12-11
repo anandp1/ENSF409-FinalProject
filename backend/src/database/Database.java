@@ -401,15 +401,15 @@ public class Database {
         // inserts a property into the database, and then inserts a listing corresponding to that property
         // (default is inactive) for the manager to update the listing information
         try {
-            String query = "INSERT INTO Property (Landlord_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
+            String query = "INSERT INTO Property (Landlord_id, Property_address, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
-
-            myStmt.setInt(1, landlord_id);
-            myStmt.setInt(2, property.getApartmentType().getInt());
-            myStmt.setInt(3, property.getNumBed());
-            myStmt.setInt(4, property.getNumBath());
-            myStmt.setInt(5, property.getQuadrant().getInt());
-            myStmt.setInt(6, property.getIsFurnished() ? 1:0);
+            myStmt.setString(1, property.getPropertyAddress());
+            myStmt.setInt(2, landlord_id);
+            myStmt.setInt(3, property.getApartmentType().getInt());
+            myStmt.setInt(4, property.getNumBed());
+            myStmt.setInt(5, property.getNumBath());
+            myStmt.setInt(6, property.getQuadrant().getInt());
+            myStmt.setInt(7, property.getIsFurnished() ? 1:0);
             myStmt.executeUpdate();
 
             myStmt.close();
