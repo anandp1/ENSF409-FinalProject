@@ -401,10 +401,12 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_changeFeeButtonActionPerformed
 
     private void createSummaryReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSummaryReportButtonActionPerformed
-        if(periodEntry.getText() == null) {
+        if(periodEntry.getText().equals("") || periodEntry.getText() == null) {
             JOptionPane.showMessageDialog(this, "No period entered", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         else {
+            System.out.println(periodEntry.getText());
             JFrame frame = new SummaryReportFrame(db, manager, Integer.valueOf(periodEntry.getText()));
             frame.setVisible(true);
 

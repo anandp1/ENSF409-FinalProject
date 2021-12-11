@@ -32,14 +32,23 @@ public class SummaryReportFrame extends javax.swing.JFrame {
         numRentedPeriod.setText("Total number of houses rented: " + manager.getNumRented());
         numActivePeriod.setText("Total number of active listings: " + manager.getNumActive());
         ArrayList<ArrayList<String>> numListed = manager.listNumRented();
-        StringBuilder constructListed = new StringBuilder();
-        constructListed.append("<html>");
-        for (ArrayList<String> strings : numListed) {
-            constructListed.append(strings.get(0)).append("<br/>");
+        if(numListed.isEmpty()){
+            numListPeriod.setText("<html>List houses rented in the period:<br/>" +
+                    "No houses for rent in this period.</html>");
         }
-        System.out.println("listed houses: " + constructListed);
-        constructListed.append("</html>");
-        numActivePeriod.setText(constructListed.toString());
+        else {
+
+
+            StringBuilder constructListed = new StringBuilder();
+            constructListed.append("<html>List houses rented in the period:<br/>");
+            for (ArrayList<String> strings : numListed) {
+                constructListed.append(strings.get(0)).append("<br/>");
+                System.out.println(strings.get(0));
+            }
+            System.out.println("listed houses: " + constructListed);
+            constructListed.append("</html>");
+            numListPeriod.setText(constructListed.toString());
+        }
 
     }
     /**

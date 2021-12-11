@@ -8,7 +8,7 @@ public class MainApplication {
     public static void main(String[] args) throws Exception {
         
     	// System.out.println("Program Started");
-    	 Database database = new Database("jdbc:mysql://localhost/RENTAL_PROPERTY_MANAGEMENT_SYSTEM", "Jett", "SecondUser");
+    	 Database database = new Database("jdbc:mysql://localhost/RENTAL_PROPERTY_MANAGEMENT_SYSTEM", "root", "radvb1009");
     	 database.connect();
     	
     	 Connection db = database.getConnection();

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Manager {
-    private ArrayList<Property> allProperties;
+    private ArrayList<Property> allProperties = new ArrayList<Property>();
     private final Database db;
     public Manager(Database db) {
         this.db = db;
@@ -38,10 +38,11 @@ public class Manager {
     }
     public void setSummaryInfo(Integer period) {
         // call database to get all properties that match this period
-        allProperties = new ArrayList<Property>();
+
         for(Property property : getProperties()) {
             if(property.getListing().getFee().getPeriod() == period) {
                 allProperties.add(property);
+
             }
         }
     }
@@ -77,14 +78,16 @@ public class Manager {
         int i = 0;
         for(Property property : allProperties) {
             if(property.getListing().getListingState().getInt() == 2) {
-                listNumRented.add(new ArrayList<>());
+                listNumRented.add(new ArrayList<String>());
                 listNumRented.get(i).add(
                         "Landlord Name: " + db.getLandlordNameFromProperty(property.getPropertyID()) +
-                        "Property ID: " + String.valueOf(property.getPropertyID()) +
+                        " Property ID: " + String.valueOf(property.getPropertyID()) +
                         " Address: " + property.getPropertyAddress()
                 );
                 i++;
             }
+            System.out.println(property.getListing().getListingState().getInt());
+
         }
         // ONLY RENTED
         // make a new arraylist with only properties that are rented
