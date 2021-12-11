@@ -8,13 +8,15 @@ public class RegisteredRenter {
     private ArrayList<Criteria> criteria; // holds criteria that the renter is subscribed too
     private boolean subscriptionState; // holds state of subscription
     private int renterID; // the renters unique ID
-    private final Database db;
+    private final Database db; // local connection, as to not consistently pass in a connection into functions
+
     // constructor that requires database, renter unique ID, subscription state of the renter
     public RegisteredRenter(boolean subscriptionState, int renterID, Database db) {
         this.subscriptionState = subscriptionState;
         this.renterID = renterID;
         this.db = db;
     }
+
     // function that requires criteria that is being searched
     // promises to return all properties that match the search
     public ArrayList<Property> searchResults(Criteria criteria) {

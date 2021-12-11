@@ -6,50 +6,58 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Manager {
+    // all property list, used to avoid repetitive calls to the database
     private ArrayList<Property> allProperties = new ArrayList<Property>();
+
+    // local database instantiation, to avoid passing in continuous database references
     private final Database db;
+
+    // constructor to instantiate the database connection
     public Manager(Database db) {
         this.db = db;
     }
+
     public ArrayList<Property> getProperties() {
         // calls database to return all properties
-
         return db.getAllProperties();
     }
+
     public ArrayList<String> getRenters() {
         // calls database to return all renters name
         return db.getAllRenterNames();
     }
+
     public ArrayList<String> getLandlords() {
         // calls database to return all renters name
         return db.getAllLandlordNames();
     }
+
     public void updateFee(int propertyID, double feeAmount, int period) {
-        // get property that matches this name
+        // get property that matches this property id
         // update fee of this property name in the database
         Fee fee = new Fee(feeAmount, period);
         db.updatePropertyFee(propertyID, fee);
     }
+
     public void updatePeriod(int propertyID, double feeAmount, int period) {
-        // get property that matches this name
+        // get property that matches this property id
         // update the period in the database with the same property name
         Fee fee = new Fee(feeAmount, period);
         db.updatePropertyFee(propertyID, fee);
     }
+
     public void setSummaryInfo(Integer period) {
         // call database to get all properties that match this period
-
         for(Property property : getProperties()) {
-            //if(property.getListing().getFee().getPeriod() == period) {
             allProperties.add(property);
-
-            //}
         }
     }
+
     public int getNumListed() {
         // use allProperties to get number of properties in the period
         return allProperties.size();
     }
+
     public int getNumRented() {
         // use allProperties to get number of properties rented in that period
         int numRented = 0;
@@ -60,6 +68,7 @@ public class Manager {
         }
         return numRented;
     }
+
     public int getNumActive() {
         // use allProperties to get number of properties listed as rented
         int numActive = 0;
@@ -70,10 +79,9 @@ public class Manager {
         }
         return numActive;
     }
-    public ArrayList<ArrayList<String>> listNumRented() {
-        // TO DO:
-        // Add landlords name to the array
 
+    public ArrayList<ArrayList<String>> listNumRented() {
+        // used to create a list of all properties only if they are rented
         ArrayList<ArrayList<String>> listNumRented = new ArrayList<>();
         int i = 0;
         for(Property property : allProperties) {
@@ -89,16 +97,10 @@ public class Manager {
             System.out.println(property.getListing().getListingState().getInt());
 
         }
-        // ONLY RENTED
-        // make a new arraylist with only properties that are rented
-        // call database to return landlord name that matches properties of the arraylist
-            // basically pass the arraylist as a argument
-        // uses allProperties to get property id number and append it to the arraylist
-        // uses allProperties to get property address and append it to the arraylist
         return listNumRented;
     }
     public void setListingState(int propertyID, String propertyState) {
-        // get property that matches this name
+        // get property that matches this property id
         // update the property with the name with the new state in the database
         db.setListingState(Objects.requireNonNull(State.fromInt(State.fromString(propertyState))), propertyID);
     }

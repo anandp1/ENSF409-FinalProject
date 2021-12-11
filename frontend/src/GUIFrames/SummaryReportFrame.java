@@ -20,6 +20,7 @@ public class SummaryReportFrame extends javax.swing.JFrame {
     private final Database db;
     private final Manager manager;
     private final Integer period;
+    // requires database, manager, and period
     public SummaryReportFrame(Database db, Manager manager, Integer period) {
         initComponents();
         this.db = db;
@@ -27,10 +28,12 @@ public class SummaryReportFrame extends javax.swing.JFrame {
         this.period = period;
 
         manager.setSummaryInfo(period);
-
+        // use the manager to get the info needed and construct the messages
         numPropertyPeriod.setText("Total number of houses listed: " + manager.getNumListed());
         numRentedPeriod.setText("Total number of houses rented: " + manager.getNumRented());
         numActivePeriod.setText("Total number of active listings: " + manager.getNumActive());
+        // get all rented properties under the period and show it
+        // if there are none then show the a appropriate message
         ArrayList<ArrayList<String>> numListed = manager.listNumRented();
         if(numListed.isEmpty()){
             numListPeriod.setText("<html>List houses rented in the period:<br/>" +

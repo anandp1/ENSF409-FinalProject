@@ -5,28 +5,33 @@ import java.util.*;
 import backendclasses.*;
 
 public class Database {
+    // Hold the connection information from the database into the local component
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;
-
     private Connection dbConnect;
     private ResultSet results;
+
     public Database(String DBURL, String USERNAME, String PASSWORD) {
+        // constructor, get the information to connect to the database
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
 
     }
     public void connect() throws SQLException {
+        // establish connection to the database
         DriverManager.setLoginTimeout(5);
         dbConnect = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
 
     }
     public Connection getConnection() {
+        // retrieve connection instance, used to pass into other functions
         return dbConnect;
     }
 
     public void disconnect() {
+        // disconnect from the database
         try {
             dbConnect.close();
 
@@ -38,8 +43,7 @@ public class Database {
     }
 
     public ArrayList<Property> getAllProperties() {
-        // presumes all states are active, otherwise set the first input for listing as results.getInt("ListingState")
-        // honestly might throw an error - no idea how to verify if this is working right. Basically I call getBoolean on a result that might be an integer.
+        // Get all the properties (and connected listings and fees) from the database
         ArrayList<Property> returnValue = new ArrayList<Property>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -63,6 +67,7 @@ public class Database {
     }
 
     public ArrayList<String> getAllRenterNames() {
+        // get all of the renter names from the database
         ArrayList<String> returnValue = new ArrayList<String>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -83,6 +88,7 @@ public class Database {
     }
 
     public ArrayList<String> getAllLandlordNames() {
+        // get all of the landlord names from the database
         ArrayList<String> returnValue = new ArrayList<String>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -103,6 +109,8 @@ public class Database {
     }
 
     public ArrayList<Property> getAllMatchingProperties(Criteria criteria) {
+        // get all of the properties and listings that match a given criteria set,
+        // only if the listing state is active
         ArrayList<Property> returnValue = new ArrayList<Property>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -132,6 +140,8 @@ public class Database {
     }
 
     public String getUserType(String email, String password) {
+        // get the user type (renter, landlord, manager) and the user id from the database
+        // given a login email and password. Return as a concatenated string.
         try {
             Statement stmt = dbConnect.createStatement();
             results = stmt.executeQuery("SELECT * FROM User WHERE Email = \'" + email + "\' AND Password = \'" + password + "\'");
@@ -158,6 +168,7 @@ public class Database {
     }
 
     public ArrayList<Property> getLandlordProperties (int landlord_id) {
+        // get all of the properties that correspond to a given landlord
         ArrayList<Property> returnValue = new ArrayList<Property>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -189,22 +200,27 @@ public class Database {
     }
 
     public int createNewRenter(String fname, String lname, String email, String password) {
+        // creates a new renter without a subscription state, setting default state to 1 (subscribed)
         return createNewRenter(fname, lname, email, password, 1);
     }
 
     public int createNewRenter(String fname, String lname, String email, String password, int subscriptionState) {
+        // creates a new renter with a subscription state
         return createNewUser(0, fname, lname, email, password, subscriptionState);
     }
 
     public int createNewLandlord(String fname, String lname, String email, String password) {
+        // create a new landlord
         return createNewUser(1, fname, lname, email, password, -1);
     }
 
     public int createNewManager(String fname, String lname, String email, String password) {
+        // create a new manager
         return createNewUser(2, fname, lname, email, password, -1);
     }
 
     public int createNewUser(int user_type, String fname, String lname, String email, String password, int subscriptionState) {
+        // insert a new user (renter, landlord, manager) into the database and return the user id
         int returnValue = -1;
         try {
             String query = "INSERT INTO User (User_type, Fname, Lname, Email, Password";
@@ -228,6 +244,7 @@ public class Database {
     }
 
     public ArrayList<Criteria> getAllCriteria (int renter_id) {
+        // get all criteria corresponding to a registered renter
         ArrayList<Criteria> returnValue = new ArrayList<Criteria>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -249,6 +266,7 @@ public class Database {
     }
 
     public boolean getSubscriptionState(int renter_id) {
+        // get the subscription state of a registered renter
         boolean returnValue = false;
         try {
             Statement stmt = dbConnect.createStatement();
@@ -269,6 +287,7 @@ public class Database {
     }
 
     public boolean addCriteria(int renter_id, Criteria criteria) {
+        // insert a criteria of a renter into the database
         try {
             String query = "INSERT INTO Criteria (Renter_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -291,6 +310,7 @@ public class Database {
     }
 
     public boolean updatePropertyFee(int property_id, Fee fee) {
+        // update a property fee amount and period into the database
         try {
             String query = "UPDATE Listing SET FeeAmount = " + fee.getFeeAmount() + ", Period = " + fee.getPeriod() + " WHERE Property_id = " + property_id;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -308,6 +328,7 @@ public class Database {
     }
 
     public ArrayList<String> getLandlordNamesFromProperties (ArrayList<Property> properties) {
+        // gets an array of landlord names, mapped to the input array of properties
         ArrayList<String> returnValue = new ArrayList<String>();
         for(var property: properties) {
             returnValue.add(getLandlordNameFromProperty(property.getPropertyID()));
@@ -316,71 +337,26 @@ public class Database {
     }
 
     public String getLandlordNameFromProperty(int property_id) {
+        // returns the landlord name of a single property
         String returnValue = "";
         try {
             Statement stmt = dbConnect.createStatement();
             results = stmt.executeQuery("Select * FROM User, Property WHERE User.User_type = 1 AND User.User_id = Property.Landlord_id AND Property.Property_id = " + property_id);
 
-            if(results.next()) {
-                 returnValue = results.getString("Fname") + " " + results.getString("Lname");
+            if (results.next()) {
+                returnValue = results.getString("Fname") + " " + results.getString("Lname");
             }
             stmt.close();
             results.close();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.err.println("\nError in Database getLandlordNameFromProperty\n");
             e.printStackTrace();
         }
         return returnValue;
     }
 
-    /* Jett's progress comments.
-     I have implemented the following functions, as per the specifications below:
-       1. function to get all the properties names <-- returns ArrayList<Property>
-       2. function that returns all renters name <-- returns ArrayList<String>
-       3. function that returns all landlord names <-- returns ArrayList<String>
-       4. (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
-       5. (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
-       6. (landlordID) <-- function that returns properties owned by landlord
-       7. (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
-       8. (RenterId) <-- returns ArrayList<Criteria> of all criteria that match this renter
-       9. (RenterId) <-- returns subscriptionState of the renter as a boolean
-       10. (Criteria criteria) <-- adds criteria to the database
-       11. (PropertyID, fee) <-- updates fee of that property
-       12. (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
-     */
-
-
-    // @Jett
-    // if anything is unclear let me know but these are all the functions
-    // that I think we need to make the program work
-
-            // function to get all the properties names <-- returns ArrayList<Property>
-            // function that returns all renters name <-- returns ArrayList<String>
-            // function that returns all landlord names <-- returns ArrayList<String>
-            // (Criteria criteria) <-- function that returns all properties that match this function returns a arraylist<Criteria>
-            // (email,password) <-- function that returns which landlord, manager or registered renter it is as a string (identified as a id)
-                    // add a "l" at the end of the integer value for landlord, "m" for manager and "r" for renter
-                    // returns empty string if none of the above
-            // (landlordID) <-- function that returns properties owned by landlord
-                    // return a ArrayList<Property> with all the properties
-            // (firstName, lastName, email, password) <-- function that saves all this info into the database for the renter
-            // (RenterId) <-- returns ArrayList<Criteria> of all criteria that match this renter
-            // (RenterId) <-- returns subscriptionState of the renter as a boolean
-            // (Criteria criteria) <-- adds criteria to the database
-            // (PropertyID, fee) <-- updates fee of that property
-    // (PropertyID, period) <-- updates period of that property
-            // (ArrayList<Property>) <-- return landlord name next to each property (just use the propertyID to check)
-                    // return as ArrayList<String>
-
-    // (landlordID) <-- returns any mail that landlord has if the id is of a landlord
-    // (message, emailAddressOfRenter) <-- saves message in landlord email in the database of that renter
-
-            // DONE  // (Property, landlordId) <-- saves property into properties in the database with that landlord id
-                    // set fee and period to -1 manually because it is not set yet (manager sets it)
-
-
     public boolean addMessage(int landlord_id, Message message) {
+        // inserts a message into the database to communicate with a landlord
         try {
             String query = "INSERT INTO Message (Landlord_id, Renter_email, Message) VALUES (?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -401,6 +377,7 @@ public class Database {
     }
 
     public ArrayList<Message> getAllMessages(int landlord_id) {
+        // gets all of the messages to a landlord
         ArrayList<Message> returnValue = new ArrayList<Message>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -421,6 +398,8 @@ public class Database {
     }
 
     public boolean addProperty(int landlord_id, Property property) {
+        // inserts a property into the database, and then inserts a listing corresponding to that property
+        // (default is inactive) for the manager to update the listing information
         try {
             String query = "INSERT INTO Property (Landlord_id, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -444,6 +423,8 @@ public class Database {
     }
 
     private int getMaxPropertyId(int landlord_id) {
+        // returns the most-recently created property by a landlord from the database,
+        // used by other functions to ensure that the property was successfully created
         int returnValue = -1;
         try {
             Statement stmt = dbConnect.createStatement();
@@ -463,6 +444,7 @@ public class Database {
     }
 
     public boolean addListing(int property_id, Fee fee, int dayCount, State listingState) {
+        // inserts a listing into the database, corresponding to a property
         try {
             String query = "INSERT INTO Listing (Property_id, FeeAmount, Period, DayCount, ListingState) VALUES (?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -485,6 +467,9 @@ public class Database {
     }
 
     public boolean setListingState(State listingState, int propertyID) {
+        // changes the listing state of a property. If the state was set to active,
+        // calls observables that notifies all registered renters of the new property,
+        // if the property matches the criteria of the renters.
         try {
             String query = "UPDATE Listing SET ListingState = " + listingState.getInt() + " WHERE Property_id = " + propertyID;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -503,6 +488,8 @@ public class Database {
     }
 
     public boolean addNewProperty(int property_id) {
+        // used to call other functions to notify every renter with matching criteria that
+        // a new property has been added into the database. Main observable structure.
         Property property = getProperty(property_id);
         if(property == null) return false;
         ArrayList<Integer> renter_ids = getMatchingCriteria(property);
@@ -515,6 +502,7 @@ public class Database {
     }
 
     public Integer getPropertyLandlord(int property_id) {
+        // returns the landlord of an input property
         int returnValue = -1;
         try {
             Statement stmt = dbConnect.createStatement();
@@ -534,6 +522,7 @@ public class Database {
     }
 
     public Property getProperty(int property_id) {
+        // returns the full property information of a property, given a property id
         Property returnValue = null;
         try {
             Statement stmt = dbConnect.createStatement();
@@ -553,6 +542,7 @@ public class Database {
     }
 
     public ArrayList<Integer> getMatchingCriteria(Property property) {
+        // returns a list of all criteria objects that match a given property
         ArrayList<Integer> returnValue = new ArrayList<Integer>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -577,6 +567,8 @@ public class Database {
     }
 
     public boolean addNewProperty(int renter_id, int property_id) {
+        // inserts a new notification tag to the database to inform registered renters
+        // of a newly-created property that matches their criteria
         try {
             String query = "INSERT INTO New_Property (Renter_id, Property_id) VALUES (?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -596,6 +588,8 @@ public class Database {
     }
 
     public ArrayList<Property> getNewProperties(int renter_id) {
+        // returns all new property notifications of a registered renter, and sets the
+        // tag to ensure they only get notified once
         ArrayList<Property> returnValue = new ArrayList<Property>();
         try {
             Statement stmt = dbConnect.createStatement();
@@ -624,6 +618,8 @@ public class Database {
     }
 
     public boolean removeNewProperties(int renter_id) {
+        // changes the tag of a renter notification to ensure that they are only notified
+        // once of new properties that match their criteria
         try {
             String query = "UPDATE New_Property SET Is_new = " + 0 + " WHERE Renter_id = " + renter_id;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -640,9 +636,14 @@ public class Database {
         }
     }
 
-    public boolean increaseDay(){ return increaseDay(1); }
+    public boolean increaseDay(){
+        // used to locally increase the time of the database, to simulate a real-life increase in the database.
+        // increases it by 1 day
+        return increaseDay(1);
+    }
 
     public boolean increaseDay(int numDays) {
+        // used to locally increase the time of the database, to simulate a real-life increase in the database.
         if(increaseByDay(numDays)) {
             suspendByPeriod();
             return true;
@@ -651,6 +652,8 @@ public class Database {
     }
 
     private boolean increaseByDay(int numDays) {
+        // calls an update to the database to increase the number of days of all property postings, to ensure
+        // that they have been posted only by their given period, specified in the listing
         try {
             String query = "UPDATE Listing SET DayCount = DayCount + " + numDays + " WHERE Property_id > 0 AND ListingState = 1 ";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -668,6 +671,7 @@ public class Database {
     }
 
     private boolean suspendByPeriod() {
+        // cancels all the property listings that have an expired period, and resets the counter
         try {
             String query = "UPDATE Listing SET ListingState = 4, DayCount = 0 WHERE Property_id > 0 AND DayCount > Period";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -684,6 +688,8 @@ public class Database {
         }
     }
     public boolean setSubscriptionState(int renter_id, boolean state) {
+        // updates a given renter's subscription state. If they unsubscribe, removes any notification
+        // observables of properties that may match their criteria.
         try {
             String query = "Update User Set Subscription_state = " + (state ? 1:0) + " WHERE User_type = 0 AND User_id = " + renter_id;
 
@@ -703,6 +709,7 @@ public class Database {
         }
     }
     private boolean removeAllCriteria(int renter_id) {
+        // removes all observables of a given renter.
         try {
             String query = "DELETE FROM Criteria WHERE Renter_id = " + renter_id;
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
@@ -719,6 +726,7 @@ public class Database {
         }
     }
     public Property getPropertyWithListing(int property_id) {
+        // returns the property and a listing of the property from the property id
         Property returnValue = null;
         try {
             Statement stmt = dbConnect.createStatement();

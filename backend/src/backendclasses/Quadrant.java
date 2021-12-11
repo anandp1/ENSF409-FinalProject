@@ -2,19 +2,20 @@ package backendclasses;
 
 import java.util.Locale;
 
+// enumeration used to specify the different types of quadrants used in the database.
 public enum Quadrant {
 	SW(1), NW(2), NE(3), SE(4);
-
 	private int number;
-	
-	public int getInt() {
-		return number;
-	}
-	
 	Quadrant(int i) {
 		number = i;
 	}
 
+	// gets the enumeration as an integer value
+	public int getInt() {
+		return number;
+	}
+
+	// gets the enumeration from an integer
 	static public Quadrant fromInt(int i) {
 		switch(i) {
 			case 1:
@@ -29,6 +30,7 @@ public enum Quadrant {
 		return null;
 	}
 
+	// gets the enumeration as an int from a string
 	static public int fromString(String i) {
 		switch(i.toUpperCase()) {
 			case "SW":

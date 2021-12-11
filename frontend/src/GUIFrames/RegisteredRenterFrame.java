@@ -24,6 +24,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
     private final Integer renterID;
     private final RegisteredRenter registeredRenter;
     private final String renterEmail;
+    // requires the database, renter id and renter email
     public RegisteredRenterFrame(Database db, String ID, String renterEmail) {
         initComponents();
         this.db = db;
@@ -31,12 +32,13 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         this.renterEmail = renterEmail;
         this.registeredRenter = new RegisteredRenter(db.getSubscriptionState(renterID),
                 renterID, db);
-
+        // gets all new properties that the renter subscribed to
         ArrayList<Property> notificationProperties = db.getNewProperties(renterID);
 
 
         String[] propertyDisplay = new String[notificationProperties.size()];
         int i = 0;
+        // construct each item of the list from the new properties that the renter needs to be notified on
         for(Property properties : notificationProperties) {
             String isFurnished = (properties.getIsFurnished()) ? "Furnished" : "Not Furnished";
             propertyDisplay[i] = "<html>PropertyID: " + properties.getPropertyID() + " Address:"
@@ -46,6 +48,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
             "<br/>Furnished State: " + isFurnished + "<br/></html>";
             i++;
         }
+        // set new model
         notificationList.setModel(new javax.swing.AbstractListModel<String>() {
             //                String[] strings = { "No Matches", "NewItem" };
             public int getSize() { return propertyDisplay.length; }
@@ -256,15 +259,17 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
+    // logout button clicked
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        // show base frame
         this.dispose();
         new BaseFrame(db).setVisible(true);
     }
-
+   // unsubscibred is clicked
     private void unsubscribeButtonMouseClicked(java.awt.event.MouseEvent evt) {
         boolean subState = db.getSubscriptionState(renterID);
+        // set subscription state based on current
         if(subState) {
             subState = false;
             registeredRenter.setSubscriptionState(subState);
@@ -278,9 +283,10 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         // unsubcribes to all the criteria in the class for this renter
     }
-
+    // search button is clicked
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:\
+        // extract all values
         String apartmentText = Objects.requireNonNull(apartmentType.getSelectedItem()).toString();
         Integer numBathrooms = Integer.valueOf(Objects.requireNonNull(numBath.getSelectedItem()).toString());
         Integer numBedrooms = Integer.valueOf(Objects.requireNonNull(numBed.getSelectedItem()).toString());
@@ -294,6 +300,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
         Criteria criteria = new Criteria(ApartmentType.fromInt(ApartmentType.fromString(apartmentText)), numBedrooms, numBathrooms, Quadrant.fromInt(Quadrant.fromString(cityQuad)), furnishedState);
         ArrayList<Property> matched = registeredRenter.searchResults(criteria);
+        // construct message for all matches
         if(matched.isEmpty()) {
             searchList.setModel(new javax.swing.AbstractListModel<String>() {
                 String[] strings = {"No Matches"};
@@ -302,6 +309,7 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
             });
         }
         else {
+            // update the list on matched properties based on search
             String[] propertyDisplay = new String[matched.size()];
             int i = 0;
             for(Property properties : matched) {
@@ -318,11 +326,12 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
 
 
     }
-
+    // meail button is clicked
     private void emailButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         String selectedProperty = "";
         int flag = 0;
+        // error checking
         if(notificationList.getSelectedValue() == null && searchList.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(this, "No properties are selected", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -341,11 +350,13 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
         }
         if(flag == 1) {
                 System.out.println(selectedProperty);
+                // prompt user
                 String email = JOptionPane.showInputDialog(this, "What is your preferred email?");
                 String message = JOptionPane.showInputDialog(this, "What is your message to the landlord?");
                 Message constructMessage = new Message(email, message);
 
                 StringBuilder propertyID = new StringBuilder();
+                // extract property ID
                 for(int i = 12; i < selectedProperty.length(); i++){
                     if(selectedProperty.charAt(i) == ' ' || selectedProperty.charAt(i) == 'A'){
                         break;
@@ -353,7 +364,9 @@ public class RegisteredRenterFrame extends javax.swing.JFrame {
                     propertyID.append(String.valueOf(selectedProperty.charAt(i)));
 
                 }
+                // get landlord ID
                 Integer landlordID = db.getPropertyLandlord(Integer.parseInt(propertyID.toString()));
+                // send message to landlord
                 db.addMessage(landlordID, constructMessage);
                 // save message in the landlord emails, pass in who the renter is
         }
