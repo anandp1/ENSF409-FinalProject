@@ -403,8 +403,8 @@ public class Database {
         try {
             String query = "INSERT INTO Property (Landlord_id, Property_address, Apartment_type, NoBedrooms, NoBathrooms, Quadrant, Furnished) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement myStmt = dbConnect.prepareStatement(query);
-            myStmt.setString(1, property.getPropertyAddress());
-            myStmt.setInt(2, landlord_id);
+            myStmt.setInt(1, landlord_id);
+            myStmt.setString(2, property.getPropertyAddress());
             myStmt.setInt(3, property.getApartmentType().getInt());
             myStmt.setInt(4, property.getNumBed());
             myStmt.setInt(5, property.getNumBath());

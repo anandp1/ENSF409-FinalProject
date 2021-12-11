@@ -10,6 +10,7 @@ public class MainApplication {
     	 database.connect();
     	
     	 Connection db = database.getConnection();
+		 //database.increaseDay();
 		new BaseFrame(database).setVisible(true);
     	System.out.println("Program Terminated.");
     }
