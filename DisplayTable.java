@@ -7,8 +7,9 @@ package javaapplication1;
 import javax.swing.JFrame;
 
 /**
- *
- * @author mubas
+ * @author Mubashir Rahman, mubashir.rahman@ucalgary.ca
+ * @version 1.1
+ * @since 1.0
  */
 public class DisplayTable extends javax.swing.JFrame {
 
