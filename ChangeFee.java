@@ -6,7 +6,9 @@ package javaapplication1;
 
 /**
  *
- * @author mubas
+ * @author Mubashir Rahman, mubashir.rahman@ucalgary.ca
+ * @version 1.1
+ * @since 1.0
  */
 public class ChangeFee extends javax.swing.JFrame {
 
